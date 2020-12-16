@@ -1,0 +1,8 @@
+<div class='title'>
+    <h1>{{item.title}}</h1>
+    <h2>{{item.subtitle || 'placeholder'}}</h2>    
+    <img class='close' src='assets/img/wawb-close.svg' (click)='close.emit()'>
+</div>
+
+<app-player [audio]='item.audio_above' [image]='item.image_above || image_placeholder'></app-player>
+<app-player [audio]='item.audio_below' [image]='item.image_below || image_placeholder'></app-player>

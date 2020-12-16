@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  api_key: 'key7jIbxK4zBiOYDr'
 };
 
 /*

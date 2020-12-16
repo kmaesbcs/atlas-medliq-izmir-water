@@ -1,0 +1,53 @@
+@import '../../../../common.less';
+
+:host {
+    width: 100%;
+    max-width: 360px;
+    height: 100%;
+    padding: 24px;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: white;
+    
+    .title {
+        position: relative;
+        border-bottom: 0.5px solid #333333;
+        margin-bottom: 20px;
+
+        h1, h2 {
+            .font-sourcecode;
+            font-style: normal;
+            max-width: calc(100% - 46px);
+            color: @gray1;
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: @gray1;
+
+        }
+
+        h2 {
+            font-weight: normal;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .close {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    app-player {
+        margin: 16px;
+    }
+}

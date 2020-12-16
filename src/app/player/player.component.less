@@ -1,0 +1,36 @@
+@size: 280px;
+@control-size: 60px;
+
+:host {
+    width: @size;
+    height: @size;
+    display: block;
+
+    .component {
+        width: 100%;
+        height: 100%;
+        border-radius: @size/2;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        cursor: pointer;
+
+        img {
+            width: @control-size;
+            height: @control-size;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
