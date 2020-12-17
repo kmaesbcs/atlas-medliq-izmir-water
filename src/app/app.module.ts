@@ -4,16 +4,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { M1wawbComponent } from './maps/m1wawb/m1wawb.component';
-import { SidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
+import { M1wawbComponent } from './maps/m1wawb/m1wawb.component'
+import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
+import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PlayerComponent,
     M1wawbComponent,
-    SidebarComponent,
-    PlayerComponent
+    WawbSidebarComponent,
+    WawbInfobarComponent,
   ],
   imports: [
     BrowserModule,

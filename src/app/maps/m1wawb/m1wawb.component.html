@@ -1,2 +1,12 @@
-<div class='map' #mapEl>
-<app-sidebar [item]='sample' *ngIf='sample' (close)='sample = null'></app-sidebar>
+<div class='content'>
+    <div class='map'>
+        <div #mapEl></div>
+        <app-wawb-sidebar [item]='sample' *ngIf='sample' (close)='sample = null'></app-wawb-sidebar>
+        <app-wawb-infobar *ngIf='info' (close)='info = false'></app-wawb-infobar>
+    </div>
+    <div class='header'>
+        <img class='logo' src='assets/img/wawb-logo-up.svg'>
+        <h1>Water Above Water Below</h1>
+        <img class='info' src='assets/img/wawb-info-icon.svg' (click)='info = true; sample = null'>
+    </div>
+</div>

@@ -4,5 +4,20 @@
     <img class='close' src='assets/img/wawb-close.svg' (click)='close.emit()'>
 </div>
 
-<app-player [audio]='item.audio_above' [image]='item.image_above || image_placeholder'></app-player>
-<app-player [audio]='item.audio_below' [image]='item.image_below || image_placeholder'></app-player>
+<app-player [audio]='item.audio_above' [image]='item.image_above || image_above_placeholder'></app-player>
+<app-player [audio]='item.audio_below' [image]='item.image_below || image_below_placeholder'></app-player>
+
+<div class='bottom'>
+    <div class='date' *ngIf='item.date'>{{date}}</div>
+    <div class='date' *ngIf='item.notes'>{{item.notes}}</div>
+    <div class='author' *ngIf='author'>
+        <div class='header'>
+            <strong>{{author.name}}</strong><span>&nbsp;&mdash;&nbsp;Audio & Visuals</span>
+            <img class='expander' [class.expanded]='authorExpanded' (click)='authorExpanded = !authorExpanded' src='assets/img/wawb-expander-icon.svg'>
+        </div>
+        <div class='content' *ngIf='authorExpanded'>
+            <p *ngIf='author.bio'>{{author.bio}}</p>
+            <a *ngIf='author.link' [href]='author.link' target='_blank'>{{author.link}}</a>
+        </div>
+    </div>
+</div>

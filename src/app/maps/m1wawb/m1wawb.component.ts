@@ -20,6 +20,7 @@ export class M1wawbComponent implements OnInit {
   theMap: mapboxgl.Map;
   samples = new ReplaySubject<GeoJSON.FeatureCollection>(1);
   sample = null;
+  info = false;
 
   LAYER_NAME = 'above-below-sample';
   SOURCE_NAME = 'samples';
@@ -49,6 +50,7 @@ export class M1wawbComponent implements OnInit {
         });
         this.theMap.on('click', this.LAYER_NAME, (e) => {
           this.sample = e.features[0].properties;
+          this.info = false;
           console.log('CLICKED', this.sample)
           // const audio = new Audio(item.audio_above);
           // fromEvent(audio, 'canplaythrough').pipe(first()).subscribe(() => {

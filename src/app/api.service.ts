@@ -54,6 +54,7 @@ export class ApiService {
                 sample.image_below = sample.image_below ? sample.image_below[0].thumbnails.large.url: '';
                 sample.audio_above = sample.audio_above ? sample.audio_above[0].url: '';
                 sample.audio_below = sample.audio_below ? sample.audio_below[0].url: '';
+                sample.author = sample.author ? sample.author[0] : '';
                 return {
                   type: 'Feature',
                   properties: sample,
@@ -67,4 +68,18 @@ export class ApiService {
           })
         );
   }
+
+  m1GetAuthors() {
+    return this.airtableFetch(this.M1, 'Authors', 'website')
+        .pipe(
+          map((response: any) => {
+            const authors = {};
+            response.records.forEach((record) => {
+              authors[record.id] = record.fields;
+            })
+            return authors;
+          }),
+        );
+  }
+
 }
