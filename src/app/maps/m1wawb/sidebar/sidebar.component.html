@@ -10,14 +10,16 @@
 <div class='bottom'>
     <div class='date' *ngIf='item.date'>{{date}}</div>
     <div class='date' *ngIf='item.notes'>{{item.notes}}</div>
-    <div class='author' *ngIf='author'>
+    <div class='author' *ngFor='let author of item.authors'>
         <div class='header'>
-            <strong>{{author.name}}</strong><span>&nbsp;&mdash;&nbsp;Audio & Visuals</span>
-            <img class='expander' [class.expanded]='authorExpanded' (click)='authorExpanded = !authorExpanded' src='assets/img/wawb-expander-icon.svg'>
+            <strong>{{author.name}}</strong><span>&nbsp;&mdash;&nbsp;{{author.credit}}</span>
+            <img src='assets/img/wawb-expander-icon.svg'
+                 class='expander' [class.expanded]='authorExpanded[author.name]' 
+                 (click)='authorExpanded[author.name] = !authorExpanded[author.name]'>
         </div>
-        <div class='content' *ngIf='authorExpanded'>
+        <div class='content' *ngIf='authorExpanded[author.name]'>
             <p *ngIf='author.bio'>{{author.bio}}</p>
-            <a *ngIf='author.link' [href]='author.link' target='_blank'>{{author.link}}</a>
+            <a *ngIf='author.link' [href]='author.link' target='_blank'>{{author.link_text}}</a>
         </div>
     </div>
 </div>

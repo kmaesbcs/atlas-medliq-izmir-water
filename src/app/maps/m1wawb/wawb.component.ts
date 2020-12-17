@@ -2,18 +2,18 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { ApiService } from '../../api.service';
 import { MapService } from '../../map.service';
 import { PlayerService } from '../../player.service';
 
 import * as mapboxgl from 'mapbox-gl';
+import { WawbService } from './wawb.service';
 
 @Component({
-  selector: 'app-m1wawb',
-  templateUrl: './m1wawb.component.html',
-  styleUrls: ['./m1wawb.component.less']
+  selector: 'app-wawb',
+  templateUrl: './wawb.component.html',
+  styleUrls: ['./wawb.component.less']
 })
-export class M1wawbComponent implements OnInit {
+export class WawbComponent implements OnInit {
   
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
 
@@ -25,8 +25,8 @@ export class M1wawbComponent implements OnInit {
   LAYER_NAME = 'above-below-sample';
   SOURCE_NAME = 'samples';
 
-  constructor(private api: ApiService, private map: MapService, private player: PlayerService) {
-    api.m1GetSamples().subscribe((samples) => {
+  constructor(private api: WawbService, private map: MapService, private player: PlayerService) {
+    api.getSamples().subscribe((samples) => {
       console.log('SAMPLES', samples);
       this.samples.next(samples);
     });

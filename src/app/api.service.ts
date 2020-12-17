@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { FeatureCollection, Feature, Geometry } from 'geojson';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +9,6 @@ export class ApiService {
   API_KEY = 'key7jIbxK4zBiOYDr';
   AIRTABLE_BASE = 'https://api.airtable.com/v0';
   
-  M1 = 'app4j8ReBz6mg40Al';
   M2 = 'appk4QxOhg2XleeTM';
   M3 = ''
 
@@ -35,51 +32,4 @@ export class ApiService {
       url, {headers, params}
     );
   }
-
-  m1GetSamples() {
-    return this.airtableFetch(this.M1, 'Samples', 'website')
-        .pipe(
-          map((response: any) => response.records.map((rec) => rec.fields)),
-          map((samples: any[]) => { 
-            return {
-              type: 'FeatureCollection',
-              features: samples.map((sample) => {
-                const coordinates = sample.coordinates.split(',').map((x) => parseFloat(x));
-                sample.symbol = (
-                  (sample.audio_above && sample.audio_above.length) ? '' : 'no'
-                ) + 'above+' + (
-                  (sample.audio_below && sample.audio_below.length) ? '' : 'no'
-                ) + 'below';
-                sample.image_above = sample.image_above ? sample.image_above[0].thumbnails.large.url: '';
-                sample.image_below = sample.image_below ? sample.image_below[0].thumbnails.large.url: '';
-                sample.audio_above = sample.audio_above ? sample.audio_above[0].url: '';
-                sample.audio_below = sample.audio_below ? sample.audio_below[0].url: '';
-                sample.author = sample.author ? sample.author[0] : '';
-                return {
-                  type: 'Feature',
-                  properties: sample,
-                  geometry: {
-                    type: 'Point',
-                    coordinates: [coordinates[1], coordinates[0]]
-                  } as Geometry
-                } as Feature;
-              })
-            } as FeatureCollection;
-          })
-        );
-  }
-
-  m1GetAuthors() {
-    return this.airtableFetch(this.M1, 'Authors', 'website')
-        .pipe(
-          map((response: any) => {
-            const authors = {};
-            response.records.forEach((record) => {
-              authors[record.id] = record.fields;
-            })
-            return authors;
-          }),
-        );
-  }
-
 }

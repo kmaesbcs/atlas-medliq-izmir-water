@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { M1wawbComponent } from './maps/m1wawb/m1wawb.component'
+import { WawbComponent } from './maps/m1wawb/wawb.component'
 import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
 import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
@@ -13,7 +13,7 @@ import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
   declarations: [
     AppComponent,
     PlayerComponent,
-    M1wawbComponent,
+    WawbComponent,
     WawbSidebarComponent,
     WawbInfobarComponent,
   ],

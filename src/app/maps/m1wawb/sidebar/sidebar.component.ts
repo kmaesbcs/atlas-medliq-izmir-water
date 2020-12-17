@@ -1,41 +1,46 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import * as dayjs from 'dayjs';
-import { ApiService } from 'src/app/api.service';
+import { first } from 'rxjs/operators';
+import { WawbService } from '../wawb.service';
 
 @Component({
   selector: 'app-wawb-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.less']
 })
-export class WawbSidebarComponent implements OnInit {
+export class WawbSidebarComponent implements OnChanges {
 
   @Input() item;
   @Output() close = new EventEmitter();
   
-  authors = {};
-  authorExpanded = false;
+  authorExpanded = {};
   
   image_above_placeholder = 'assets/img/player-placeholder.png'
   image_below_placeholder = 'assets/img/player-placeholder.png'
 
-  constructor(private api: ApiService) {
-    this.api.m1GetAuthors().subscribe((authors) => {
-      this.authors = authors;
-    });  
+  constructor(private api: WawbService) {
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     console.log(this.item);
+    this.api.authorRecords.pipe(first()).subscribe((authorRecords) => {
+      const authors = this.item.author.split(',');
+      const credits = this.item.author_credits.split(',');
+      for (const i in authors) {
+        authors[i] = Object.assign({}, authorRecords[authors[i]]);
+        console.log(authors[i], credits[i]);
+        if (credits[i] && credits[i].length) {
+          authors[i].credit = credits[i];
+        } else {
+          authors[i].credit = authors[i].dafault_credit;
+        }
+      }
+      this.item.authors = authors;
+    });  
   }
 
   get date() {
     return dayjs(this.item.date).format(('dddd, D MMMM YYYY, h:mm a'))
   }
 
-  get author() {
-    console.log('get author', this.item.author[0], this.authors);
-    if (this.item.author) {
-      return this.authors[this.item.author];
-    }
-  }
 }
