@@ -15,8 +15,10 @@ export class WawbSidebarComponent implements OnChanges {
   
   authorExpanded = {};
   
-  image_above_placeholder = 'assets/img/player-placeholder.png'
-  image_below_placeholder = 'assets/img/player-placeholder.png'
+  image_above_audio_placeholder = 'assets/img/wawb-placeholder-above-audio.png';
+  image_below_audio_placeholder = 'assets/img/wawb-placeholder-below-audio.png';
+  image_above_noaudio_placeholder = 'assets/img/wawb-placeholder-above-noaudio.png';
+  image_below_noaudio_placeholder = 'assets/img/wawb-placeholder-below-noaudio.png';
 
   constructor(private api: WawbService) {
   }

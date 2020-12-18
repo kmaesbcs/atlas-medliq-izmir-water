@@ -1,0 +1,8 @@
+<div class='layout'>
+    <ng-content select='.content'></ng-content>
+    <div class='header'>
+        <img class='logo' src='assets/img/wawb-logo-up.svg'>
+        <ng-content select='.header-title'></ng-content>
+        <img class='info' src='assets/img/wawb-info-icon.svg' (click)='info.emit(true)'>
+    </div>
+</div>

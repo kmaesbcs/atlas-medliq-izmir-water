@@ -1,12 +1,39 @@
-
+/* fonts */
 .font-sourcecode {
     font-family: 'Source Code Pro', monospace;
+    font-style: normal;
 }
 
 .font-manrope {
     font-family: 'Manrope', sans-serif;
+    font-feature-settings: 'tnum' on, 'lnum' on;                
+    font-style: normal;
 }
 
+/* colors */
 @gray1: #333333;
+@gray3: #828282;
 @accent: #00A881;
 @blue2: #2D9CDB;
+@bright-multiply: #CE0031;
+
+@grayC5: #c5c5c5;
+
+/* utilities */
+.no-scrollbars {
+    /*FireFox*/
+    scrollbar-width: none;
+    /*IE10+*/
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    &::-webkit-scrollbar {
+    /*Chrome, Safari, Edge*/
+        display: none;
+    } 
+}
+
+.unselecteble {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}

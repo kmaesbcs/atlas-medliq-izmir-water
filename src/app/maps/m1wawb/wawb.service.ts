@@ -55,13 +55,7 @@ export class WawbService {
   getAuthors() {
     return this.api.airtableFetch(this.BASE, 'Authors', 'website')
         .pipe(
-          map((response: any) => {
-            const authors = {};
-            response.records.forEach((record) => {
-              authors[record.id] = record.fields;
-            })
-            return authors;
-          }),
+          this.api.airtableToMapping(),
         ).subscribe((authorRecords) => {
           this.authorRecords.next(authorRecords);
         });

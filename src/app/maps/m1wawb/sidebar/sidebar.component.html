@@ -4,8 +4,8 @@
     <img class='close' src='assets/img/wawb-close.svg' (click)='close.emit()'>
 </div>
 
-<app-player [audio]='item.audio_above' [image]='item.image_above || image_above_placeholder'></app-player>
-<app-player [audio]='item.audio_below' [image]='item.image_below || image_below_placeholder'></app-player>
+<app-player [audio]='item.audio_above' [image]='item.image_above || (item.audio_above ? image_above_audio_placeholder : image_above_noaudio_placeholder)'></app-player>
+<app-player [audio]='item.audio_below' [image]='item.image_below || (item.audio_below ? image_below_audio_placeholder : image_below_noaudio_placeholder)'></app-player>
 
 <div class='bottom'>
     <div class='date' *ngIf='item.date'>{{date}}</div>

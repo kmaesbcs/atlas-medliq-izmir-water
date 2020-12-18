@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,19 @@ export class ApiService {
   API_KEY = 'key7jIbxK4zBiOYDr';
   AIRTABLE_BASE = 'https://api.airtable.com/v0';
   
-  M2 = 'appk4QxOhg2XleeTM';
   M3 = ''
 
   constructor(private http: HttpClient) { }
+
+  airtableToMapping() {
+    return map((response: any) => {
+      const ret = {};
+      response.records.forEach((i) => {
+        ret[i.id] = i.fields;
+      });
+      return ret;
+    });
+  }
 
   airtableFetch(base, table, view, record?) {
     const headers = {
