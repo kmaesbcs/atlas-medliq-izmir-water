@@ -1,0 +1,93 @@
+@import '../../../../../common.less';
+
+.font-wikipedia-georgia {
+    font-family: 'Linux Libertine','Georgia','Times',serif;
+    font-style: normal;
+}
+
+.font-wikipedia-sans-serif {
+    font-family: sans-serif;
+    font-style: normal;
+}
+
+@wikipedia-blue: #3366BB;
+
+.article {
+    width: 640px;
+    max-width: 100%;
+    background: white;
+    padding-right: 22px;
+    background-image: url(../../../../../assets/img/spectours-wikipedia-logo.png);
+    background-repeat: no-repeat;
+    background-position: bottom 4px right 4px;
+    background-size: 66px 64px;
+
+    .title {
+        padding: 11px 0px 7px 14px;
+        
+        h1 {
+            .font-wikipedia-georgia;
+            font-weight: normal;
+            font-size: 32px;
+            line-height: 36px;
+            color: black;
+            border-bottom: 1px solid @grayA2;
+            margin: 0 0 9px 0;
+        }
+
+        h2 {
+            .font-wikipedia-sans-serif;
+            font-weight: normal;
+            font-size: 13px;
+            line-height: 15px;
+            color: black;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-flow: row;
+        align-items: stretch;
+
+
+        .image {
+            flex: 0 0 auto;
+            width: 185px;
+            min-height: 245px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-right: 15px;
+        }
+
+        .text {
+            display: flex;
+            flex-flow: column;
+            .excerpt {
+                .font-wikipedia-sans-serif;
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 28px;
+                color: black;
+                margin-bottom: 6px;
+            }
+
+            a {
+                &, &:hover, &.visited {
+                    .font-wikipedia-georgia;
+                    font-weight: normal;
+                    font-size: 15px;
+                    line-height: 17px;
+                    color: @wikipedia-blue;
+                    text-decoration: none;
+                }
+                &.link {
+                    margin-bottom: 30px;                    
+                }
+                &.source-link {
+                    margin-bottom: 10px;                    
+                }
+            }
+        }
+    }
+}

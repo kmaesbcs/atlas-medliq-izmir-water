@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-spectours-content-wikipedia',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wikipedia.component.less']
 })
 export class WikipediaComponent implements OnInit {
+
+  @Input() item;
 
   constructor() { }
 

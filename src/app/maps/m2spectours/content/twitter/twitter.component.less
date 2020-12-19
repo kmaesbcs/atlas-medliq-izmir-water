@@ -49,11 +49,11 @@
             }
         }
         .twitter-logo {
-            margin-left: auto;
             width: 23px;
             height: 19px;
             align-self: flex-start;
             margin: 6px 0;
+            margin-left: auto;
         }
     }
 
@@ -64,6 +64,7 @@
         font-size: 19px;
         line-height: 23px;
         color: @twitter-black;
+        margin-bottom: 8px;
     }
 
     .image {
@@ -73,7 +74,44 @@
         background-size: cover;
         background-repeat: no-repeat;
         border-radius: 16px;
+        margin: 0 0;
+        margin-bottom: 8px;
+    }
+
+    .link {
+        height: 250px;
+        display: flex;
+        flex-flow: column;
+        border: 1px solid @blueC5;
+        box-sizing: border-box;
+        border-radius: 2px;
         margin: 8px 0;
+
+        .link-image {
+            flex: 1 1 auto;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+        }
+        .link-container {
+            padding: 8px;
+            flex: 0 0 auto;
+            .link-title {
+                .twitter-font;
+                font-weight: 500;
+                font-size: 16px;
+                color: @twitter-gray;
+            }
+            .link-domain {
+                .twitter-font;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: @gray3;
+                margin-top: 2px;
+            }
+        }
     }
 
     .deets {

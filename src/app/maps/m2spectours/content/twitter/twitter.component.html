@@ -9,7 +9,15 @@
         <img class='twitter-logo' src='assets/img/spectours-twitter-logo.svg'>
     </div>
     <div class='caption'>{{item.content}}</div>
-    <div class='image' [style.background-image]='"url(" + item.image[0].url + ")"'></div>
+    <div *ngIf='!item.link_title && item.image' class='image' [style.background-image]='"url(" + item.image[0].url + ")"'></div>
+    <div *ngIf='item.link_title' class='link'>
+        <div *ngIf='item.image' class='link-image' [style.background-image]='"url(" + item.image[0].url + ")"'></div>
+        <div class='link-container'>
+            <div class='link-title'>{{item.link_title}}</div>        
+            <div class='link-domain'>{{item.link_domain}}</div>        
+        </div>
+    </div>
+    
     <div class='deets'>
         <div class='timestamp'>{{timestamp}}</div>
         <img class='info' src='assets/img/spectours-twitter-info-icon.svg'>
