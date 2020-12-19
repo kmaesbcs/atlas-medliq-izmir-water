@@ -13,6 +13,7 @@ export class SpecToursComponent implements OnInit {
   timeline = [];
   theMap: mapboxgl.Map;
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
+  info = false;
 
   constructor(private api: SpecToursService) {
     api.fetchData().subscribe((timeline) => {

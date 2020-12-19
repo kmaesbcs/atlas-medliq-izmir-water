@@ -4,21 +4,25 @@ import { distinctUntilChanged } from "rxjs/operators";
 export class VisibilityDetector  {
 
     visible$ = new Subject<boolean>();
-    visible: Observable<boolean>;
+    detected: Observable<boolean>;
     observer: IntersectionObserver;
   
     constructor() {
-      this.visible = this.visible$.pipe(
+      this.detected = this.visible$.pipe(
         distinctUntilChanged()
       );
       this.visible$.next(false);
     }
 
-    initVisibilityDetector(element, rootElement) {
+    initVisibilityDetector(element, rootElement, kind) {
         // (this.el.nativeElement as HTMLElement).parentElement
+        const rootMargin = {
+          active: '-50% 0% -50% 0%',
+          visible: '0% 0% 0% 0%'
+        }[kind];
         const observerOptions = {
             root: rootElement,
-            rootMargin: '-50% 0% -50% 0%',
+            rootMargin: rootMargin,
             threshold: 0
           }
           this.observer = new IntersectionObserver((entries) => {

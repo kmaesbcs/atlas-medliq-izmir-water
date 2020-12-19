@@ -1,7 +1,11 @@
 @import '../../../../../common.less';
 
+@timeline-width: 70px;
+@header-height: 40px;
+
 :host {
     width: 100%;
+    pointer-events: none;
 
     .wrapper {
         height: 100vh;
@@ -10,6 +14,8 @@
         flex-flow: column;
         align-items: flex-start;
         background: linear-gradient(270deg, rgba(0, 0, 0, 0) 55.4%, rgba(0, 0, 0, 0.1) 67.51%);
+        position: relative;
+        z-index: 0;
 
         .header {
             flex: 0 0 auto;
@@ -17,6 +23,10 @@
             flex-flow: row;
             align-items: center;
             padding: 8px 16px;
+            height: @header-height;
+            position: relative;
+            z-index: 1;
+
             .year {
                 .font-manrope;
                 font-weight: bold;
@@ -32,25 +42,32 @@
                 margin-left: 20px;
             }
         }
-        .content {
+        .timeline {
             flex: 1 1 100%;
-            display: flex;
-            flex-flow: row;
-            align-items: stretch;        
+            width: @timeline-width;
+            height: 100%;
+            background-image: url(../../../../../assets/img/spectours-timeline-dots.svg);
+            background-repeat: repeat-y;
+            background-position-x: center;
+            background-position-y: top;
+            position: relative;
+            z-index: 1;
+        }
 
-            .timeline {
-                flex: 0 0 auto;
-                width: 70px;
-                height: 100;
-                background-image: url(../../../../../assets/img/spectours-timeline-dots.svg);
-                background-repeat: repeat-y;
-                background-position-x: center;
-                background-position-y: top;
-            }
-            .content-items {
-                flex: 1 1 auto;
-                overflow-x: scroll;
-                .no-scrollbars;
+        .content {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+            pointer-events: all;
+
+            app-spectours-content-video, app-spectours-content-twitter {
+                display: flex;
+                flex-flow: column;
+                justify-content: center;
+                width: calc(100% ~'-' 2*@timeline-width);
+                height: calc(100% ~'-' 2*@header-height);
+                margin: @header-height @timeline-width;
             }
         }
     }

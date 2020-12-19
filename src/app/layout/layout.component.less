@@ -1,5 +1,7 @@
 @import '../../common.less';
 
+@header-size: 96px;
+
 :host {
     width: 100%;
     height: 100%;
@@ -14,8 +16,8 @@
 
         .header {
             flex: 0 0 auto;
-            width: 96px;
-            min-width: 96px;
+            width: @header-size;
+            min-width: @header-size;
             background: white;
             padding: 16px;
             display: flex;
@@ -28,18 +30,30 @@
                 margin-bottom: 20px;
                 cursor: pointer;
             }
-            &::ng-deep {
-                h1 {
-                    .font-sourcecode;
-                    font-weight: bold;
-                    font-size: 30px;
-                    text-transform: uppercase;
-                    color: #00A881;
-                    transform: rotate(90deg);
-                    transform-origin: 19px 19px;
-                    margin: 0;
-                    white-space: nowrap;
-                    width: 38px;
+            .text {
+                transform: rotate(90deg);
+                transform-origin: @header-size/2 @header-size/2;
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                width: @header-size;
+                height: @header-size;
+                &::ng-deep {
+                    h1, h2 {
+                        .font-sourcecode;
+                        color: @accent;
+                        margin: 0;
+                        white-space: nowrap;
+                    }
+                    h1 {
+                        font-weight: bold;
+                        font-size: 30px;
+                        text-transform: uppercase;
+                    }
+                    h2 {
+                        font-weight: 500;
+                        font-size: 20px;
+                    }
                 }
             }
             .info {

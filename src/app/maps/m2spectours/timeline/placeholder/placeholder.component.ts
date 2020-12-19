@@ -6,24 +6,25 @@ import { VisibilityDetector } from '../visibility-detector';
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.less']
 })
-export class PlaceholderComponent extends VisibilityDetector implements OnInit, AfterViewInit {
+export class PlaceholderComponent implements OnInit, AfterViewInit {
 
   @Input() item;
   active = false;
+  activeDetector = new VisibilityDetector();
 
   constructor(private el: ElementRef) {
-    super();
+    
   }
 
   ngOnInit(): void {
-    this.visible.subscribe((visible) => {
-      this.active = visible;
+    this.activeDetector.detected.subscribe((value) => {
+      this.active = value;
     });
   }
 
   ngAfterViewInit() {
     const el: HTMLElement = this.el.nativeElement;
-    this.initVisibilityDetector(el, el.parentElement);
+    this.activeDetector.initVisibilityDetector(el, el.parentElement, 'active');
   }
 
 }
