@@ -24,13 +24,11 @@ export class WawbSidebarComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.item);
     this.api.authorRecords.pipe(first()).subscribe((authorRecords) => {
       const authors = this.item.author.split(',');
       const credits = this.item.author_credits.split(',');
       for (const i in authors) {
         authors[i] = Object.assign({}, authorRecords[authors[i]]);
-        console.log(authors[i], credits[i]);
         if (credits[i] && credits[i].length) {
           authors[i].credit = credits[i];
         } else {

@@ -16,6 +16,10 @@ export class SpecToursService {
 
   constructor(private api: ApiService, private map: MapService) { }
 
+  fetchMapLayers() {
+    return this.api.airtableFetch(this.BASE, 'MapLayers', 'website').pipe(this.api.airtableToMapping());
+  }
+  
   fetchMapViews() {
     return this.api.airtableFetch(this.BASE, 'MapViews', 'website').pipe(this.api.airtableToMapping());
   }
@@ -30,21 +34,38 @@ export class SpecToursService {
     );
   }
 
+  fetchMapData() {
+    return forkJoin([
+      this.fetchMapLayers(),
+      this.fetchMapViews(),
+    ]).pipe(
+      map(([layers, views]) => {
+        const allLayers = new Set();
+        Object.values(views).forEach((view: any) => {
+          const onLayers = [];
+          (view.map_layers || []).forEach((v) => {
+            onLayers.push(...layers[v].on_layers);
+          });
+          onLayers.forEach(allLayers.add, allLayers);
+          view.onLayers = onLayers;
+        });
+        Object.values(views).forEach((view: any) => {
+          view.offLayers = [...allLayers].filter((l) => view.onLayers.indexOf(l) < 0);
+        });
+        return views;
+      })
+    );
+  }
+
   fetchData() {
     return from([true]).pipe(
       switchMap(() => {
         return forkJoin([
-          this.fetchMapViews(),
           this.fetchContent(),
           this.fetchTimeline(),
         ]);
       }),
-      map(([mapViews, content, timeline]) => {
-        for (const item of Object.values(content) as any[]) {
-          if (item.map_view) {
-            item.map_view = item.map_view.map((mv) => mapViews[mv]);
-          }
-        }
+      map(([content, timeline]) => {
         timeline.forEach(item => {
           item.content = item.content.map(id => content[id]);
           item.year = dayjs(item.date).year();

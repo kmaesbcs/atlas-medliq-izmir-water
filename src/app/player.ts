@@ -18,20 +18,20 @@ export class Player {
         });
         this.subscriptions.push(...[
             fromEvent(this.audio, 'play').subscribe(() => {
-                console.log('play');
+                // console.log('play');
                 this.playing.next(true);
             }),
             fromEvent(this.audio, 'pause').subscribe(() => {
-                console.log('pause');
+                // console.log('pause');
                 this.playing.next(false);
             }),
             fromEvent(this.audio, 'ended').subscribe(() => {
-                console.log('ended');
+                // console.log('ended');
                 this.playing.next(false);
                 this.audio.fastSeek(0);
             }),
             fromEvent(this.audio, 'timeupdate').pipe(
-                tap(() => console.log(this.audio.currentTime)),
+                // tap(() => console.log(this.audio.currentTime)),
                 map(() => Math.round(this.audio.currentTime / this.audio.duration * 1000)),
                 distinctUntilChanged(),
             ).subscribe((pos) => {

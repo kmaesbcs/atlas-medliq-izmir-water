@@ -58,6 +58,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
         break;
       }
     }
+  }
 
+  classes() {
+    if (this.item && this.item.content && this.item.content.length && this.item.content[0].variants) {
+      return this.item.content[0].variants.join(' ');
+    }
+    return '';
   }
 }

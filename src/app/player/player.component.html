@@ -1,4 +1,4 @@
-<div class='component' (click)='player.toggle()' [style.background-image]='"url(" + image + ")"'>
+<div class='component' (click)='player? player.toggle() : null' [style.background-image]='"url(" + image + ")"'>
     <svg viewport='0 0 280 280'>
         <circle cx='140' cy='140' r='138' stroke='#dedede' stroke-width='4' fill='none'></circle>
         <path [attr.d]='progressBarPath' stroke='#0AB239' stroke-width='4' fill='none'></path>

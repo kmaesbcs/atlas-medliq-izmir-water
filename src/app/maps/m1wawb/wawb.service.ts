@@ -21,7 +21,9 @@ export class WawbService {
   getSamples() {
     return this.api.airtableFetch(this.BASE, 'Samples', 'website')
         .pipe(
-          map((response: any) => response.records.map((rec) => rec.fields)),
+          map((response: any) => response.records.map((rec) => {
+            return Object.assign(rec.fields, {id: rec.id});
+          })),
           map((samples: any[]) => { 
             return {
               type: 'FeatureCollection',

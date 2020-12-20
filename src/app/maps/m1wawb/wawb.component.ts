@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { delay, first, switchMap } from 'rxjs/operators';
 
 import { MapService } from '../../map.service';
 import { PlayerService } from '../../player.service';
 
 import * as mapboxgl from 'mapbox-gl';
 import { WawbService } from './wawb.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-wawb',
@@ -19,17 +20,43 @@ export class WawbComponent implements OnInit {
 
   theMap: mapboxgl.Map;
   samples = new ReplaySubject<GeoJSON.FeatureCollection>(1);
-  sample = null;
+  _sample = null;
   info = false;
 
   LAYER_NAME = 'above-below-sample';
   SOURCE_NAME = 'samples';
 
-  constructor(private api: WawbService, private map: MapService, private player: PlayerService) {
-    api.getSamples().subscribe((samples) => {
-      console.log('SAMPLES', samples);
-      this.samples.next(samples);
+  constructor(private api: WawbService, private map: MapService, private player: PlayerService, private activatedRoute: ActivatedRoute) {
+    api.getSamples().pipe(
+      switchMap((samples) => {
+        this.samples.next(samples);
+        return this.activatedRoute.fragment;
+      }),
+      first(),
+      delay(100),
+    ).subscribe((fragment) => {
+      this.samples.pipe(first()).subscribe((samples) => {
+        samples.features.forEach((s: any) => {
+          const props = s.properties;
+          if (props.id === fragment) {
+            this.sample = props;
+          }
+        })
+      });
     });
+  }
+
+  set sample(value) {
+    this._sample = value;
+    if (value) {
+      location.hash = '#' + value.id;
+    } else {
+      location.hash = '';
+    }
+  }
+
+  get sample() {
+    return this._sample;
   }
 
   ngOnInit(): void {
@@ -51,11 +78,7 @@ export class WawbComponent implements OnInit {
         this.theMap.on('click', this.LAYER_NAME, (e) => {
           this.sample = e.features[0].properties;
           this.info = false;
-          console.log('CLICKED', this.sample)
-          // const audio = new Audio(item.audio_above);
-          // fromEvent(audio, 'canplaythrough').pipe(first()).subscribe(() => {
-          //   audio.play();
-          // })
+          location.hash = '#' + this.sample.id;
         });
       });
     });
