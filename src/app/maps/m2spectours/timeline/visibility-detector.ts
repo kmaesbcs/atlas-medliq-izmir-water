@@ -18,7 +18,7 @@ export class VisibilityDetector  {
         // (this.el.nativeElement as HTMLElement).parentElement
         const rootMargin = {
           active: '-50% 0% -50% 0%',
-          visible: '0% 0% 0% 0%'
+          visible: '100% 0% 100% 0%'
         }[kind];
         const observerOptions = {
             root: rootElement,
