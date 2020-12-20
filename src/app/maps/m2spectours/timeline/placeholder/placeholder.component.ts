@@ -19,6 +19,9 @@ export class PlaceholderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.activeDetector.detected.subscribe((value) => {
       this.active = value;
+      if (value) {
+        location.hash = '';
+      }
     });
   }
 

@@ -28,7 +28,10 @@ export class SpecToursComponent implements OnInit {
       first(),
       delay(100),
     ).subscribe((fragment) => {
-      document.getElementById(fragment).scrollIntoView({block: 'center', behavior: 'smooth'});
+      const el = document.querySelector(`[data-year=${fragment}]`);
+      if (el) {
+        el.scrollIntoView({block: 'center', behavior: 'auto'});
+      }
     });
     api.fetchMapData().subscribe((views) => {
       this.mapViews.next(views);

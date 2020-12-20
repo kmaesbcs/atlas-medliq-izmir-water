@@ -5,8 +5,8 @@
         </div>
         <div class='timeline'>
             <ng-container *ngFor='let item of timeline'>
-                <app-spectours-timeline-placeholder [attr.id]='"Y" + item.year' [item]='item' *ngIf='item.content.length === 0'></app-spectours-timeline-placeholder>
-                <app-spectours-timeline-content [attr.id]='"Y" + item.year' [item]='item' *ngIf='item.content.length > 0'
+                <app-spectours-timeline-placeholder [attr.data-year]='"Y" + item.year' [item]='item' *ngIf='item.content.length === 0'></app-spectours-timeline-placeholder>
+                <app-spectours-timeline-content [attr.data-year]='"Y" + item.year' [item]='item' *ngIf='item.content.length > 0'
                     (mapView)='changeMapView($event)'
                 ></app-spectours-timeline-content>
             </ng-container>

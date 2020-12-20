@@ -30,6 +30,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       this.active = active;
       if (active) {
         this.handleGeo();
+        location.replace(location.pathname + '#Y' + this.item.year);
       }
     });
     this.visibleDetector.detected.subscribe((visible) => {
