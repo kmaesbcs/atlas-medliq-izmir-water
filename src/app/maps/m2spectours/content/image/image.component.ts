@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-spectours-content-image',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./image.component.less']
 })
 export class ImageComponent implements OnInit {
+
+  @Input() item;
 
   constructor() { }
 

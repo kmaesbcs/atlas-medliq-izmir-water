@@ -11,8 +11,7 @@
     .wrapper {
         height: 100vh;
         &.medium {
-            height: auto;
-            min-height: 50vh;
+            height: 75vh;
         }
         width: 100%;
         display: flex;
@@ -68,7 +67,10 @@
             position: relative;
             z-index: 0;
             pointer-events: all;
+            overflow: hidden;
 
+            app-spectours-content-image, 
+            app-spectours-content-audio, 
             app-spectours-content-video, 
             app-spectours-content-twitter,
             app-spectours-content-instagram,
