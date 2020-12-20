@@ -16,6 +16,10 @@ export class SpecToursService {
 
   constructor(private api: ApiService, private map: MapService) { }
 
+  fetchAudioTimestamps() {
+    return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website').pipe(this.api.airtableToMapping());
+  }
+  
   fetchMapLayers() {
     return this.api.airtableFetch(this.BASE, 'MapLayers', 'website').pipe(this.api.airtableToMapping());
   }
@@ -61,11 +65,19 @@ export class SpecToursService {
     return from([true]).pipe(
       switchMap(() => {
         return forkJoin([
+          this.fetchAudioTimestamps(),
           this.fetchContent(),
           this.fetchTimeline(),
         ]);
       }),
-      map(([content, timeline]) => {
+      map(([audioTimestamps, content, timeline]) => {
+        Object.values(content).forEach((item: any) => {
+          if (item.audio_timestamps) {
+            item.audio_timestamps = item.audio_timestamps.map((x) => audioTimestamps[x]);
+          } else {
+            item.audio_timestamps = []
+          }
+        });
         timeline.forEach(item => {
           item.content = item.content.map(id => content[id]);
           item.year = dayjs(item.date).year();

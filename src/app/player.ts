@@ -9,6 +9,7 @@ export class Player {
 
     playing = new BehaviorSubject<boolean>(false); 
     ready = new BehaviorSubject<boolean>(false); 
+    timestamp = new BehaviorSubject<number>(0); 
     position = new BehaviorSubject<number>(0); 
 
     constructor(private url: string, private playerService: PlayerService) {
@@ -32,7 +33,13 @@ export class Player {
             }),
             fromEvent(this.audio, 'timeupdate').pipe(
                 // tap(() => console.log(this.audio.currentTime)),
-                map(() => Math.round(this.audio.currentTime / this.audio.duration * 1000)),
+                map(() => {
+                    const timestamp = Math.floor(this.audio.currentTime);
+                    if (timestamp !== this.timestamp.getValue()) {
+                        this.timestamp.next(timestamp);
+                    }
+                    return Math.round(this.audio.currentTime / this.audio.duration * 1000);
+                }),
                 distinctUntilChanged(),
             ).subscribe((pos) => {
                 this.position.next(pos);

@@ -18,6 +18,7 @@ export class SpecToursComponent implements OnInit {
   theMap: mapboxgl.Map;
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
   info = false;
+  activeYear = -1;
 
   constructor(private api: SpecToursService, private activatedRoute: ActivatedRoute) {
     api.fetchData().pipe(
@@ -32,6 +33,8 @@ export class SpecToursComponent implements OnInit {
       if (el) {
         el.scrollIntoView({block: 'center', behavior: 'auto'});
       }
+      this.activeYear = parseInt(fragment.slice(1));
+      console.log('activeYear==', this.activeYear);
     });
     api.fetchMapData().subscribe((views) => {
       this.mapViews.next(views);
@@ -52,7 +55,7 @@ export class SpecToursComponent implements OnInit {
       mapView = mapViews[mapView];
       const geoRe = /center:\s*\{\s*lon:\s*([-0-9.]+),\s*lat:\s*([-0-9.]+)\s*\},\s*zoom:\s*([-0-9.]+),\s*pitch:\s*([-0-9.]+),\s*bearing:\s*([-0-9.]+)/g;
       const parsed = geoRe.exec(mapView.geo);
-      const options = {
+      const options: mapboxgl.FlyToOptions = {
         center: {
           lon: parseFloat(parsed[1]),
           lat: parseFloat(parsed[2]),
@@ -61,13 +64,19 @@ export class SpecToursComponent implements OnInit {
         pitch: parseFloat(parsed[4]),
         bearing: parseFloat(parsed[5])
       }
-      this.theMap.flyTo(options);
+      if (mapView.curve) {
+        options.curve = mapView.curve;
+      }
+      if (mapView.speed) {
+        options.speed = mapView.speed;
+      }
       for (const l of mapView.onLayers) {
         this.theMap.setLayoutProperty(l, 'visibility', 'visible');
       }
       for (const l of mapView.offLayers) {
         this.theMap.setLayoutProperty(l, 'visibility', 'none');
       }
+      this.theMap.flyTo(options);
     });
   }
 

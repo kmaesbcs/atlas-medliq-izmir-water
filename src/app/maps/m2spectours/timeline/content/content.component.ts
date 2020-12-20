@@ -10,12 +10,12 @@ import { VisibilityDetector } from '../visibility-detector';
 export class ContentComponent implements OnInit, AfterViewInit {
 
   @Input() item;
+  @Input() active = false;
   @Output() mapView = new EventEmitter<any>();
 
   contentType = '';
   content = null;
   contentVisible = false;
-  active = false;
   visibleDetector: VisibilityDetector;
   activeDetector: VisibilityDetector;
 
