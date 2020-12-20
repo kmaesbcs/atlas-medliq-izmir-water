@@ -52,7 +52,6 @@ export class SpecToursComponent implements OnInit {
   }
 
   changeMapView(mapView) {
-    console.log('mapView', mapView);
     this.mapViews.pipe(first()).subscribe((mapViews) => {
       mapView = mapViews[mapView];
       const geoRe = /center:\s*\{\s*lon:\s*([-0-9.]+),\s*lat:\s*([-0-9.]+)\s*\},\s*zoom:\s*([-0-9.]+),\s*pitch:\s*([-0-9.]+),\s*bearing:\s*([-0-9.]+)/g;
