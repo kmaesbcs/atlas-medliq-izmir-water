@@ -35,7 +35,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
     });
     this.visibleDetector.detected.subscribe((visible) => {
       console.log('CONTENT VISIBLE', visible, this.item);
-      this.contentVisible = visible;
+      this.contentVisible = this.contentVisible || visible;
     });
     if (this.item.content && this.item.content.length) {
       this.content = this.item.content[0];
