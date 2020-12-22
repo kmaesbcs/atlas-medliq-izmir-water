@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { forkJoin, fromEvent, merge, Subscription } from 'rxjs';
+import { combineAll, filter, first, last, switchMap, takeLast, takeUntil, tap } from 'rxjs/operators';
 
 import { Player } from '../player';
 import { PlayerService } from '../player.service';
@@ -9,21 +10,62 @@ import { PlayerService } from '../player.service';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.less']
 })
-export class PlayerComponent implements OnInit, OnChanges, OnDestroy {
+export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() audio;
   @Input() image;
+  @ViewChild('handle', {static: true}) handle: ElementRef;
+  @ViewChild('component', {static: true}) component: ElementRef;
 
   SIZE = 280;
+  PADDING = 2;
   BAR_WIDTH = 4;
 
   player: Player = null;
   progressBarPath = '';
   positionSub: Subscription;
+  handleX: number;
+  handleY: number;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService, private el: ElementRef) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+  }
+
+  drag() {
+    const rect = (this.component.nativeElement as HTMLElement).getBoundingClientRect();
+    fromEvent(window, 'mousemove').pipe(
+        // filter((ev: MouseEvent) => ev.target === this.component.nativeElement),
+        // takeUntil(fromEvent(this.el.nativeElement, 'mouseleave')),
+        takeUntil(fromEvent(window, 'mouseup')),
+        tap((event: MouseEvent) => {
+          const x = event.clientX - rect.left - this.SIZE / 2;
+          const y = event.clientY - rect.top - this.SIZE / 2;
+          const angle = Math.atan(y/x) + Math.PI / 2 + (x < 0 ? Math.PI : 0);
+          this.player.seek(angle / 2 / Math.PI);
+        }),
+        takeLast(1)
+      ).subscribe((event) => {
+        console.log('DONE', event);
+      });
+  }
+
+  click(event) {
+    if (!this.player) {
+      return false;
+    }
+    const x = event.offsetX - this.SIZE / 2;
+    const y = event.offsetY - this.SIZE / 2;
+    const angle = Math.atan(y/x) + Math.PI / 2 + (x < 0 ? Math.PI : 0);
+    const r = Math.sqrt(x*x + y*y);
+    if (Math.abs(r - this.SIZE/2) < 10) {
+      this.player.seek(angle / 2 / Math.PI);
+    } else if (r < this.SIZE/2) {
+      this.player.toggle();
+    }
   }
 
   createPlayer() {
@@ -60,5 +102,7 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy {
     const Y = C - R * Math.cos(angle);
     const params = angle >= Math.PI ? '1 1' : '0 1';
     this.progressBarPath = `M${C} ${C-R} A ${R} ${R} 0 ${params} ${X} ${Y}`;
+    this.handleX = X;
+    this.handleY = Y;
   }
 }

@@ -48,6 +48,12 @@ export class Player {
         this.playing.next(false);
     }
 
+    seek(percent) {
+        if (this.audio) {
+            this.audio.currentTime = this.audio.duration * percent;
+        }
+    }
+
     play() {
         if (!this.playing.getValue()) {
             this.ready.pipe(

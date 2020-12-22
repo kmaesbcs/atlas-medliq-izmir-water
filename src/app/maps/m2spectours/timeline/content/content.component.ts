@@ -40,7 +40,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
     if (this.item.content && this.item.content.length) {
       this.content = this.item.content[0];
       this.contentType = this.content.type;
-      console.log('CTCT', this.contentType);
     }
   }
 
