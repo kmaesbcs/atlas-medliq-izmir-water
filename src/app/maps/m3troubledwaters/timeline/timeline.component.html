@@ -1,0 +1,9 @@
+<div class='timeline'>
+    <div class='segment' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
+        <div class='section' *ngFor='let section of segment.sections' [attr.data-section]='section.id'>
+            <div class='second' *ngFor='let second of section.seconds' [class.played]='played(section, second)' [attr.data-offset]='second'>
+    
+            </div>
+        </div>
+    </div>
+</div>

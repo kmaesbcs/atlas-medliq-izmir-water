@@ -24,6 +24,7 @@ export class MapService {
     const oldLayers = map.getStyle().layers;
     const layerIndex = oldLayers.findIndex(l => l.id === layerId);
     const layerDef = oldLayers[layerIndex];
+    console.log('LAYER', layerDef);
     const before = oldLayers[layerIndex + 1] && oldLayers[layerIndex + 1].id;
     layerDef.source = source;
     if (layerDef['source-layer']) {
@@ -31,5 +32,26 @@ export class MapService {
     }
     map.removeLayer(layerId);
     map.addLayer(layerDef, before);
+  }
+
+  parseMapView(view: any): mapboxgl.FlyToOptions {
+    const geoRe = /center:\s*\{\s*lon:\s*([-0-9.]+),\s*lat:\s*([-0-9.]+)\s*\},\s*zoom:\s*([-0-9.]+),\s*pitch:\s*([-0-9.]+),\s*bearing:\s*([-0-9.]+)/g;
+    const parsed = geoRe.exec(view.geo);
+    const options: mapboxgl.FlyToOptions = {
+      center: {
+        lon: parseFloat(parsed[1]),
+        lat: parseFloat(parsed[2]),
+      },
+      zoom: parseFloat(parsed[3]),
+      pitch: parseFloat(parsed[4]),
+      bearing: parseFloat(parsed[5])
+    }
+    if (view.curve) {
+      options.curve = view.curve;
+    }
+    if (view.speed) {
+      options.speed = view.speed;
+    }
+    return options;
   }
 }

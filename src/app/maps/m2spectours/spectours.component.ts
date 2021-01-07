@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 import { ReplaySubject } from 'rxjs';
 import { delay, first, switchMap } from 'rxjs/operators';
+import { MapService } from 'src/app/map.service';
 
 import { SpecToursService } from './spectours.service';
 
@@ -20,7 +21,7 @@ export class SpecToursComponent implements OnInit {
   info = false;
   activeYear = -1;
 
-  constructor(private api: SpecToursService, private activatedRoute: ActivatedRoute) {
+  constructor(private api: SpecToursService, private activatedRoute: ActivatedRoute, private mapSvc: MapService) {
     api.fetchData().pipe(
       switchMap((timeline) => {
         this.timeline = timeline;
@@ -54,23 +55,7 @@ export class SpecToursComponent implements OnInit {
   changeMapView(mapView) {
     this.mapViews.pipe(first()).subscribe((mapViews) => {
       mapView = mapViews[mapView];
-      const geoRe = /center:\s*\{\s*lon:\s*([-0-9.]+),\s*lat:\s*([-0-9.]+)\s*\},\s*zoom:\s*([-0-9.]+),\s*pitch:\s*([-0-9.]+),\s*bearing:\s*([-0-9.]+)/g;
-      const parsed = geoRe.exec(mapView.geo);
-      const options: mapboxgl.FlyToOptions = {
-        center: {
-          lon: parseFloat(parsed[1]),
-          lat: parseFloat(parsed[2]),
-        },
-        zoom: parseFloat(parsed[3]),
-        pitch: parseFloat(parsed[4]),
-        bearing: parseFloat(parsed[5])
-      }
-      if (mapView.curve) {
-        options.curve = mapView.curve;
-      }
-      if (mapView.speed) {
-        options.speed = mapView.speed;
-      }
+      const options = this.mapSvc.parseMapView(mapView);
       for (const l of mapView.onLayers) {
         this.theMap.setLayoutProperty(l, 'visibility', 'visible');
       }
