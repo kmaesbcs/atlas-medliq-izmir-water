@@ -63,7 +63,7 @@ export class TroubledwatersService {
   }
 
   fetchSegments() {
-    return this.api.airtableFetch(this.BASE, 'Segment', 'website', null, ['title', 'interviewee', 'audio_timestamps', 'audio']).pipe(
+    return this.api.airtableFetch(this.BASE, 'Segment', 'website', null, ['title', 'name', 'interviewee', 'audio_timestamps', 'audio']).pipe(
       map((x: any) => x.records.map((x) => Object.assign(x.fields, {id: x.id})))
     );
   }

@@ -113,12 +113,12 @@ export class TroubledwatersComponent implements OnInit {
 
   initializeMapView() {
     this.troubledWaters.position.subscribe((position) => {
+      const segment = position.segment;
       const timestamp = position.timestamp;
       const flyTo = this.map.parseMapView(timestamp);
       this.theMap.flyTo(flyTo);
       for (const zoom of [4, 14]) {
         const layer = `trouble-waters-markers-${zoom}`;
-        const filter = 
         this.theMap.setFilter(layer, [
           "all",
           [
@@ -131,6 +131,13 @@ export class TroubledwatersComponent implements OnInit {
           [
             "match",
             ["get", "segment"],
+            [segment.name] || ['__non_existent'],
+            true,
+            false
+          ],
+          [
+            "match",
+            ["get", "name"],
             timestamp.filter || ['__non_existent'],
             true,
             false
