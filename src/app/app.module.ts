@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import * as Sentry from "@sentry/angular";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.component';
 import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timeline/timeline.component';
 import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/player.component';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,24 @@ import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/pl
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
