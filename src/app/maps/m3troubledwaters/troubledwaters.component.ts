@@ -133,7 +133,7 @@ export class TroubledwatersComponent implements OnInit {
         ],
         [
           "match",
-          ["get", "name"],
+          ["to-string", ["get", "name"]],
           timestamp.filter || ['__non_existent'],
           true,
           false

@@ -3,7 +3,9 @@
         <circle cx='140' cy='140' r='138' stroke='#dedede' stroke-width='4' fill='none'></circle>
         <path [attr.d]='progressBarPath' stroke='#0AB239' stroke-width='4' fill='none'></path>
     </svg>
-    <div class='handle' [style.left]='handleX + "px"' [style.top]='handleY + "px"' (mousedown)='drag()' #handle></div>
-    <img *ngIf='player && (player.playing | async)' src='assets/img/player-control-pause.svg'>
-    <img *ngIf='player && !(player.playing | async)' src='assets/img/player-control-play.svg'>
+    <ng-conainer *ngIf='player'>
+        <div class='handle' [style.left]='handleX + "px"' [style.top]='handleY + "px"' (mousedown)='drag()' #handle></div>
+        <img *ngIf='(player.playing | async)' src='assets/img/player-control-pause.svg'>
+        <img *ngIf='!(player.playing | async)' src='assets/img/player-control-play.svg'>    
+    </ng-conainer>
 </div>
