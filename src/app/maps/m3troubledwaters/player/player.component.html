@@ -22,13 +22,14 @@
         </svg>
     </div>
     <div class='interviewees' [style.transform]='transform()'>
-        <ng-container *ngFor='let interviewee of interviewees; let idx=index'>
-            <div class='interviewee'
-                 [class.active]='idx === intervieweeIndex'
-                 [style.background-image]='"url(" + interviewee.profile_pic[0].thumbnails.large.url + ")"'
-                 [style.border-color]='interviewee.color'
+        <ng-container *ngFor='let segment of segments; let idx=index'>
+            <a class='interviewee'
+                 [class.active]='idx === segmentIndex'
+                 [style.background-image]='"url(" + segment.interviewee.profile_pic[0].thumbnails.large.url + ")"'
+                 [style.border-color]='segment.interviewee.color'
+                 routerLink='/m3' [queryParams]='{segment: segment.id}'
             >
-            </div>
+            </a>
         </ng-container>
     </div>    
 </div>

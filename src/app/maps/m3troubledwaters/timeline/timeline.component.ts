@@ -59,10 +59,10 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
         const outer = el.querySelector(firstSelector);
         const inner = el.querySelector(secondSelector);
         if (inner) {
-          this.offset = outer.getBoundingClientRect().top - inner.getBoundingClientRect().top;
+          this.offset = outer.getBoundingClientRect().top - inner.getBoundingClientRect().top - 2;
         }
         if (this.troubledWaters.playing) {
-          this.segments.filter(x => x.id === segment.id)[0].played[offset] = true;
+          // this.segments.filter(x => x.id === segment.id)[0].played[offset] = true;
           if (offset > 0) {
             this.segments.filter(x => x.id === segment.id)[0].played[offset - 1] = true;
           }
