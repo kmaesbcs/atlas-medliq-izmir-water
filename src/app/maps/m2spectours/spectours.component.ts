@@ -37,7 +37,6 @@ export class SpecToursComponent implements OnInit {
       if (fragment) {
         this.activeYear = parseInt(fragment.slice(1));
       }
-      console.log('activeYear==', this.activeYear);
     });
     api.fetchMapData().subscribe((views) => {
       this.mapViews.next(views);

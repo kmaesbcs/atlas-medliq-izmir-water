@@ -1,4 +1,4 @@
-import { BehaviorSubject, from, fromEvent, Subscription } from 'rxjs';
+import { BehaviorSubject, from, fromEvent, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, first, map, tap } from 'rxjs/operators';
 
 import { PlayerService } from './player.service';
@@ -11,6 +11,7 @@ export class Player {
     ready = new BehaviorSubject<boolean>(false); 
     timestamp = new BehaviorSubject<number>(0); 
     position = new BehaviorSubject<number>(0); 
+    ended = new Subject();; 
 
     constructor(private url: string, private playerService: PlayerService) {
         this.audio = new Audio(url);
@@ -19,20 +20,19 @@ export class Player {
         });
         this.subscriptions.push(...[
             fromEvent(this.audio, 'play').subscribe(() => {
-                // console.log('play');
                 this.playing.next(true);
             }),
             fromEvent(this.audio, 'pause').subscribe(() => {
-                // console.log('pause');
                 this.playing.next(false);
             }),
             fromEvent(this.audio, 'ended').subscribe(() => {
-                // console.log('ended');
+                this.ended.next();
                 this.playing.next(false);
-                this.audio.fastSeek(0);
+                if (this.audio) {
+                    this.audio.fastSeek(0);
+                }
             }),
             fromEvent(this.audio, 'timeupdate').pipe(
-                // tap(() => console.log(this.audio.currentTime)),
                 map(() => {
                     const timestamp = Math.floor(this.audio.currentTime);
                     if (timestamp !== this.timestamp.getValue()) {
@@ -51,6 +51,12 @@ export class Player {
     seek(percent) {
         if (this.audio) {
             this.audio.currentTime = this.audio.duration * percent;
+        }
+    }
+    
+    seekTime(seconds) {
+        if (this.audio) {
+            this.audio.currentTime = seconds;
         }
     }
 

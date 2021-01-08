@@ -15,6 +15,7 @@ export class TroubledwatersService {
 
   data = new ReplaySubject<any[]>(1);
   position = new ReplaySubject<Position>(1);
+  playing = false;
 
   constructor(private api: ApiService, private map: MapService) {
     this.fetchData();
@@ -25,6 +26,7 @@ export class TroubledwatersService {
     this.data.pipe(
       first(),
       map((segments) => {
+        console.log('SET POSITION??', segment, timestamp, offset);
         if (!timestamp && !segment) {
           segment = segments[0];
         }
@@ -63,13 +65,13 @@ export class TroubledwatersService {
   }
 
   fetchSegments() {
-    return this.api.airtableFetch(this.BASE, 'Segment', 'website', null, ['title', 'name', 'interviewee', 'audio_timestamps', 'audio']).pipe(
+    return this.api.airtableFetch(this.BASE, 'Segment', 'website', null, ['title', 'name', 'interviewee', 'audio_timestamps', 'audio', 'duration']).pipe(
       map((x: any) => x.records.map((x) => Object.assign(x.fields, {id: x.id})))
     );
   }
 
   fetchInterviewees() {
-    return this.api.airtableFetch(this.BASE, 'Interviewees', 'website', null, ['name', 'title', 'bio', 'twitter', 'profile_pic']).pipe(
+    return this.api.airtableFetch(this.BASE, 'Interviewees', 'website', null, ['name', 'title', 'bio', 'twitter', 'profile_pic', 'color']).pipe(
       this.api.airtableToMapping()
     );
   }

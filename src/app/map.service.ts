@@ -24,7 +24,6 @@ export class MapService {
     const oldLayers = map.getStyle().layers;
     const layerIndex = oldLayers.findIndex(l => l.id === layerId);
     const layerDef = oldLayers[layerIndex];
-    console.log('LAYER', layerDef);
     const before = oldLayers[layerIndex + 1] && oldLayers[layerIndex + 1].id;
     layerDef.source = source;
     if (layerDef['source-layer']) {

@@ -1,0 +1,34 @@
+<div class='wrapper'>
+    <div class='player'>
+        <svg  class='indicator' width="40" height="4" viewBox="0 0 40 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line [attr.stroke]='intervieweeColor' y1="2" x2="40" y2="2" stroke-width="4"/>
+        </svg>            
+        <svg class='icon pause' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+             *ngIf='troubledWaters.playing' (click)='pause()'>
+            <path [attr.fill]='intervieweeColor' d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"/>
+            <mask id="path-2-inside-1" fill="white">
+                <rect x="9.06689" y="8.61523" width="5.33333" height="15.3846" rx="1"/>
+            </mask>
+            <rect x="9.06689" y="8.61523" width="5.33333" height="15.3846" rx="1" fill="white" stroke="white" stroke-width="3" mask="url(#path-2-inside-1)"/>
+            <mask id="path-3-inside-2" fill="white">
+                <rect x="17.6001" y="8.61523" width="5.33333" height="15.3846" rx="1"/>
+            </mask>
+            <rect x="17.6001" y="8.61523" width="5.33333" height="15.3846" rx="1" fill="white" stroke="white" stroke-width="3" mask="url(#path-3-inside-2)"/>
+        </svg>
+        <svg class='icon play' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+             *ngIf='!troubledWaters.playing' (click)='play()'>
+            <path [attr.fill]='intervieweeColor' d="M0 16C0 7.16344 7.16344 0 16 0V0C24.8366 0 32 7.16344 32 16V16C32 24.8366 24.8366 32 16 32V32C7.16344 32 0 24.8366 0 16V16Z"/>
+            <path d="M24.2568 16.0121L11.551 23.3408C11.3843 23.4369 11.1761 23.3167 11.1761 23.1243L11.1761 8.46679C11.1761 8.27439 11.3843 8.1541 11.551 8.25023L24.2568 15.579C24.4236 15.6752 24.4236 15.9159 24.2568 16.0121Z" fill="white" stroke="white" stroke-width="1.5"/>
+        </svg>
+    </div>
+    <div class='interviewees' [style.transform]='transform()'>
+        <ng-container *ngFor='let interviewee of interviewees; let idx=index'>
+            <div class='interviewee'
+                 [class.active]='idx === intervieweeIndex'
+                 [style.background-image]='"url(" + interviewee.profile_pic[0].thumbnails.large.url + ")"'
+                 [style.border-color]='interviewee.color'
+            >
+            </div>
+        </ng-container>
+    </div>    
+</div>

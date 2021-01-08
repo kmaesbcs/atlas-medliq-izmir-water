@@ -15,6 +15,7 @@ export class TroubledwatersComponent implements OnInit {
 
   theMap: mapboxgl.Map;
   info = false;
+  currentTimestamp = '';
 
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
 
@@ -24,17 +25,19 @@ export class TroubledwatersComponent implements OnInit {
   ngOnInit(): void {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
+      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj',
       minZoom: 3,
     });
     this.theMap.on('style.load', () => {
+      this.theMap.setLayoutProperty('trouble-waters-points', 'visibility', 'visible');
+      this.theMap.setLayoutProperty('trouble-waters-markers', 'visibility', 'visible');
       this.initialize();
     });
   }
 
   setPosition(segment?: any, timestamp?: any, offset?: number) {
     this.router.navigate(['m3'], {
-      queryParams: {segment, timestamp, offset}
+      queryParams: {segment, timestamp}
     });
   }
 
@@ -59,9 +62,7 @@ export class TroubledwatersComponent implements OnInit {
         features: []
       };
       data.forEach((segment) => {
-        console.log('segment', segment);
         segment.audio_timestamps.forEach((timestamp) => {
-          console.log('timestamp', timestamp);
           timestamp.segment = segment.id;
           if (timestamp.coordinates) {
             const feature: Feature = {
@@ -97,7 +98,6 @@ export class TroubledwatersComponent implements OnInit {
       this.theMap.on('click', LAYER_NAME, (e) => {
         var features = this.theMap.queryRenderedFeatures(e.point);
         if (features.length > 0 && features[0].layer.id === LAYER_NAME) {
-          console.log('FFF', features[0]);
           this.setPosition(null, features[0].properties.id, null);
         }
       });
@@ -115,35 +115,30 @@ export class TroubledwatersComponent implements OnInit {
     this.troubledWaters.position.subscribe((position) => {
       const segment = position.segment;
       const timestamp = position.timestamp;
-      const flyTo = this.map.parseMapView(timestamp);
-      this.theMap.flyTo(flyTo);
-      for (const zoom of [4, 14]) {
-        const layer = `trouble-waters-markers-${zoom}`;
-        this.theMap.setFilter(layer, [
-          "all",
-          [
-            "match",
-            ["get", "zoom"],
-            [zoom],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "segment"],
-            [segment.name] || ['__non_existent'],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "name"],
-            timestamp.filter || ['__non_existent'],
-            true,
-            false
-          ]
-        ]);
+      if (timestamp.id === this.currentTimestamp) {
+        return;
       }
+      this.currentTimestamp = timestamp.id;
+      const flyTo = this.map.parseMapView(timestamp);
+      console.log('FlyTo', flyTo);
+      this.theMap.flyTo(flyTo);
+      this.theMap.setFilter('trouble-waters-markers', [
+        "all",
+        [
+          "match",
+          ["get", "segment"],
+          [segment.name] || ['__non_existent'],
+          true,
+          false
+        ],
+        [
+          "match",
+          ["get", "name"],
+          timestamp.filter || ['__non_existent'],
+          true,
+          false
+        ]
+      ]);
     });
   }
 

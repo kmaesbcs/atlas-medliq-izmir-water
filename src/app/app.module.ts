@@ -20,6 +20,7 @@ import { VideoComponent } from './maps/m2spectours/content/video/video.component
 import { LayoutComponent } from './layout/layout.component';
 import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.component';
 import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timeline/timeline.component';
+import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/player.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timelin
     LayoutComponent,
     TroubledwatersComponent,
     TroubledwatersTimelineComponent,
+    TroubledwatersPlayerComponent,
   ],
   imports: [
     BrowserModule,
