@@ -1,4 +1,5 @@
-<div class='timeline' #timeline [style.transform]='transform()'>
+<div class='timeline' #timeline>
+    <div class='filler'></div>
     <div class='segment' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
         <div class='section' *ngFor='let section of segment.sections' [attr.data-section]='section.id'>
             <a class='second' *ngFor='let second of section.seconds' [attr.data-offset]='second'
@@ -8,5 +9,6 @@
             </a>
         </div>
     </div>
+    <div class='filler'></div>
 </div>
 <app-troubledwaters-player></app-troubledwaters-player>
