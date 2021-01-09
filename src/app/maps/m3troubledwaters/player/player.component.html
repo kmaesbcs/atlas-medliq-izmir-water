@@ -21,7 +21,8 @@
             <path d="M24.2568 16.0121L11.551 23.3408C11.3843 23.4369 11.1761 23.3167 11.1761 23.1243L11.1761 8.46679C11.1761 8.27439 11.3843 8.1541 11.551 8.25023L24.2568 15.579C24.4236 15.6752 24.4236 15.9159 24.2568 16.0121Z" fill="white" stroke="white" stroke-width="1.5"/>
         </svg>
     </div>
-    <div class='interviewees' [style.transform]='transform()'>
+    <div class='interviewees' #interviewees>
+        <div class='filler'></div>
         <ng-container *ngFor='let segment of segments; let idx=index'>
             <a class='interviewee'
                  [class.active]='idx === segmentIndex'
@@ -31,5 +32,6 @@
             >
             </a>
         </ng-container>
+        <div class='filler'></div>
     </div>    
 </div>

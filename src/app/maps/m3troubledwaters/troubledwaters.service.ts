@@ -26,7 +26,6 @@ export class TroubledwatersService {
     this.data.pipe(
       first(),
       map((segments) => {
-        console.log('SET POSITION??', segment, timestamp, offset);
         if (!timestamp && !segment) {
           segment = segments[0];
         }
@@ -59,7 +58,7 @@ export class TroubledwatersService {
         return {segment, timestamp, offset};
       })
     ).subscribe(({segment, timestamp, offset}) => {
-      console.log('SET POSITION', segment, timestamp, offset);
+      console.log('SET POSITION', segment.id, timestamp.id, offset);
       this.position.next({segment, timestamp, offset})
     });
   }
@@ -105,7 +104,6 @@ export class TroubledwatersService {
         return segments;
       })
     ).subscribe((data) => {
-      console.log('GOT DATA!', data);
       this.data.next(data);
     })
   }

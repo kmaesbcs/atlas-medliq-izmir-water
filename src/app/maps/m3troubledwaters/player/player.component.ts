@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { delay, first } from 'rxjs/operators';
 import { Player } from 'src/app/player';
 import { PlayerService } from 'src/app/player.service';
+import { Scroller } from '../scroller';
 import { TroubledwatersService } from '../troubledwaters.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { TroubledwatersService } from '../troubledwaters.service';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.less']
 })
-export class TroubledwatersPlayerComponent implements OnInit {
+export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
 
   segments = [];
   segment: any = {};
@@ -19,7 +20,9 @@ export class TroubledwatersPlayerComponent implements OnInit {
   // intervieweeIndex = -1;
   // interviewee = null;
   intervieweeColor = 'black';
-
+  @ViewChild('interviewees', {static: true}) interviewees: ElementRef;
+  
+  scroller: Scroller = null;
   player: Player = null;
 
   constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService) {
@@ -35,7 +38,7 @@ export class TroubledwatersPlayerComponent implements OnInit {
         //   ids.push(segment.interviewee.id);
         // }
       }
-      troubledWaters.position.subscribe(({segment, timestamp, offset}) => {
+      troubledWaters.position.pipe(delay(0)).subscribe(({segment, timestamp, offset}) => {
         if (segment.id !== this.segment.id) {
           this.segment = segment;
           this.intervieweeColor = segment.interviewee.color;
@@ -53,19 +56,20 @@ export class TroubledwatersPlayerComponent implements OnInit {
           const s = this.segments[idx];
           if (segment.id === s.id) {
             this.segmentIndex = idx;
+            const offset = this.segmentIndex * (60 + 32) + 30;
+            this.scroller.update(offset);
           }
         }
       });
     })
   }
 
-  ngOnInit(): void {
-    
+  ngAfterViewInit(): void {
+    this.scroller = new Scroller(this.interviewees.nativeElement);
   }
 
-  transform() {
-    const offset = this.segmentIndex * (60 + 32) + (120 / 2);
-    return `translateY(calc(50% - ${offset}px))`
+  ngOnInit(): void {
+    
   }
 
   pause() {

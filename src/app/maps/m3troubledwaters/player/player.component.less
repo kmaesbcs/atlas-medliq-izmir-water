@@ -35,9 +35,8 @@
         .no-scrollbars;
         width: 120px;
         height: 100%;
-        transition-property: transform;
-        transition-duration: 1000ms;
-        transition-timing-function: linear;
+        overflow-y: scroll;
+        pointer-events: all;
 
         .interviewee {
             display: block;
@@ -64,6 +63,10 @@
             }
         }
     
+        .filler {
+            width: 1px;
+            flex: 0 0 ~'calc(50% - 30px)';
+        }    
     }
 }
 

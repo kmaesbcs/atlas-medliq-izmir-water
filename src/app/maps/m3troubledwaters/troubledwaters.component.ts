@@ -120,7 +120,6 @@ export class TroubledwatersComponent implements OnInit {
       }
       this.currentTimestamp = timestamp.id;
       const flyTo = this.map.parseMapView(timestamp);
-      console.log('FlyTo', flyTo);
       this.theMap.flyTo(flyTo);
       this.theMap.setFilter('trouble-waters-markers', [
         "all",

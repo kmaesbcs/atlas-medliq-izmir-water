@@ -48,9 +48,7 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
           this.player.seek(angle / 2 / Math.PI);
         }),
         takeLast(1)
-      ).subscribe((event) => {
-        console.log('DONE', event);
-      });
+      ).subscribe((event) => {});
   }
 
   click(event) {

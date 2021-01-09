@@ -1,93 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { fromEvent, ReplaySubject } from 'rxjs';
-import { debounceTime, delay, filter, first, sampleTime, tap } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { delay, first } from 'rxjs/operators';
 import { TroubledwatersService } from '../troubledwaters.service';
 
-
-class Scroller {
-  
-  startingOffset = 0;
-  startingTime = 0;
-  offset = 0;
-  done = true;
-  dragging = false;
-  dragDiff = 0;
-  scrolling = false;
-
-  constructor(private el: HTMLElement) {
-    fromEvent(el, 'wheel').pipe(
-      tap(() => { this.scrolling = true; }),
-      debounceTime(500)
-    ).subscribe(() => {
-      this.scrolling = false;
-      this.scrollEnded();
-    });
-    fromEvent(el, 'mousedown').subscribe((ev: MouseEvent) => {
-      this.dragDiff = this.el.scrollTop + ev.y;
-      this.dragging = true;
-    });
-    fromEvent(el, 'mouseup').subscribe(() => { this.dragging = false; });
-    fromEvent(el, 'mousemove').pipe(
-      filter(() => this.dragging),
-      sampleTime(33),
-      tap((ev: MouseEvent) => {
-        this.el.scrollTo({top: - ev.y + this.dragDiff});
-      }),
-      debounceTime(500),
-    ).subscribe(() => {
-      this.dragging = false;
-      this.scrollEnded();
-    });
-  }
-
-  scrollEnded() {
-    const center = this.el.getBoundingClientRect().height / 2;
-    let selected: HTMLElement = null;
-    this.el.querySelectorAll('.second').forEach((second) => {
-      if (selected === null && second.getBoundingClientRect().top > center) {
-        selected = second as HTMLElement;
-      }
-    });
-    if (selected !== null) {
-      selected.click();
-    }
-  }
-
-  scrollSmoothly(timestamp) {
-    if (this.done) {
-      return;
-    }
-    if (timestamp - this.startingTime <= 1000) {
-      let target = this.startingOffset + (this.offset - this.startingOffset) * (timestamp - this.startingTime) / 1000;
-      target = Math.ceil(target);
-      if (Math.abs(target - this.el.scrollTop) > 0) {
-        if (!this.scrolling && !this.dragging) {
-          this.el.scrollTo({top: target, behavior: 'auto'});  
-        }
-      }
-      requestAnimationFrame((x) => this.scrollSmoothly(x)); 
-    } else {
-      if (Math.abs(this.offset - this.el.scrollTop) > 0) {
-        if (!this.scrolling && !this.dragging) {
-          this.el.scrollTo({top: this.offset, behavior: 'auto'});
-        }
-      }
-      this.done = true;
-    }
-  }
-
-  update(offset) {
-    this.offset = offset;
-    this.startingTime = performance.now();
-    this.startingOffset = this.el.scrollTop;
-    if (this.done) {
-      this.done = false;
-      requestAnimationFrame((x) => this.scrollSmoothly(x));
-    }
-  }
-
-}
+import { Scroller } from '../scroller';
 
 @Component({
   selector: 'app-troubledwaters-timeline',
