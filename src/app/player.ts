@@ -29,7 +29,7 @@ export class Player {
                 this.ended.next();
                 this.playing.next(false);
                 if (this.audio) {
-                    this.audio.fastSeek(0);
+                    this.audio.currentTime = 0;
                 }
             }),
             fromEvent(this.audio, 'timeupdate').pipe(
@@ -55,14 +55,13 @@ export class Player {
     }
     
     seekTime(seconds) {
-        if (this.audio) {
-            this.ready.pipe(
-                filter((x) => x),
-                first()
-            ).subscribe(() => {
+        return this.ready.pipe(
+            filter((x) => x),
+            first(),
+            tap(() => {
                 this.audio.currentTime = seconds;
-            });
-        }
+            })
+        ).toPromise();
     }
 
     play() {

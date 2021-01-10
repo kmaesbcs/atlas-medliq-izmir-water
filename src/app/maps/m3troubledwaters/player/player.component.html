@@ -26,9 +26,15 @@
         <ng-container *ngFor='let segment of segments; let idx=index'>
             <a class='interviewee'
                  [class.active]='idx === segmentIndex'
+                 [style.width]='segment.size + "px"'
+                 [style.height]='segment.size + "px"'
+                 [style.border-radius]='segment.size/2 + "px"'
+                 [style.border-width]='segment.size/32 + "px"'
                  [style.background-image]='"url(" + segment.interviewee.profile_pic[0].thumbnails.large.url + ")"'
                  [style.border-color]='segment.interviewee.color'
-                 routerLink='/m3' [queryParams]='{segment: segment.id}'
+                 [attr.data-segment-id]='segment.id'
+                 [attr.data-offset]='offset(idx)'
+                 routerLink='/m3' [queryParams]='{segment: segment.id, offset: 0, who: "interviewee-click"}'
             >
             </a>
         </ng-container>

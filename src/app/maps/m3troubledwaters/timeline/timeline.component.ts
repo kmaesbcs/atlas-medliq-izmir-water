@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ReplaySubject } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 import { TroubledwatersService } from '../troubledwaters.service';
 
 import { Scroller } from '../scroller';
+import { AnimationManagerService } from 'src/app/animation-manager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-troubledwaters-timeline',
@@ -19,7 +20,8 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
 
   @ViewChild('timeline', {static: true}) timeline: ElementRef;
 
-  constructor(private troubledWaters: TroubledwatersService, private sanitizer: DomSanitizer) { }
+  constructor(private troubledWaters: TroubledwatersService, private router: Router, 
+              private animationManager: AnimationManagerService) { }
 
   ngOnInit(): void {
     this.troubledWaters.data.pipe(first()).subscribe((segments) => {
@@ -57,14 +59,14 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
           return;
         }
         const el = this.timeline.nativeElement as HTMLElement;
-        const firstSelector = `.segment:nth-child(2)`;
+        const firstSelector = `.segment[data-segment="${this.segments[0].id}"]`;
         const secondSelector = `.segment[data-segment="${segment.id}"] > .section[data-section="${timestamp.id}"] > .second[data-offset="${offset}"]`;
         const outer = el.querySelector(firstSelector);
         const inner = el.querySelector(secondSelector);
         if (inner) {
           const offset = inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2;
           if (!this.scroller) {
-            this.scroller = new Scroller(el, '.second');
+            this.scroller = new Scroller(el, '.second', this.animationManager);
           }
           this.scroller.update(offset);
         }
@@ -89,9 +91,13 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
 
   bgStyle(segment, offset) {
     if (this.played(segment, offset)) {
-      return segment.src.interviewee.color;
+      return {'background-image': `linear-gradient(${segment.src.interviewee.color} 100%,transparent 0%)`};
     } else {
-      return `linear-gradient(${segment.src.interviewee.color} 50%,transparent 0%)`;
+      return {'background-image': `linear-gradient(${segment.src.interviewee.color} 50%,transparent 0%)`};
     }    
+  }
+
+  secondClicked(segment, offset) {
+    this.router.navigate(['m3'], {queryParams: {segment: segment.id, offset: offset, who: 'second-click'}});
   }
 }

@@ -3,8 +3,10 @@
     <div class='segment' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
         <div class='section' *ngFor='let section of segment.sections' [attr.data-section]='section.id'>
             <a class='second' *ngFor='let second of section.seconds' [attr.data-offset]='second'
-                 [style.background]='bgStyle(segment, second)'
-                 routerLink='/m3' [queryParams]='{timestamp: section.id, offset: second}'
+                 [class.played]='played(segment, second)'
+                 [ngStyle]='bgStyle(segment, second)'
+                 (click)='secondClicked(segment, second)'
+                 draggable='false'
             >
             </a>
         </div>

@@ -1,5 +1,6 @@
 import { debounceTime, filter, sampleTime, tap } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
+import { AnimationManagerService } from '../../animation-manager.service';
 
 export class Scroller {
   
@@ -9,51 +10,80 @@ export class Scroller {
     _done = true;
     _dragging = false;
     dragDiff = 0;
+    dragStart = 0;
     _scrolling = false;
+    prefix = '';
   
-    constructor(private el: HTMLElement, private itemSelector) {
-      fromEvent(el, 'wheel').pipe(
-        tap(() => { this.scrolling = true; }),
-        debounceTime(500)
-      ).subscribe(() => {
-        this.scrolling = false;
-        this.scrollEnded();
+    constructor(private el: HTMLElement, private itemSelector, private animationManager: AnimationManagerService) {
+      let wheelTimer = null;
+      this.prefix = `scroller:${itemSelector}:`;
+
+      // Wheel Event
+      animationManager.register(this.prefix + 'wheel', () => {
+        this.scrolling = true;
+        if (wheelTimer !== null) {
+          clearTimeout(wheelTimer);
+        }
+        wheelTimer = setTimeout(() => {
+          this.scrolling = false;
+          animationManager.disable(this.prefix + 'wheel');
+          this.scrollEnded();
+        }, 500);
+        animationManager.disable(this.prefix + 'wheel')
+      });  
+      fromEvent(el, 'wheel').subscribe(() => {
+        animationManager.enable(this.prefix + 'wheel')
+        animationManager.go();
       });
+
+      // Mouse up/down Event
       fromEvent(el, 'mousedown').subscribe((ev: MouseEvent) => {
         this.dragDiff = this.el.scrollTop + ev.y;
+        this.dragStart = performance.now();
         this.dragging = true;
       });
       fromEvent(el, 'mouseup').subscribe(() => {
-        if (this.dragging) {
-          this.dragging = false;
+        const now = performance.now();
+        this.dragging = false;
+        if (this.dragging && now - this.dragStart > 200) {
           this.scrollEnded();  
         }
       });
-      fromEvent(el, 'mousemove').pipe(
-        filter(() => this.dragging),
-        // sampleTime(),
-        tap((ev: MouseEvent) => {
-          this.el.scrollTo({top: - ev.y + this.dragDiff});
-        }),
-        debounceTime(1000),
-      ).subscribe(() => {
-        this.dragging = false;
-        // this.scrollEnded();
+
+      // Mouse Move Event
+      fromEvent(el, 'mousemove').subscribe((ev: MouseEvent) => {
+        if (this.dragging) {
+          animationManager.register(this.prefix + 'mousemove', () => {
+            this.el.scrollTo({top: - ev.y + this.dragDiff});
+            animationManager.deregister(this.prefix + 'mousemove');
+          });
+        }
+        animationManager.go();
       });
+
+      // Smooth Scroll
+      this.animationManager.register(this.prefix + 'smoothscroll', (x) => this.scrollSmoothly(x));
+      this.animationManager.disable(this.prefix + 'smoothscroll');
     }
   
     scrollEnded() {
-      const center = this.el.getBoundingClientRect().height / 2;
+      const center = this.el.offsetHeight / 2;
       let selected: HTMLElement = null;
-      let last: HTMLElement = null;
+      let nearest = center;
       this.el.querySelectorAll(this.itemSelector).forEach((second: HTMLElement) => {
-        if (selected === null && second.getBoundingClientRect().top > center) {
-          selected = last || second;
+        const rect = second.getBoundingClientRect();
+        const dist = Math.abs(rect.top + rect.height/2 - center);
+        if (selected === null || dist < nearest) {
+          selected = second;
+          nearest = dist;
         }
-        last = second;
       });
       if (selected !== null) {
         selected.click();
+        const offset = selected.getAttribute('data-offset');
+        if (offset) {
+          this.update(parseInt(offset, 10));
+        }
       }
     }
   
@@ -69,13 +99,14 @@ export class Scroller {
             this.el.scrollTo({top: target, behavior: 'auto'});  
           }
         }
-        requestAnimationFrame((x) => this.scrollSmoothly(x)); 
+        this.animationManager.go();
       } else {
         if (Math.abs(this.offset - this.el.scrollTop) > 0) {
           if (!this.scrolling && !this.dragging) {
             this.el.scrollTo({top: this.offset, behavior: 'auto'});
           }
         }
+        this.animationManager.disable(this.prefix + 'smoothscroll');
         this.done = true;
       }
     }
@@ -89,7 +120,8 @@ export class Scroller {
       this.startingOffset = this.el.scrollTop;
       if (this.done) {
         this.done = false;
-        requestAnimationFrame((x) => this.scrollSmoothly(x));
+        this.animationManager.enable(this.prefix + 'smoothscroll');
+        this.animationManager.go();
       }
     }
 
@@ -109,7 +141,6 @@ export class Scroller {
       if (this._done === value) {
         return;
       }
-      console.log('SSS', this.itemSelector, 'DONE', value);
       this._done = value;
     }
   
@@ -117,7 +148,6 @@ export class Scroller {
       if (this._scrolling === value) {
         return;
       }
-      console.log('SSS', this.itemSelector, 'SCROLLING', value);
       this._scrolling = value;
     }
   
@@ -125,7 +155,6 @@ export class Scroller {
       if (this._dragging === value) {
         return;
       }
-      console.log('SSS', this.itemSelector, 'DRAGGING', value);
       this._dragging = value;
     }
   

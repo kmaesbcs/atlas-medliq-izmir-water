@@ -31,9 +31,8 @@
         display: flex;
         flex-flow: column;
         align-items: center;    
-        overflow: scroll-y;
         .no-scrollbars;
-        width: 120px;
+        min-width: 128px;
         height: 100%;
         overflow-y: scroll;
         pointer-events: all;
@@ -41,31 +40,17 @@
         .interviewee {
             display: block;
             flex: 0 0 auto;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
             pointer-events: all;
             margin-bottom: 32px;
-            transition-property: width height;
-            transition-duration: 1000ms;
-            transition-timing-function: linear;
-            border-width: 2px;
             border-style: solid;
-
-            &.active {
-                width: 120px;
-                height: 120px;
-                border-radius: 60px;
-                border-width: 4px;
-            }
         }
     
         .filler {
             width: 1px;
-            flex: 0 0 ~'calc(50% - 30px)';
+            flex: 0 0 ~'calc(50% - 32px)';
         }    
     }
 }

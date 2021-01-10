@@ -53,7 +53,7 @@ export class TroubledwatersComponent implements OnInit {
         segment: params.segment,
         timestamp: params.timestamp,
         offset: params.offset,
-        who: 'router'
+        who: params.who || 'router'
       });
     })
   }

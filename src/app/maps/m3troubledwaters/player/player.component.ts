@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { delay, first } from 'rxjs/operators';
+import { delay, first, switchMap, tap } from 'rxjs/operators';
 import { Player } from 'src/app/player';
 import { PlayerService } from 'src/app/player.service';
 import { Scroller } from '../scroller';
+import { AnimationManagerService } from '../../../animation-manager.service';
 import { TroubledwatersService } from '../troubledwaters.service';
 
 @Component({
@@ -17,9 +18,6 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   segment: any = {};
   segmentIndex = -1;
 
-  // interviewees = [];
-  // intervieweeIndex = -1;
-  // interviewee = null;
   intervieweeColor = 'black';
   @ViewChild('interviewees', {static: true}) interviewees: ElementRef;
   
@@ -27,27 +25,55 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   player: Player = null;
   players = {};
 
-  constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService) {
-    troubledWaters.data.pipe(first()).subscribe((data) => {
-      // const ids = [];
-      this.segments = data;
-      let index = 0;
-      for (const segment of data) {
-        segment.segmentIndex = index;
-        index++;
-        // if (ids.indexOf(segment.interviewee.id) === -1) {
-        //   this.interviewees.push(segment.interviewee);
-        //   ids.push(segment.interviewee.id);
-        // }
-      }
-      troubledWaters.position.pipe(delay(0)).subscribe(({segment, timestamp, offset}) => {
+  // observer: IntersectionObserver;
+
+  constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService,
+              private animationManager: AnimationManagerService) {
+    troubledWaters.data.pipe(
+      first(),
+      tap((data) => {
+        this.segments = data;
+        let index = 0;
+        for (const segment of data) {
+          segment.segmentIndex = index;
+          segment.size = 64;
+          index++;
+        }
+      }),
+      delay(0),
+      tap((data) => {
+        const el = this.interviewees.nativeElement as HTMLElement;
+        this.animationManager.register('player:scroll', () => {
+          const center = el.offsetHeight / 2;
+          el.querySelectorAll('.interviewee').forEach((child: HTMLElement) => {
+            const childRect = child.getBoundingClientRect();                
+            const segmentId = child.getAttribute('data-segment-id');
+            for (const segment of this.segments) {
+              if (segment.id === segmentId) {
+                let ratio = 1 - Math.abs((childRect.top + childRect.height/2) - center) / 64;
+                if (ratio < 0) { ratio = 0; }
+                segment.size = 64 + 64 * ratio;
+              }
+            }
+          });
+          animationManager.disable('player:scroll');
+        });
+        fromEvent(el, 'scroll').subscribe((event) => {
+          animationManager.enable('player:scroll')
+          animationManager.go();
+        });
+      }),
+      switchMap(() => this.troubledWaters.position),
+      delay(0),
+      tap(({segment, timestamp, offset}) => {
         if (segment.id !== this.segment.id) {
           this.segment = segment;
           this.intervieweeColor = segment.interviewee.color;
           this.initPlayer();
           if (this.troubledWaters.playing) {
-            this.player.seekTime(offset);
-            this.player.play();            
+            this.player.seekTime(offset).then(() => {
+              this.player.play();
+            });
           }
         } else {
           if (this.player.audio && Math.abs(offset - this.player.audio.currentTime) > 2) {
@@ -58,11 +84,11 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           const s = this.segments[idx];
           if (segment.id === s.id) {
             this.segmentIndex = idx;
-            const offset = this.segmentIndex * (60 + 32) + 30;
-            this.scroller.update(offset);  
+            this.scroller.update(this.offset(idx));  
           }
         }
-      });
+      })
+    ).subscribe(() => {
     });
     fromEvent(window, 'blur').subscribe(() => {
       if (this.player !== null) {
@@ -71,8 +97,23 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     })
   }
 
+  offset(idx) {
+    return idx * (64 + 32) + 32;
+  }
+
   ngAfterViewInit(): void {
-    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee');
+    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee', this.animationManager);
+  }
+
+  intersection(entries: IntersectionObserverEntry[]) {
+    entries.forEach((entry: IntersectionObserverEntry ) => {
+      const segmentId = entry.target.getAttribute('data-segment-id');
+      for (const segment of this.segments) {
+        if (segment.id === segmentId) {
+          segment.size = 64 + 64*entry.intersectionRatio;
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -85,8 +126,8 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   play() {
-    this.troubledWaters.playing = true;
     this.player.play();
+    this.troubledWaters.playing = true;
   }
 
   initPlayer() {
@@ -97,26 +138,30 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     console.log('init PLAYER', this.segment.audio);
     this.player = this.players[this.segment.audio];
     if (!this.player) {
-      this.player = new Player(this.segment.audio, this.playerService);
-      this.players[this.segment.audio] = this.player;
+      const player = new Player(this.segment.audio, this.playerService);
+      player.timestamp.subscribe((offset) => {
+        // this.position = '' + offset % 60
+        if (player !== this.player) {
+          return;
+        }
+        if (this.troubledWaters.playing) {
+          this.troubledWaters.setPosition({segment: this.segment, offset, who: 'play-position'});
+        }
+      });
+      player.ended.subscribe(() => {
+        if (player !== this.player) {
+          return;
+        }
+        if (this.segment.segmentIndex + 1 < this.segments.length) {
+          this.troubledWaters.setPosition({segment: this.segments[this.segment.segmentIndex + 1], who: 'play-ended'});
+        } else {
+          this.troubledWaters.playing = false;
+        }
+      });
+      this.player = player
+      this.players[this.segment.audio] = player;
     }
-    this.player.timestamp.subscribe((offset) => {
-      // this.position = '' + offset % 60
-      if (this.troubledWaters.playing) {
-        console.log('PPP', this.segment.id, offset, this.player.url);
-        this.troubledWaters.setPosition({segment: this.segment, offset, who: 'play-position'});
-      }
-    });
-    this.player.playing.subscribe((playing) => {
-    });
-    this.player.ended.subscribe(() => {
-      if (this.segment.segmentIndex + 1 < this.segments.length) {
-        this.troubledWaters.setPosition({segment: this.segments[this.segment.segmentIndex + 1], who: 'play-ended'});
-      } else {
-        this.troubledWaters.playing = false;
-      }
-    });
-
+    this.player.audio.currentTime = 0;
   }
 
 }
