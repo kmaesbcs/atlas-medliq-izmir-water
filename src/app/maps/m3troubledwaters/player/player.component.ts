@@ -25,6 +25,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   player: Player = null;
   players = {};
 
+  clock = '14:06';
   // observer: IntersectionObserver;
 
   constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService,
@@ -129,7 +130,13 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     if (!this.player) {
       const player = new Player(this.segment.audio, this.playerService);
       player.timestamp.subscribe((offset) => {
-        // this.position = '' + offset % 60
+        const left = Math.floor(this.segment.duration) - offset;
+        this.clock = '' + left % 60
+        if (this.clock.length == 1) {
+          this.clock = '0' + this.clock;
+        }
+        this.clock = Math.floor(left/60) + ':' + this.clock;
+
         if (player !== this.player) {
           return;
         }

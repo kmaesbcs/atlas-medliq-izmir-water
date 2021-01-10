@@ -38,9 +38,11 @@ export class Scroller {
 
       // Mouse up/down Event
       fromEvent(el, 'mousedown').subscribe((ev: MouseEvent) => {
-        this.dragDiff = this.el.scrollTop + ev.y;
-        this.dragStart = performance.now();
-        this.dragging = true;
+        if (ev.button === 0) {
+          this.dragDiff = this.el.scrollTop + ev.y;
+          this.dragStart = performance.now();
+          this.dragging = true;  
+        }
       });
       fromEvent(el, 'mouseup').subscribe(() => {
         const now = performance.now();

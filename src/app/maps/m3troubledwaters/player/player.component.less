@@ -21,7 +21,7 @@
             width: 32px;
             height: 32px;
             margin: 0 -16px;
-            z-index: 1;
+            z-index: 4;
             pointer-events: all;
             cursor: pointer;
         }
@@ -54,15 +54,19 @@
                 pointer-events: all;
                 border-style: solid;    
                 margin-left: -32px;
-                z-index: 0;
+                z-index: 3;
             }
 
             .badges {
                 overflow: hidden;
-                z-index: -1;
+                z-index: 2;
                 position: relative;
                 height: 64px;    
-                width: 200px;
+                width: 320px;
+                display: flex;
+                flex-flow: row-reverse;
+                align-items: center;
+                pointer-events: all;
 
                 .info {
                     position: absolute;
@@ -75,14 +79,29 @@
                     background: #E6E6E6;
                     border-radius: 3px;
                     height: 100%;
-                    width: 100%;
 
-                    &.small, &.big {
+                    &.small {
                         flex-direction: column;
                         align-items: flex-start;
+                        width: 200px;
+                    }
+                    &.big-extra {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        width: 210px;
+                        padding-right: 18px;
+                    }
+                    &.big {
+                        flex-direction: row-reverse;
+                        align-items: center;
+                        width: 120px;
+                        z-index: 2;
+                    }
+                    &.big-extra {
+                        z-index: 1;
                     }
     
-                    .name, .title {
+                    .name, .title, .clock {
                         .font-manrope;
                         font-size: 12px;
                         line-height: 16px;
@@ -95,17 +114,42 @@
                     .title {
                         font-weight: 400;
                     }
+                
+                    .clock {
+                        font-weight: 800;
+                        padding-left: 12px;
+                        border-left: 1px solid black;
+                        display: flex;
+                        flex-flow: row;
+                        align-items: center;
+                        height: 100%;
+                    }
+
+                    .caret {
+                        padding-right: 12px;
+
+                        svg {
+                            transform: rotate(0deg);
+                            transition-property: transform;
+                            transition-duration: 500ms;    
+                        }
+                    }
 
                     transition-property: transform;
                     transition-duration: 500ms;
 
                     &.small {
-                        transform: translateX(200px);
+                        transform: translateX(210px);
                         transition-delay: 0ms;
                     }
 
                     &.big {
-                        transform: translateX(200px);
+                        transform: translateX(130px);
+                        transition-delay: 0;
+                    }
+
+                    &.big-extra {
+                        transform: translateX(210px);
                         transition-delay: 0;
                     }
 
@@ -114,9 +158,13 @@
                         &.small {
                             transition-delay: 250ms;
                         }
-    
+
                         &.big {
                             transform: translateX(0);
+                            transition-delay: 250ms;
+                        }
+    
+                        &.big-extra {
                             transition-delay: 250ms;
                         }    
                     }
@@ -127,6 +175,13 @@
                 .badges {
                     .info.small.visible {
                         transform: translateX(0);
+                    }
+                    .info.big-extra.visible {
+                        transform: translateX(-110px);
+                    }
+                    .info.big .caret svg {
+                        transform: rotate(-90deg);
+                        cursor: pointer;
                     }
                 }
             }

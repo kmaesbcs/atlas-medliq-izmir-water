@@ -43,13 +43,32 @@
                     <div class='info small' [style.color]='segment.interviewee.color'
                     [class.visible]='idx !== segmentIndex'
                 >
-                        <div class='name'>SSS {{segment.interviewee.name}}</div>
+                        <div class='name'>{{segment.interviewee.name}}</div>
                         <div class='title'>{{segment.interviewee.title}}</div>
                     </div>
                     <div class='info big' [style.color]='segment.interviewee.color'
                          [class.visible]='idx === segmentIndex'
                 >
-                        <div class='name'>BBB {{segment.interviewee.name}}</div>
+                        <div class='clock' [style.border-color]='segment.interviewee.color'>
+                            <span>{{clock}}</span>
+                        </div>
+                        <div class='caret'>
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0)">
+                                    <path d="M8.5 0.25L3.5 5L8.5 9.625" [attr.stroke]="segment.interviewee.color" stroke-width="1.5"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0">
+                                        <rect width="10" height="10" fill="white" transform="translate(0 10) rotate(-90)"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class='info big-extra' [style.color]='segment.interviewee.color'
+                         [class.visible]='idx === segmentIndex'
+                >
+                        <div class='name'>{{segment.interviewee.name}}</div>
                         <div class='title'>{{segment.interviewee.title}}</div>
                     </div>
                 </div>
