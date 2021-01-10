@@ -13,7 +13,7 @@ export class Player {
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
 
-    constructor(private url: string, private playerService: PlayerService) {
+    constructor(public url: string, private playerService: PlayerService) {
         this.audio = new Audio(url);
         fromEvent(this.audio, 'canplaythrough').pipe(first()).subscribe(() => {
             this.ready.next(true);
@@ -56,7 +56,12 @@ export class Player {
     
     seekTime(seconds) {
         if (this.audio) {
-            this.audio.currentTime = seconds;
+            this.ready.pipe(
+                filter((x) => x),
+                first()
+            ).subscribe(() => {
+                this.audio.currentTime = seconds;
+            });
         }
     }
 

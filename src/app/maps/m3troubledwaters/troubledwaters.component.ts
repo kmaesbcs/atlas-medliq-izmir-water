@@ -48,8 +48,13 @@ export class TroubledwatersComponent implements OnInit {
   }
 
   initializeNavigation() {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.troubledWaters.setPosition(params);
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.troubledWaters.setPosition({
+        segment: params.segment,
+        timestamp: params.timestamp,
+        offset: params.offset,
+        who: 'router'
+      });
     })
   }
 
@@ -120,7 +125,9 @@ export class TroubledwatersComponent implements OnInit {
       }
       this.currentTimestamp = timestamp.id;
       const flyTo = this.map.parseMapView(timestamp);
-      this.theMap.flyTo(flyTo);
+      if (flyTo) {
+        this.theMap.flyTo(flyTo);
+      }
       this.theMap.setFilter('trouble-waters-markers', [
         "all",
         [

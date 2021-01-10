@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 import { Player } from 'src/app/player';
 import { PlayerService } from 'src/app/player.service';
@@ -24,6 +25,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   
   scroller: Scroller = null;
   player: Player = null;
+  players = {};
 
   constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService) {
     troubledWaters.data.pipe(first()).subscribe((data) => {
@@ -44,9 +46,9 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           this.intervieweeColor = segment.interviewee.color;
           this.initPlayer();
           if (this.troubledWaters.playing) {
+            this.player.seekTime(offset);
             this.player.play();            
           }
-          this.player.seekTime(offset);
         } else {
           if (this.player.audio && Math.abs(offset - this.player.audio.currentTime) > 2) {
             this.player.seekTime(offset);
@@ -57,15 +59,20 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           if (segment.id === s.id) {
             this.segmentIndex = idx;
             const offset = this.segmentIndex * (60 + 32) + 30;
-            this.scroller.update(offset);
+            this.scroller.update(offset);  
           }
         }
       });
+    });
+    fromEvent(window, 'blur').subscribe(() => {
+      if (this.player !== null) {
+        this.pause();
+      }  
     })
   }
 
   ngAfterViewInit(): void {
-    this.scroller = new Scroller(this.interviewees.nativeElement);
+    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee');
   }
 
   ngOnInit(): void {
@@ -84,19 +91,27 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
 
   initPlayer() {
     if (this.player !== null) {
-      this.player.cleanup();
+      console.log('cleanup PLAYER', this.player.url);
+      this.player.pause();
     }
-    this.player = new Player(this.segment.audio, this.playerService);
+    console.log('init PLAYER', this.segment.audio);
+    this.player = this.players[this.segment.audio];
+    if (!this.player) {
+      this.player = new Player(this.segment.audio, this.playerService);
+      this.players[this.segment.audio] = this.player;
+    }
     this.player.timestamp.subscribe((offset) => {
+      this.position = '' + offset % 60
       if (this.troubledWaters.playing) {
-        this.troubledWaters.setPosition({segment: this.segment, offset});
+        console.log('PPP', this.segment.id, offset, this.player.url);
+        this.troubledWaters.setPosition({segment: this.segment, offset, who: 'play-position'});
       }
     });
     this.player.playing.subscribe((playing) => {
     });
     this.player.ended.subscribe(() => {
       if (this.segment.segmentIndex + 1 < this.segments.length) {
-        this.troubledWaters.setPosition({segment: this.segments[this.segment.segmentIndex + 1]});
+        this.troubledWaters.setPosition({segment: this.segments[this.segment.segmentIndex + 1], who: 'play-ended'});
       } else {
         this.troubledWaters.playing = false;
       }

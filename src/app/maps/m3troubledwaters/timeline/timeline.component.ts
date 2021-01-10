@@ -64,7 +64,7 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
         if (inner) {
           const offset = inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2;
           if (!this.scroller) {
-            this.scroller = new Scroller(el);
+            this.scroller = new Scroller(el, '.second');
           }
           this.scroller.update(offset);
         }

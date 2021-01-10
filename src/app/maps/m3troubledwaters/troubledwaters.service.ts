@@ -21,8 +21,8 @@ export class TroubledwatersService {
     this.fetchData();
   }
 
-  setPosition(options: {segment?: any, timestamp?: any, offset?: number}) {
-    let {segment, timestamp, offset} = options;
+  setPosition(options: {segment?: any, timestamp?: any, offset?: number, who?: string}) {
+    let {segment, timestamp, offset, who} = options;
     this.data.pipe(
       first(),
       map((segments) => {
@@ -55,10 +55,10 @@ export class TroubledwatersService {
           }
         }
         offset = offset || timestamp.timestamp;  
-        return {segment, timestamp, offset};
+        return {segment, timestamp, offset, who};
       })
-    ).subscribe(({segment, timestamp, offset}) => {
-      console.log('SET POSITION', segment.id, timestamp.id, offset);
+    ).subscribe(({segment, timestamp, offset, who}) => {
+      console.log('SET POSITION BY', who, ':', segment.id, timestamp.id, offset);
       this.position.next({segment, timestamp, offset})
     });
   }
@@ -98,7 +98,10 @@ export class TroubledwatersService {
       map(([segments, audio_timestamps, interviewees]) => {
         for (const segment of segments) {
           segment.audio = segment.audio[0].url;
-          segment.audio_timestamps = segment.audio_timestamps ? segment.audio_timestamps.map((x) => audio_timestamps[x]) : [];
+          segment.audio_timestamps = segment.audio_timestamps ? segment.audio_timestamps.map((x) => audio_timestamps[x]) : [{
+            id: segment.id + '-dummy', timestamp: 0
+          }];
+          (segment.audio_timestamps as any[]).sort((a ,b) => a.timestamp - b.timestamp);
           segment.interviewee = segment.interviewee && segment.interviewee.length ? interviewees[segment.interviewee[0]] : null;
         }
         return segments;

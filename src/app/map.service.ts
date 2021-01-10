@@ -34,6 +34,9 @@ export class MapService {
   }
 
   parseMapView(view: any): mapboxgl.FlyToOptions {
+    if (!view.geo) {
+      return;
+    }
     const geoRe = /center:\s*\{\s*lon:\s*([-0-9.]+),\s*lat:\s*([-0-9.]+)\s*\},\s*zoom:\s*([-0-9.]+),\s*pitch:\s*([-0-9.]+),\s*bearing:\s*([-0-9.]+)/g;
     const parsed = geoRe.exec(view.geo);
     const options: mapboxgl.FlyToOptions = {
