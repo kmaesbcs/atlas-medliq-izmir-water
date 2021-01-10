@@ -101,7 +101,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       this.players[this.segment.audio] = this.player;
     }
     this.player.timestamp.subscribe((offset) => {
-      this.position = '' + offset % 60
+      // this.position = '' + offset % 60
       if (this.troubledWaters.playing) {
         console.log('PPP', this.segment.id, offset, this.player.url);
         this.troubledWaters.setPosition({segment: this.segment, offset, who: 'play-position'});
