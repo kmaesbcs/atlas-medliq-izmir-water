@@ -30,22 +30,106 @@
     .interviewees {
         display: flex;
         flex-flow: column;
-        align-items: center;    
+        align-items: flex-end;    
         .no-scrollbars;
-        min-width: 128px;
+        // min-width: 128px;
         height: 100%;
         overflow-y: scroll;
         pointer-events: all;
 
         .interviewee {
-            display: block;
             flex: 0 0 auto;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            pointer-events: all;
+            display: flex;
+            flex-flow: row-reverse;
+            align-items: center;
             margin-bottom: 32px;
-            border-style: solid;
+            position: relative;
+
+            .photo {
+                display: block;
+                flex: 0 0 auto;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                pointer-events: all;
+                border-style: solid;    
+                margin-left: -32px;
+                z-index: 0;
+            }
+
+            .badges {
+                overflow: hidden;
+                z-index: -1;
+                position: relative;
+                height: 64px;    
+                width: 200px;
+
+                .info {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    flex: 1 0 auto;
+                    display: flex;
+                    padding: 8px;
+                    padding-right: 48px;
+                    background: #E6E6E6;
+                    border-radius: 3px;
+                    height: 100%;
+                    width: 100%;
+
+                    &.small, &.big {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+    
+                    .name, .title {
+                        .font-manrope;
+                        font-size: 12px;
+                        line-height: 16px;
+                    }
+    
+                    .name {
+                        font-weight: 800;
+                    }
+    
+                    .title {
+                        font-weight: 400;
+                    }
+
+                    transition-property: transform;
+                    transition-duration: 500ms;
+
+                    &.small {
+                        transform: translateX(200px);
+                        transition-delay: 0ms;
+                    }
+
+                    &.big {
+                        transform: translateX(200px);
+                        transition-delay: 0;
+                    }
+
+                    &.visible {
+
+                        &.small {
+                            transition-delay: 250ms;
+                        }
+    
+                        &.big {
+                            transform: translateX(0);
+                            transition-delay: 250ms;
+                        }    
+                    }
+                }
+            }
+
+            &:hover {
+                .badges {
+                    .info.small.visible {
+                        transform: translateX(0);
+                    }
+                }
+            }
         }
     
         .filler {

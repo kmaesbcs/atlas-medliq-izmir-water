@@ -45,7 +45,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
         const el = this.interviewees.nativeElement as HTMLElement;
         this.animationManager.register('player:scroll', () => {
           const center = el.offsetHeight / 2;
-          el.querySelectorAll('.interviewee').forEach((child: HTMLElement) => {
+          el.querySelectorAll('.interviewee > .photo').forEach((child: HTMLElement) => {
             const childRect = child.getBoundingClientRect();                
             const segmentId = child.getAttribute('data-segment-id');
             for (const segment of this.segments) {
@@ -102,18 +102,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee', this.animationManager);
-  }
-
-  intersection(entries: IntersectionObserverEntry[]) {
-    entries.forEach((entry: IntersectionObserverEntry ) => {
-      const segmentId = entry.target.getAttribute('data-segment-id');
-      for (const segment of this.segments) {
-        if (segment.id === segmentId) {
-          segment.size = 64 + 64*entry.intersectionRatio;
-        }
-      }
-    });
+    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee .photo', this.animationManager);
   }
 
   ngOnInit(): void {
