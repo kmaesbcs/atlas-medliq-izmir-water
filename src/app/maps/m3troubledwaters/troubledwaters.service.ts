@@ -82,6 +82,7 @@ export class TroubledwatersService {
           if (rec.fields.coordinates) {
             rec.fields.coordinates = rec.fields.coordinates.split(',').map(parseFloat);
           }
+          rec.fields.timestamp *= 10;
           return rec;  
         });
       }),

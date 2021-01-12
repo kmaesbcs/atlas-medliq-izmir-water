@@ -2,7 +2,7 @@
     <div class='filler'></div>
     <div class='segment' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
         <div class='section' *ngFor='let section of segment.sections' [attr.data-section]='section.id'>
-            <a class='second' *ngFor='let second of section.seconds' [attr.data-offset]='second'
+            <a class='second' *ngFor='let second of section.seconds' [attr.data-second]='second'
                  [class.played]='played(segment, second)'
                  [ngStyle]='bgStyle(segment, second)'
                  (click)='secondClicked(segment, second)'

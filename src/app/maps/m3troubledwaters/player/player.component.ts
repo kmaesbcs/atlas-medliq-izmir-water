@@ -67,6 +67,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       switchMap(() => this.troubledWaters.position),
       delay(0),
       tap(({segment, timestamp, offset}) => {
+        offset /= 10;
         if (segment.id !== this.segment.id) {
           this.segment = segment;
           this.intervieweeColor = segment.interviewee.color;
@@ -129,8 +130,8 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     this.player = this.players[this.segment.audio];
     if (!this.player) {
       const player = new Player(this.segment.audio, this.playerService);
-      player.timestamp.subscribe((offset) => {
-        const left = offset; // Math.floor(this.segment.duration) - offset;
+      player.hiResTimestamp.subscribe((offset) => {
+        const left = Math.floor(offset/10); // Math.floor(this.segment.duration) - offset;
         this.clock = '' + left % 60
         if (this.clock.length == 1) {
           this.clock = '0' + this.clock;

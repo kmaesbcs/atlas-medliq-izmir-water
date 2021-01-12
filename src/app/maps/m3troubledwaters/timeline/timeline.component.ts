@@ -35,8 +35,8 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
         for (let section_idx = 0; section_idx < (segment.audio_timestamps || []).length; section_idx++) {
           const timestamp = segment.audio_timestamps[section_idx];
           const next_timestamp = segment.audio_timestamps[section_idx + 1];
-          const start = timestamp.timestamp;
-          const end = next_timestamp ? next_timestamp.timestamp : segment.duration;
+          const start = Math.floor(timestamp.timestamp/10);
+          const end = next_timestamp ? Math.floor(next_timestamp.timestamp/10) : segment.duration;
           const item1 = {
             id: timestamp.id,
             seconds: []
@@ -44,7 +44,9 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
           for (let sec = start; sec < end; sec++) {
             item1.seconds.push(sec)
           }
-          item.sections.push(item1);
+          if (item1.seconds.length > 0) {
+            item.sections.push(item1);
+          }
         }
         this.segments.push(item);
       }
@@ -58,22 +60,23 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
         if (!this.timeline || !this.timeline.nativeElement) {
           return;
         }
+        const second = Math.floor(offset/10);
         const el = this.timeline.nativeElement as HTMLElement;
         const firstSelector = `.segment[data-segment="${this.segments[0].id}"]`;
-        const secondSelector = `.segment[data-segment="${segment.id}"] > .section[data-section="${timestamp.id}"] > .second[data-offset="${offset}"]`;
+        const secondSelector = `.segment[data-segment="${segment.id}"] > .section[data-section="${timestamp.id}"] > .second[data-second="${second}"]`;
         const outer = el.querySelector(firstSelector);
         const inner = el.querySelector(secondSelector);
         if (inner) {
-          const offset = inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2;
+          const scrollOffset = inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2;
           if (!this.scroller) {
             this.scroller = new Scroller(el, '.second', this.animationManager);
           }
-          this.scroller.update(offset);
+          this.scroller.update(scrollOffset);
         }
         if (this.troubledWaters.playing) {
           // this.segments.filter(x => x.id === segment.id)[0].played[offset] = true;
-          if (offset > 0) {
-            this.segments.filter(x => x.id === segment.id)[0].played[offset - 1] = true;
+          if (second > 0) {
+            this.segments.filter(x => x.id === segment.id)[0].played[second - 1] = true;
           }
         }  
       });
@@ -98,6 +101,6 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   }
 
   secondClicked(segment, offset) {
-    this.router.navigate(['m3'], {queryParams: {segment: segment.id, offset: offset, who: 'second-click'}});
+    this.router.navigate(['m3'], {queryParams: {segment: segment.id, offset: offset * 10, who: 'second-click'}});
   }
 }

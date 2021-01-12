@@ -9,6 +9,7 @@ export class Player {
 
     playing = new BehaviorSubject<boolean>(false); 
     ready = new BehaviorSubject<boolean>(false); 
+    hiResTimestamp = new BehaviorSubject<number>(0); 
     timestamp = new BehaviorSubject<number>(0); 
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
@@ -34,6 +35,17 @@ export class Player {
             }),
             fromEvent(this.audio, 'timeupdate').pipe(
                 map(() => {
+                    const hiResTimestamp = Math.floor(this.audio.currentTime * 10);
+                    const currentHiResTimestamp = this.hiResTimestamp.getValue()
+                    if (hiResTimestamp !== currentHiResTimestamp) {
+                        if (hiResTimestamp - currentHiResTimestamp < 20) {
+                            for (let t = currentHiResTimestamp+ 1  ; t <= hiResTimestamp ; t++) {
+                                this.hiResTimestamp.next(t);
+                            }
+                        } else {
+                            this.hiResTimestamp.next(hiResTimestamp);
+                        }
+                    }
                     const timestamp = Math.floor(this.audio.currentTime);
                     if (timestamp !== this.timestamp.getValue()) {
                         this.timestamp.next(timestamp);
