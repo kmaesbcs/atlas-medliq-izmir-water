@@ -38,7 +38,7 @@ export class Player {
                     const hiResTimestamp = Math.floor(this.audio.currentTime * 10);
                     const currentHiResTimestamp = this.hiResTimestamp.getValue()
                     if (hiResTimestamp !== currentHiResTimestamp) {
-                        if (hiResTimestamp - currentHiResTimestamp < 20) {
+                        if (currentHiResTimestamp < hiResTimestamp && hiResTimestamp - currentHiResTimestamp < 20) {
                             for (let t = currentHiResTimestamp+ 1  ; t <= hiResTimestamp ; t++) {
                                 this.hiResTimestamp.next(t);
                             }
