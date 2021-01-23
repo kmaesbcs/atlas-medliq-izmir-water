@@ -4,6 +4,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    position: relative;
 
     .component {
         width: 100%;
@@ -42,6 +43,7 @@
             transform: translateX(-50%) translateY(-50%);
             position: absolute;
             pointer-events: all;
+            z-index: 1;
         }
     }
 }

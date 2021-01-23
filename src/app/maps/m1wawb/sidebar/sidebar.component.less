@@ -74,9 +74,21 @@
 
     app-player {
         .desktop({
-            margin: 16px;
+            &:first-child {
+                margin: 0 16px -4px 16px;
+            }
+            &:last-child {
+                margin: -4px 16px 0 16px;   
+            }
         });
-        .mobile({});
+        .mobile({
+            &:first-child {
+                margin: 0 0 -4px 0;
+            }
+            &:last-child {
+                margin: -4px 0 0 0;   
+            }
+        });
     }
 
     p {
