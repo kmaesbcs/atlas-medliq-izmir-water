@@ -1,3 +1,5 @@
+@import '../../common.less';
+
 @control-size: 60px;
 
 :host {
@@ -44,6 +46,17 @@
             position: absolute;
             pointer-events: all;
             z-index: 1;
+        }
+
+        .timestamp {
+            .font-manrope;
+            color: white;
+            display: block;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 16px;
+            text-shadow: 0px 0px 6px #000000;
+            height: 0px;
         }
     }
 }

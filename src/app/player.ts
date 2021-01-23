@@ -10,7 +10,8 @@ export class Player {
     playing = new BehaviorSubject<boolean>(false); 
     ready = new BehaviorSubject<boolean>(false); 
     hiResTimestamp = new BehaviorSubject<number>(0); 
-    timestamp = new BehaviorSubject<number>(0); 
+    timestamp = new BehaviorSubject<number>(0);
+    textTimestamp = new BehaviorSubject<string>('00:00');
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
 
@@ -49,6 +50,15 @@ export class Player {
                     const timestamp = Math.floor(this.audio.currentTime);
                     if (timestamp !== this.timestamp.getValue()) {
                         this.timestamp.next(timestamp);
+                        let textTimestamp = '' + (timestamp % 60);
+                        if (textTimestamp.length < 2) {
+                            textTimestamp = '0' + textTimestamp;
+                        }
+                        textTimestamp = Math.floor(timestamp / 60) + ':' +textTimestamp;
+                        if (textTimestamp.length < 5) {
+                            textTimestamp = '0' + textTimestamp;
+                        }
+                        this.textTimestamp.next(textTimestamp);
                     }
                     return Math.round(this.audio.currentTime / this.audio.duration * 1000);
                 }),

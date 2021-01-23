@@ -4,10 +4,11 @@
             <circle [attr.cx]='size/2' [attr.cy]='size/2' [attr.r]='size/2 - 2' stroke='#dedede' stroke-width='4' fill='none'></circle>
             <path [attr.d]='progressBarPath' stroke='#0AB239' stroke-width='4' fill='none'></path>
         </svg>
-        <ng-conainer *ngIf='player'>
+        <ng-container *ngIf='player'>
             <div class='handle' [style.left]='handleX + "px"' [style.top]='handleY + "px"' (mousedown)='drag()' #handle></div>
             <img *ngIf='(player.playing | async)' src='assets/img/player-control-pause.svg'>
             <img *ngIf='!(player.playing | async)' src='assets/img/player-control-play.svg'>    
-        </ng-conainer>
+            <span class='timestamp'>{{player.textTimestamp | async}}</span>
+        </ng-container>
     </div>
 </div>
