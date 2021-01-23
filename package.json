@@ -24,6 +24,7 @@
     "@sentry/tracing": "^5.29.2",
     "dayjs": "^1.9.7",
     "mapbox-gl": "^2.0.0",
+    "marked": "^1.2.7",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

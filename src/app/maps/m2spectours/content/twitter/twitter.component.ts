@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as dayjs from 'dayjs';
+import * as marked from 'marked';
 
 @Component({
   selector: 'app-spectours-content-twitter',
@@ -9,6 +10,7 @@ import * as dayjs from 'dayjs';
 export class TwitterComponent implements OnInit {
 
   @Input() item;
+  marked = marked;
 
   constructor() { }
 
