@@ -10,7 +10,12 @@
 @ig-blue: #008AF5;
 
 .card {
-    width: 344px;
+    .desktop({
+        width: 344px;
+    });
+    .mobile({
+        width: 100%;
+    });
     display: flex;
     flex-flow: column;
     align-items: stretch;

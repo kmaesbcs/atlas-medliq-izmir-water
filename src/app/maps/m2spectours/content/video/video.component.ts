@@ -41,10 +41,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     console.log('INIT YOUTUBE', this.frame.nativeElement, this.item.youtube_video_id);
-    this.player = new YT.Player(this.frame.nativeElement, {
+    const el = this.frame.nativeElement as HTMLElement;
+    const width = Math.min(el.offsetWidth, 640);
+    const height = (width * 3) / 4;
+    this.player = new YT.Player(el, {
       videoId: this.item.youtube_video_id,
-      height: '480px',
-      width: '640px',
+      height: height + 'px',
+      width: width + 'px',
       events: {
         onReady: () => {
           console.log('YOUTUBE READY');

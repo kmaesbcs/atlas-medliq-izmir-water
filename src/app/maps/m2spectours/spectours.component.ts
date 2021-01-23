@@ -38,9 +38,6 @@ export class SpecToursComponent implements OnInit {
         this.activeYear = parseInt(fragment.slice(1));
       }
     });
-    api.fetchMapData().subscribe((views) => {
-      this.mapViews.next(views);
-    });
   }
 
   ngOnInit(): void {
@@ -49,6 +46,11 @@ export class SpecToursComponent implements OnInit {
       style: 'mapbox://styles/atlasmedliq/ckiodibg82x1k17tcof8e9pmd/draft',
       minZoom: 3,
     });
+    this.theMap.on('style.load', () => {
+      this.api.fetchMapData().subscribe((views) => {
+        this.mapViews.next(views);
+      });  
+    })
   }
 
   changeMapView(mapView) {
@@ -56,10 +58,14 @@ export class SpecToursComponent implements OnInit {
       mapView = mapViews[mapView];
       const options = this.mapSvc.parseMapView(mapView);
       for (const l of mapView.onLayers) {
-        this.theMap.setLayoutProperty(l, 'visibility', 'visible');
+        if (this.theMap.getLayer(l)) {
+          this.theMap.setLayoutProperty(l, 'visibility', 'visible');
+        }
       }
       for (const l of mapView.offLayers) {
-        this.theMap.setLayoutProperty(l, 'visibility', 'none');
+        if (this.theMap.getLayer(l)) {
+          this.theMap.setLayoutProperty(l, 'visibility', 'none');
+        }
       }
       this.theMap.flyTo(options);
     });

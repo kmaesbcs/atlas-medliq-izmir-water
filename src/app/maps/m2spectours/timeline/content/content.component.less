@@ -9,9 +9,9 @@
     display: block;
 
     .wrapper {
-        height: 100vh;
-        &.medium {
-            height: 75vh;
+        min-height: calc(~'100vh - 64px');
+        &.medium {  
+            min-height: 75vh;
         }
         width: 100%;
         display: flex;
@@ -30,7 +30,7 @@
             flex: 0 0 auto;
             display: flex;
             flex-flow: row;
-            align-items: center;
+            align-items: flex-start;
             padding: 8px 16px;
             height: @header-height;
             position: relative;
@@ -72,6 +72,9 @@
             z-index: 0;
             pointer-events: all;
             overflow: hidden;
+            flex: 1 1 auto;
+            display: flex;
+            flex-flow: column-reverse;
 
             app-spectours-content-image, 
             app-spectours-content-audio, 
@@ -82,10 +85,17 @@
             {
                 display: flex;
                 flex-flow: column;
-                justify-content: flex-start;
-                width: calc(100% ~'-' 2*@timeline-width);
+                justify-content: flex-end;
+
+                .desktop({
+                    width: calc(100% ~'-' 2*@timeline-width);
+                    margin: @header-height @timeline-width;
+                });
+                .mobile({
+                    width: 100%;
+                    margin: @header-height 0 0 0;
+                });
                 height: calc(100% ~'-' 2*@header-height);
-                margin: @header-height @timeline-width;
             }
         }
     }
