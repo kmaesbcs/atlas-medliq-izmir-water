@@ -1,17 +1,13 @@
-@size: 280px;
-@padding: 2px;
 @control-size: 60px;
 
 :host {
-    width: @size + 2*@padding;
-    height: @size + 2*@padding;
-    padding: @padding;
-    display: block;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 
     .component {
         width: 100%;
         height: 100%;
-        border-radius: @size/2;
         display: flex;
         flex-flow: column;
         align-items: center;

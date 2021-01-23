@@ -1,8 +1,8 @@
 <app-layout (info)='info = $event; sample = $event ? null : sample'>
     <div class='map content'>
         <div #mapEl></div>
-        <app-wawb-sidebar [item]='sample' *ngIf='sample' (close)='sample = null'></app-wawb-sidebar>
-        <app-wawb-infobar *ngIf='info' (close)='info = false'></app-wawb-infobar>
+        <app-wawb-sidebar [class.open]='!!sample' [item]='sample || DUMMY' (close)='sample = null'></app-wawb-sidebar>
+        <app-wawb-infobar [class.open]='!!info' (close)='info = false'></app-wawb-infobar>
     </div>
     <h1 class='header-title'>Water Above Water Below</h1>
 </app-layout>

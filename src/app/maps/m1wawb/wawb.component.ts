@@ -25,6 +25,7 @@ export class WawbComponent implements OnInit {
 
   LAYER_NAME = 'above-below-sample';
   SOURCE_NAME = 'samples';
+  DUMMY = {author: '', author_credits: ''}
 
   constructor(private api: WawbService, private map: MapService, private player: PlayerService, private activatedRoute: ActivatedRoute) {
     api.getSamples().pipe(
@@ -64,6 +65,7 @@ export class WawbComponent implements OnInit {
       container: this.mapEl.nativeElement,
       style: 'mapbox://styles/atlasmedliq/ckioczj9i39w717peyp20en12/draft',
       minZoom: 3,
+      bounds: [34.2654333839, 29.5013261988, 35.8363969256, 33.2774264593]
     });
     this.theMap.on('style.load', () => {
       this.samples.pipe(first()).subscribe((samples: GeoJSON.FeatureCollection) => {

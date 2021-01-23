@@ -2,14 +2,24 @@
 
 :host {
     width: 100%;
-    max-width: 360px;
     height: 100%;
-    padding: 24px;
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
     background: white;
     position: relative;
+    z-index: 2;
+
+    .desktop({
+        max-width: 360px;
+        padding: 24px;
+    });
+    .mobile({
+        max-height: 100%;
+        overflow-y: scroll;
+        padding: 10px 24px;
+        .no-scrollbars;
+    });
     
     .title {
         position: relative;
@@ -24,10 +34,17 @@
 
         h1 {
             font-weight: bold;
-            font-size: 18px;
             letter-spacing: 0.02em;
             text-transform: uppercase;
             color: @gray1;
+            .desktop({
+                font-size: 20px;
+                line-height: 21px;
+            });
+            .mobile({
+                font-size: 17px;
+                line-height: 21px;
+            });
 
         }
 
@@ -35,12 +52,20 @@
             font-weight: normal;
             font-size: 15px;
             letter-spacing: -0.01em;
+            .desktop({
+                font-size: 15px;
+                line-height: 21px;
+            });
+            .mobile({
+                font-size: 15px;
+                line-height: 21px;
+            });
         }
 
         .close {
             cursor: pointer;
             position: absolute;
-            top: 0;
+            top: -5px;
             right: 0;
             width: 30px;
             height: 30px;
@@ -48,7 +73,10 @@
     }
 
     app-player {
-        margin: 16px;
+        .desktop({
+            margin: 16px;
+        });
+        .mobile({});
     }
 
     p {
@@ -61,11 +89,17 @@
     }
 
     .bottom {
-        position: absolute;
-        bottom: 0;
+        .desktop({
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 24px;
+        });
+        .mobile({
+            padding: 24px 0;
+        });
         width: 100%;
         background-color: white;
-        padding: 24px;
         padding-top: 0;
 
         & > *:first-child {

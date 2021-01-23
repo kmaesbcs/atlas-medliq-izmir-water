@@ -13,10 +13,30 @@
 
     app-wawb-sidebar, app-wawb-infobar {
         position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: auto;
+        .desktop({
+            top: 0;
+            right: 8px;
+            height: 100%;
+            width: auto;
+            transform: translateX(100vw);
+            &.open {
+                transform: translateX(0);
+            }
+        });
+        .mobile({
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: auto;
+            transform: translateY(100%);
+            &.open {
+                transform: translateY(0);
+            }
+        });
+        transition-property: transform;
+        transition-duration: 500ms;
     }    
-} 
+}
 
+@media only screen and (max-width: 600px) {
+}

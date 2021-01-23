@@ -14,10 +14,11 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
 
   @Input() audio;
   @Input() image;
+  @Input() size = 280;
   @ViewChild('handle', {static: true}) handle: ElementRef;
   @ViewChild('component', {static: true}) component: ElementRef;
 
-  SIZE = 280;
+
   PADDING = 2;
   BAR_WIDTH = 4;
 
@@ -42,8 +43,8 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
         // takeUntil(fromEvent(this.el.nativeElement, 'mouseleave')),
         takeUntil(fromEvent(window, 'mouseup')),
         tap((event: MouseEvent) => {
-          const x = event.clientX - rect.left - this.SIZE / 2;
-          const y = event.clientY - rect.top - this.SIZE / 2;
+          const x = event.clientX - rect.left - this.size / 2;
+          const y = event.clientY - rect.top - this.size / 2;
           const angle = Math.atan(y/x) + Math.PI / 2 + (x < 0 ? Math.PI : 0);
           this.player.seek(angle / 2 / Math.PI);
         }),
@@ -55,13 +56,13 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
     if (!this.player) {
       return false;
     }
-    const x = event.offsetX - this.SIZE / 2;
-    const y = event.offsetY - this.SIZE / 2;
+    const x = event.offsetX - this.size / 2;
+    const y = event.offsetY - this.size / 2;
     const angle = Math.atan(y/x) + Math.PI / 2 + (x < 0 ? Math.PI : 0);
     const r = Math.sqrt(x*x + y*y);
-    if (Math.abs(r - this.SIZE/2) < 10) {
+    if (Math.abs(r - this.size/2) < 10) {
       this.player.seek(angle / 2 / Math.PI);
-    } else if (r < this.SIZE/2) {
+    } else if (r < this.size/2) {
       this.player.toggle();
     }
   }
@@ -94,8 +95,8 @@ export class PlayerComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   }
 
   calculateProgressBarPath(angle) {
-    const C = this.SIZE/2;
-    const R = (this.SIZE - this.BAR_WIDTH) / 2;
+    const C = this.size/2;
+    const R = (this.size - this.BAR_WIDTH) / 2;
     const X = C + R * Math.sin(angle);
     const Y = C - R * Math.cos(angle);
     const params = angle >= Math.PI ? '1 1' : '0 1';
