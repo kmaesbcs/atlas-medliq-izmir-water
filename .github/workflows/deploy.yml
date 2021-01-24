@@ -21,9 +21,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Deploy
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '10'
+      - name: npm requirements
+        run: (cd ui && npm install)
+      - name: git identity
+        run: |
+          git config user.email "adam.kariv@gmail.com"
+          git config user.name "Adam Kariv"
+      - name: deploy
         env:
           AIRTABLE_APIKEY: ${{ secrets.AIRTABLE_APIKEY }}
         run: ./deploy.sh
