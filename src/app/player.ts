@@ -68,6 +68,7 @@ export class Player {
             })
         ]);
         this.playing.next(false);
+        this.audio.load();
     }
 
     seek(percent) {
