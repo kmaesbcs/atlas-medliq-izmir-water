@@ -129,7 +129,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     console.log('init PLAYER', this.segment.audio);
     this.player = this.players[this.segment.audio];
     if (!this.player) {
-      const player = new Player(this.segment.audio, this.playerService);
+      const player = new Player(this.segment.audio_s3url || this.segment.audio, this.playerService);
       player.hiResTimestamp.subscribe((offset) => {
         const left = Math.floor(offset/10); // Math.floor(this.segment.duration) - offset;
         this.clock = '' + left % 60
