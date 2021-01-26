@@ -24,6 +24,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   scroller: Scroller = null;
   player: Player = null;
   players = {};
+  expanded = -1;
 
   clock = '14:06';
   // observer: IntersectionObserver;

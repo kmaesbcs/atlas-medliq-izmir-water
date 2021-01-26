@@ -1,5 +1,8 @@
 @import '../../../../common.less';
 
+@badges-height: 64px;
+@dropdown-height: 200px;
+
 .wrapper {
     position: absolute;
     right: 8px;
@@ -21,7 +24,7 @@
             width: 32px;
             height: 32px;
             margin: 0 -16px;
-            z-index: 4;
+            z-index: 21;
             pointer-events: all;
             cursor: pointer;
         }
@@ -54,14 +57,15 @@
                 pointer-events: all;
                 border-style: solid;    
                 margin-left: -32px;
-                z-index: 3;
+                z-index: 20;
             }
 
             .badges {
                 overflow: hidden;
                 z-index: 2;
                 position: relative;
-                height: 64px;    
+                height: @badges-height + @dropdown-height;
+                margin-bottom: -@dropdown-height;
                 width: 320px;
                 display: flex;
                 flex-flow: row-reverse;
@@ -78,18 +82,12 @@
                     padding-right: 48px;
                     background: #E6E6E6;
                     border-radius: 3px;
-                    height: 100%;
+                    height: @badges-height;
 
                     &.small {
                         flex-direction: column;
                         align-items: flex-start;
                         width: 200px;
-                    }
-                    &.big-extra {
-                        flex-direction: column;
-                        align-items: flex-start;
-                        width: 210px;
-                        padding-right: 18px;
                     }
                     &.big {
                         flex-direction: row-reverse;
@@ -98,7 +96,71 @@
                         z-index: 2;
                     }
                     &.big-extra {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        width: 210px;
                         z-index: 1;
+                        
+                        .base-info {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;    
+
+                            width: 210px;
+                            height: 100%;
+
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            z-index: 2;
+
+                            padding: 0 18px;
+                            background: #E6E6E6;
+
+                            .base-info-content {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: flex-start;
+                            }
+                        }
+                        .extended-info {
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            width: 320px;
+
+                            .extended-info-content {
+                                transition-property: transform;
+                                transition-duration: 500ms;    
+
+                                transform: translateY(-100%);
+                                background: #E6E6E6;
+                                padding: 8px;
+
+                                .bio {
+                                    .font-manrope;
+                                    font-weight: 300;
+                                    font-size: 12px;    
+                                }
+
+                                .twitter {
+                                    display: flex;
+                                    flex-flow: row;
+                                    align-items: center;
+                                    margin-top: 12px;
+                                    .font-manrope;
+                                    font-weight: bold;
+                                    font-size: 12px;
+                                    line-height: 16px;
+
+                                    a, a:hover, a:visited {
+                                        margin-left: 4px;
+                                        color: inherit;
+                                        text-decoration: none;                                    
+                                    }
+                                }
+                            }
+                        }
                     }
     
                     .name, .title, .clock {
@@ -169,6 +231,10 @@
                         }    
                     }
                 }
+
+                &.visible {
+                    z-index: 19;
+                }
             }
 
             &:hover {
@@ -183,6 +249,14 @@
                         transform: rotate(-90deg);
                         cursor: pointer;
                     }
+                    &.expanded {
+                        .info .caret svg {
+                            transform: rotate(90deg);
+                        }
+                        .info.big-extra .extended-info .extended-info-content {
+                            transform: translateY(0);
+                        }
+                    }    
                 }
             }
         }

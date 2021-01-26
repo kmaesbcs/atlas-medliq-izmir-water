@@ -70,7 +70,7 @@ export class TroubledwatersService {
   }
 
   fetchInterviewees() {
-    return this.api.airtableFetch(this.BASE, 'Interviewees', 'website', null, ['name', 'title', 'bio', 'twitter', 'profile_pic', 'color']).pipe(
+    return this.api.airtableFetch(this.BASE, 'Interviewees', 'website', null, ['name', 'title', 'bio', 'twitter_username', 'profile_pic', 'color']).pipe(
       this.api.airtableToMapping()
     );
   }
