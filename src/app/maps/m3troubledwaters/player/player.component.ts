@@ -6,6 +6,8 @@ import { PlayerService } from 'src/app/player.service';
 import { Scroller } from '../scroller';
 import { AnimationManagerService } from '../../../animation-manager.service';
 import { TroubledwatersService } from '../troubledwaters.service';
+import { LayoutService } from 'src/app/layout.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-troubledwaters-player',
@@ -30,7 +32,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   // observer: IntersectionObserver;
 
   constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService,
-              private animationManager: AnimationManagerService) {
+              private animationManager: AnimationManagerService, private layout: LayoutService) {
     troubledWaters.data.pipe(
       first(),
       tap((data) => {
@@ -38,7 +40,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
         let index = 0;
         for (const segment of data) {
           segment.segmentIndex = index;
-          segment.size = 64;
+          segment.size = this.playerSize;
           index++;
         }
       }),
@@ -46,15 +48,20 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       tap((data) => {
         const el = this.interviewees.nativeElement as HTMLElement;
         this.animationManager.register('player:scroll', () => {
-          const center = el.offsetHeight / 2;
+          const center = this.layout.desktop() ? el.offsetHeight / 2 : el.offsetWidth / 2;
           el.querySelectorAll('.interviewee > .photo').forEach((child: HTMLElement) => {
             const childRect = child.getBoundingClientRect();                
             const segmentId = child.getAttribute('data-segment-id');
             for (const segment of this.segments) {
               if (segment.id === segmentId) {
-                let ratio = 1 - Math.abs((childRect.top + childRect.height/2) - center) / 64;
+                let ratio = 1;
+                if (this.layout.desktop()) {
+                  ratio = 1 - Math.abs((childRect.top + childRect.height/2) - center) / 64;
+                } else {
+                  ratio = 1 - Math.abs((childRect.left + childRect.width/2) - center) / 64;
+                }
                 if (ratio < 0) { ratio = 0; }
-                segment.size = 64 + 64 * ratio;
+                segment.size = this.playerSize * (1 + ratio);
               }
             }
           });
@@ -101,11 +108,11 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   offset(idx) {
-    return idx * (64 + 32) + 32;
+    return idx * (this.playerSize + 32) + this.playerSize/2;
   }
 
   ngAfterViewInit(): void {
-    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee .photo', this.animationManager);
+    this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee .photo', this.animationManager,  () => this.layout.mobile());
   }
 
   ngOnInit(): void {
@@ -162,4 +169,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     this.player.audio.currentTime = 0;
   }
 
+  get playerSize() {
+    return this.layout.desktop() ? 64 : 40;
+  }
 }

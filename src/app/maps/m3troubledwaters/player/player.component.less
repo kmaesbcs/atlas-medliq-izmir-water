@@ -3,27 +3,54 @@
 @badges-height: 64px;
 @dropdown-height: 200px;
 
+:host {
+    .mobile({
+        width: 100%;
+    });
+}
+
 .wrapper {
-    position: absolute;
-    right: 8px;
-    height: 100%;
-    top: 0;
-    pointer-events: none;
     display: flex;
-    flex-flow: row-reverse;
+    .desktop({
+        position: absolute;
+        right: 8px;
+        height: 100%;
+        top: 0;    
+        flex-flow: row-reverse;
+    });
+    .mobile({
+        flex-flow: column-reverse;
+    });
+    pointer-events: none;
     align-items: center;
     filter: drop-shadow(0px 0px 8px rgba(14, 96, 71, 0.25));
 
     .player {
         display: flex;
-        flex-flow: row-reverse;
+        .desktop({
+            flex-flow: row-reverse;
+        });
+        .mobile({
+            flex-flow: column-reverse;
+        });
         align-items: center;
         position: relative;
 
+        .indicator.layout-mobile {
+            margin-bottom: -32px;
+        }
+
         .icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 -16px;
+            .desktop({
+                width: 32px;
+                height: 32px;    
+                margin: 0 -16px;
+            });
+            .mobile({
+                width: 24px;
+                height: 24px;    
+                margin: 0 -12px;
+            });
             z-index: 21;
             pointer-events: all;
             cursor: pointer;
@@ -32,21 +59,34 @@
 
     .interviewees {
         display: flex;
-        flex-flow: column;
+        .desktop({
+            flex-flow: column;
+            height: 100%;
+        });
+        .mobile({
+            flex-flow: row;
+            width: 100%;
+            margin-bottom: -8px;
+        });
         align-items: flex-end;    
         .no-scrollbars;
         // min-width: 128px;
-        height: 100%;
         overflow-y: scroll;
         pointer-events: all;
 
         .interviewee {
             flex: 0 0 auto;
             display: flex;
-            flex-flow: row-reverse;
+            .desktop({
+                flex-flow: row-reverse;
+                margin-bottom: 32px;
+                position: relative;
+            });
+            .mobile({
+                flex-flow: column;
+                margin-right: 32px;
+            });
             align-items: center;
-            margin-bottom: 32px;
-            position: relative;
 
             .photo {
                 display: block;
@@ -55,18 +95,20 @@
                 background-size: cover;
                 background-repeat: no-repeat;
                 pointer-events: all;
-                border-style: solid;    
-                margin-left: -32px;
-                z-index: 20;
+                border-style: solid;
+                .desktop({
+                    margin-left: -32px;
+                    z-index: 20;    
+                });
             }
 
             .badges {
                 overflow: hidden;
                 z-index: 2;
                 position: relative;
-                height: @badges-height + @dropdown-height;
                 margin-bottom: -@dropdown-height;
                 width: 320px;
+                height: @badges-height + @dropdown-height;
                 display: flex;
                 flex-flow: row-reverse;
                 align-items: center;
@@ -76,10 +118,10 @@
                     position: absolute;
                     top: 0;
                     right: 0;
+                    padding-right: 48px;
                     flex: 1 0 auto;
                     display: flex;
                     padding: 8px;
-                    padding-right: 48px;
                     background: #E6E6E6;
                     border-radius: 3px;
                     height: @badges-height;
@@ -262,9 +304,16 @@
         }
     
         .filler {
-            width: 1px;
-            flex: 0 0 ~'calc(50% - 32px)';
+            .desktop({
+                width: 1px;
+                flex: 0 0 ~'calc(50% - 32px)';
+            });
+            .mobile({
+                height: 1px;
+                flex: 0 0 ~'calc(50vw - 20px)';
+            });
         }    
     }
+
 }
 

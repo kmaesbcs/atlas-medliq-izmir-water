@@ -1,3 +1,7 @@
+<div class='bios' #bios>
+    <div class='bio-container' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
+    </div>
+</div>
 <div class='timeline' #timeline>
     <div class='filler'></div>
     <div class='segment' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>

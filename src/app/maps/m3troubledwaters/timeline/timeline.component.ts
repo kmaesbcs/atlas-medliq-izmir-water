@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { from, ReplaySubject } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 import { TroubledwatersService } from '../troubledwaters.service';
 
 import { Scroller } from '../scroller';
 import { AnimationManagerService } from 'src/app/animation-manager.service';
 import { Router } from '@angular/router';
+import { LayoutService } from '../../../layout.service';
 
 @Component({
   selector: 'app-troubledwaters-timeline',
@@ -21,7 +22,7 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   @ViewChild('timeline', {static: true}) timeline: ElementRef;
 
   constructor(private troubledWaters: TroubledwatersService, private router: Router, 
-              private animationManager: AnimationManagerService) { }
+              private animationManager: AnimationManagerService, private layout: LayoutService) { }
 
   ngOnInit(): void {
     this.troubledWaters.data.pipe(first()).subscribe((segments) => {
@@ -67,9 +68,11 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
         const outer = el.querySelector(firstSelector);
         const inner = el.querySelector(secondSelector);
         if (inner) {
-          const scrollOffset = inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2;
+          const scrollOffset = this.layout.desktop() ? 
+              inner.getBoundingClientRect().top - outer.getBoundingClientRect().top + 2 :
+              inner.getBoundingClientRect().left - outer.getBoundingClientRect().left + 2;
           if (!this.scroller) {
-            this.scroller = new Scroller(el, '.second', this.animationManager);
+            this.scroller = new Scroller(el, '.second', this.animationManager, () => this.layout.mobile());
           }
           this.scroller.update(scrollOffset);
         }
@@ -93,10 +96,11 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   // }
 
   bgStyle(segment, offset) {
+    const deg = this.layout.mobile() ? -90 : 0;
     if (this.played(segment, offset)) {
-      return {'background-image': `linear-gradient(${segment.src.interviewee.color} 100%,transparent 0%)`};
+      return {'background-image': `linear-gradient(${deg}deg, ${segment.src.interviewee.color} 100%,transparent 0%)`};
     } else {
-      return {'background-image': `linear-gradient(${segment.src.interviewee.color} 50%,transparent 0%)`};
+      return {'background-image': `linear-gradient(${deg}deg, ${segment.src.interviewee.color} 50%,transparent 0%)`};
     }    
   }
 
