@@ -64,6 +64,7 @@ export class Scroller {
               ));
               animationManager.deregister(this.prefix + 'mousemove');
             });
+            animationManager.enable(this.prefix + 'mousemove');
           }
           animationManager.go();
         });
@@ -71,7 +72,6 @@ export class Scroller {
 
       // Smooth Scroll
       this.animationManager.register(this.prefix + 'smoothscroll', (x) => this.scrollSmoothly(x));
-      this.animationManager.disable(this.prefix + 'smoothscroll');
     }
   
     scrollEnded() {

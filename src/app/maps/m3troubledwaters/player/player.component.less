@@ -87,6 +87,7 @@
                 margin-right: 32px;
             });
             align-items: center;
+            pointer-events: none;
 
             .photo {
                 display: block;
@@ -112,19 +113,20 @@
                 display: flex;
                 flex-flow: row-reverse;
                 align-items: center;
-                pointer-events: all;
+                pointer-events: none;
 
                 .info {
                     position: absolute;
                     top: 0;
                     right: 0;
-                    padding-right: 48px;
                     flex: 1 0 auto;
                     display: flex;
                     padding: 8px;
+                    padding-right: 48px;
                     background: #E6E6E6;
                     border-radius: 3px;
                     height: @badges-height;
+                    pointer-events: all;
 
                     &.small {
                         flex-direction: column;

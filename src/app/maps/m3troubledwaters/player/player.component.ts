@@ -27,11 +27,9 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   player: Player = null;
   players = {};
   expanded = -1;
-
-  clock = '14:06';
   // observer: IntersectionObserver;
 
-  constructor(public troubledWaters: TroubledwatersService, private playerService: PlayerService,
+  constructor(public troubledWaters: TroubledwatersService, public playerService: PlayerService,
               private animationManager: AnimationManagerService, private layout: LayoutService) {
     troubledWaters.data.pipe(
       first(),
@@ -65,7 +63,6 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
               }
             }
           });
-          animationManager.disable('player:scroll');
         });
         fromEvent(el, 'scroll').subscribe((event) => {
           animationManager.enable('player:scroll')
@@ -80,11 +77,11 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           this.segment = segment;
           this.intervieweeColor = segment.interviewee.color;
           this.initPlayer();
-          if (this.troubledWaters.playing) {
-            this.player.seekTime(offset).then(() => {
+          this.player.seekTime(offset).then(() => {
+            if (this.troubledWaters.playing) {
               this.player.play();
-            });
-          }
+            }
+          });
         } else {
           if (this.player.audio && Math.abs(offset - this.player.audio.currentTime) > 2) {
             this.player.seekTime(offset);
@@ -125,8 +122,10 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   play() {
-    this.player.play();
-    this.troubledWaters.playing = true;
+    if (this.player !== null) {
+      this.player.play();
+      this.troubledWaters.playing = true;  
+    }
   }
 
   initPlayer() {
@@ -139,13 +138,6 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     if (!this.player) {
       const player = new Player(this.segment.audio_s3url || this.segment.audio, this.playerService);
       player.hiResTimestamp.subscribe((offset) => {
-        const left = Math.floor(offset/10); // Math.floor(this.segment.duration) - offset;
-        this.clock = '' + left % 60
-        if (this.clock.length == 1) {
-          this.clock = '0' + this.clock;
-        }
-        this.clock = Math.floor(left/60) + ':' + this.clock;
-
         if (player !== this.player) {
           return;
         }

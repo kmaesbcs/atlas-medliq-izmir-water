@@ -13,7 +13,7 @@ export class AnimationManagerService {
 
   register(id, handler) {
     this.handlers[id] = handler;
-    this.enabled[id] = true;
+    this.enabled[id] = false;
   }
 
   enable(id) {

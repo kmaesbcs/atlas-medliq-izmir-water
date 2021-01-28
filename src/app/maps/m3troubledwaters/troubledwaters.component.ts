@@ -5,6 +5,7 @@ import { FeatureCollection, Feature, Point } from 'geojson';
 import { first } from 'rxjs/operators';
 import { MapService } from 'src/app/map.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LayoutService } from 'src/app/layout.service';
 
 @Component({
   selector: 'app-troubledwaters',
@@ -20,15 +21,16 @@ export class TroubledwatersComponent implements OnInit {
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
 
   constructor(private troubledWaters: TroubledwatersService, private map: MapService,
-              private router: Router, private activatedRoute: ActivatedRoute) { }
+              private router: Router, private activatedRoute: ActivatedRoute,
+              private layout :LayoutService) { }
 
   ngOnInit(): void {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj',
+      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
       minZoom: 3,
     });
-    this.theMap.on('style.load', () => {
+    this.theMap.on('load', () => {
       this.theMap.setLayoutProperty('trouble-waters-points', 'visibility', 'visible');
       this.theMap.setLayoutProperty('trouble-waters-markers', 'visibility', 'visible');
       this.initialize();
@@ -60,56 +62,64 @@ export class TroubledwatersComponent implements OnInit {
 
   initializeMarkers() {
     const LAYER_NAME = 'trouble-waters-points';
-    const SOURCE_NAME = 'markers';
+    const MARKER_LAYER_NAME = 'trouble-waters-markers';
+    const SOURCE_NAME: string = (this.theMap.getLayer(LAYER_NAME) as mapboxgl.CircleLayer).source as string;
+    const SOURCE_LAYER_NAME: string = (this.theMap.getLayer(LAYER_NAME) as mapboxgl.CircleLayer)['sourceLayer'] as string;
     this.troubledWaters.data.pipe(first()).subscribe((data) => {
       const markers: FeatureCollection = {
         type: 'FeatureCollection',
         features: []
       };
-      data.forEach((segment) => {
-        segment.audio_timestamps.forEach((timestamp) => {
-          timestamp.segment = segment.id;
-          if (timestamp.coordinates) {
-            const feature: Feature = {
-              type: 'Feature',
-              properties: timestamp,
-              geometry: {
-                type: 'Point',
-                coordinates: [timestamp.coordinates[1], timestamp.coordinates[0]]
-              } as Point,
-              id: markers.features.length + 1
-            };
-            markers.features.push(feature);  
-          }
-        });
+      this.theMap.querySourceFeatures(SOURCE_NAME, {sourceLayer: SOURCE_LAYER_NAME}).forEach((feature, i) => {
+        feature.id = i+1
+        markers.features.push(feature);
       });
-      this.theMap.addSource(SOURCE_NAME, {
+      this.theMap.addSource(SOURCE_LAYER_NAME, {
         type: 'geojson', data: markers
       });
-      this.map.setLayerSource(this.theMap, LAYER_NAME, SOURCE_NAME);
+      this.map.setLayerSource(this.theMap, LAYER_NAME, SOURCE_LAYER_NAME);
 
       let hoveredStateId = null;
       this.theMap.on('mouseover', LAYER_NAME, (e) => {
         this.theMap.getCanvas().style.cursor = 'pointer';
-        var features = this.theMap.queryRenderedFeatures(e.point);
+        const features = this.theMap.queryRenderedFeatures(e.point);
         if (features.length > 0 && features[0].layer.id === LAYER_NAME) {
+          const feature = features[0];
           if (hoveredStateId) {
-            this.theMap.setFeatureState({source: SOURCE_NAME, id: hoveredStateId}, {hover: false});
+            this.theMap.setFeatureState({source: SOURCE_LAYER_NAME, id: hoveredStateId}, {hover: false});
           }
-          hoveredStateId = features[0].id;
-          this.theMap.setFeatureState({source: SOURCE_NAME, id: hoveredStateId}, {hover: true});
+          hoveredStateId = feature.id;
+          const name = feature.properties.name;
+          let timestampId = this.theMap.getFeatureState({source: SOURCE_LAYER_NAME, id: hoveredStateId}).timestamp;
+
+          if (!timestampId) {
+            data.forEach((segment) => {
+              segment.audio_timestamps.forEach((timestamp) => {
+                if (!timestampId && timestamp.filter && timestamp.filter.map(x => '' + x).indexOf('' + name) >= 0) {
+                  timestampId = timestamp.id;
+                  this.theMap.setFeatureState({source: SOURCE_LAYER_NAME, id: hoveredStateId}, {
+                    timestamp: timestampId,
+                    color: segment.interviewee.color
+                  });
+                }
+              });
+            });  
+          }
+    
+          this.theMap.setFeatureState({source: SOURCE_LAYER_NAME, id: hoveredStateId}, {hover: true});
         }
       });      
       this.theMap.on('click', LAYER_NAME, (e) => {
         var features = this.theMap.queryRenderedFeatures(e.point);
         if (features.length > 0 && features[0].layer.id === LAYER_NAME) {
-          this.setPosition(null, features[0].properties.id, null);
+          const timestamp = this.theMap.getFeatureState({source: SOURCE_LAYER_NAME, id: features[0].id}).timestamp;
+          this.setPosition(null, timestamp);
         }
       });
-      this.theMap.on('mouseleave', LAYER_NAME, () => {
+      this.theMap.on('mouseleave', LAYER_NAME, (e) => {
         this.theMap.getCanvas().style.cursor = '';
         if (hoveredStateId) {
-          this.theMap.setFeatureState({source: SOURCE_NAME, id: hoveredStateId}, {hover: false});
+          this.theMap.setFeatureState({source: SOURCE_LAYER_NAME, id: hoveredStateId}, {hover: false});
         }
         hoveredStateId = null;
       });
@@ -126,6 +136,9 @@ export class TroubledwatersComponent implements OnInit {
       this.currentTimestamp = timestamp.id;
       const flyTo = this.map.parseMapView(timestamp);
       if (flyTo) {
+        if (this.layout.mobile()) {
+          flyTo.zoom -= 1;
+        }
         this.theMap.flyTo(flyTo);
       }
       this.theMap.setFilter('trouble-waters-markers', [

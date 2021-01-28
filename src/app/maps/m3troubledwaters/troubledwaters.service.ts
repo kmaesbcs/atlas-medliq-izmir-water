@@ -76,13 +76,16 @@ export class TroubledwatersService {
   }
 
   fetchAudioTimestamps() {
-    return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website', null, ['name', 'timestamp', 'coordinates', 'geo', 'speed', 'curve', 'filter']).pipe(
+    return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website', null, ['name', 'timestamp', 'coordinates', 'geo', 'speed', 'curve', 'filter', 'segment']).pipe(
       tap((resp: any) => {
         resp.records.map((rec) => {
           if (rec.fields.coordinates) {
             rec.fields.coordinates = rec.fields.coordinates.split(',').map(parseFloat);
           }
           rec.fields.timestamp *= 10;
+          if (rec.fields.segment && rec.fields.segment.length) {
+            rec.fields.segment = rec.fields.segment[0];
+          }
           return rec;  
         });
       }),

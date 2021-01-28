@@ -60,7 +60,7 @@
                          [class.visible]='idx === segmentIndex'
                 >
                         <div class='clock' [style.border-color]='segment.interviewee.color'>
-                            <span>{{clock}}</span>
+                            <span>{{playerService.clock | async}}</span>
                         </div>
                         <div class='caret' (click)='expanded = expanded >= 0 ? -1 : idx'>
                             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
