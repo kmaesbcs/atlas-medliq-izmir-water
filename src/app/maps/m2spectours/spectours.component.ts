@@ -43,7 +43,7 @@ export class SpecToursComponent implements OnInit {
   ngOnInit(): void {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/ckiodibg82x1k17tcof8e9pmd/draft',
+      style: 'mapbox://styles/atlasmedliq/ckiodibg82x1k17tcof8e9pmd',
       minZoom: 3,
     });
     this.theMap.on('style.load', () => {
