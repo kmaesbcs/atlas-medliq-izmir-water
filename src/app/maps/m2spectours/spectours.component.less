@@ -31,5 +31,32 @@
             .no-scrollbars;
             z-index: 10;
         }
+
+        app-spectours-infobar {
+            position: absolute;
+            .desktop({
+                top: 0;
+                right: 8px;
+                height: 100%;
+                width: auto;
+                transform: translateX(100vw);
+                &.open {
+                    transform: translateX(0);
+                }
+            });
+            .mobile({
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                transform: translateY(100%);
+                &.open {
+                    transform: translateY(0);
+                }
+            });
+            transition-property: transform;
+            transition-duration: 500ms;
+            z-index: 20;
+        }    
     }
 }

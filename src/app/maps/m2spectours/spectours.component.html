@@ -13,6 +13,7 @@
                 ></app-spectours-timeline-content>
             </ng-container>
         </div>
+        <app-spectours-infobar [class.open]='info' (close)='info = false'></app-spectours-infobar>
     </div>
     <div class='header-title'>
         <h2>Speculative Tourism / </h2>

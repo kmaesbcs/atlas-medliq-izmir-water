@@ -23,6 +23,7 @@ import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.
 import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timeline/timeline.component';
 import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/player.component';
 import { Router } from '@angular/router';
+import { SpectoursInfobarComponent } from './maps/m2spectours/spectours-infobar/spectours-infobar.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { Router } from '@angular/router';
     TroubledwatersComponent,
     TroubledwatersTimelineComponent,
     TroubledwatersPlayerComponent,
+    SpectoursInfobarComponent,
   ],
   imports: [
     BrowserModule,
