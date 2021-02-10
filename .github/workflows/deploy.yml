@@ -24,13 +24,42 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '10'
-      - name: npm requirements
-        run: npm install
+      - name: requirements
+        run: |
+          npm install &&\
+          pip install jinja-cli
       - name: git identity
         run: |
           git config user.email "adam.kariv@gmail.com"
           git config user.name "Adam Kariv"
+      - name: build
+        run: |
+          git checkout master
+          (git branch -D dist || true)
+          git checkout -b dist
+          rm .gitignore
+          npm run prod
+          mkdir dist/atlas-medliq/m1
+          mkdir dist/atlas-medliq/m2
+          mkdir dist/atlas-medliq/m3
+          jinja -d data/social-m1.json -o dist/atlas-medliq/m1/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-m2.json -o dist/atlas-medliq/m2/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-m3.json -o dist/atlas-medliq/m3/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-main.json -o dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
+          mv dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
+          cp dist/atlas-medliq/index.html dist/atlas-medliq/404.html
+          cp CNAME dist/atlas-medliq/
       - name: deploy
         env:
           AIRTABLE_APIKEY: ${{ secrets.AIRTABLE_APIKEY }}
-        run: ./deploy.sh
+        run: |
+          git add dist/atlas-medliq && \
+          git commit -m dist && \
+          (git branch -D gh-pages || true) && \
+          git subtree split --prefix dist/atlas-medliq -b gh-pages && \
+          git push -f origin gh-pages:gh-pages && \
+          git checkout master && \
+          git branch -D gh-pages && \
+          git branch -D dist && \
+          git checkout . && \
+          git push        

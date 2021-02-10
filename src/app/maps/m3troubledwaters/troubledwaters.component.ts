@@ -36,7 +36,7 @@ export class TroubledwatersComponent implements OnInit {
       this.theMap.setLayoutProperty('trouble-waters-points', 'visibility', 'visible');
       this.theMap.setLayoutProperty('trouble-waters-markers', 'visibility', 'visible');
       if (this.layout.mobile()) {
-        this.theMap.setPadding({top: 0, left: 0, right: 0, bottom: 180});
+        this.theMap.setPadding({top: 20, left: 20, right: 20, bottom: 180});
       }
       this.initialize();
     });

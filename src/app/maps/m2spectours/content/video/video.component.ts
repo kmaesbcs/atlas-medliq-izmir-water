@@ -40,7 +40,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    console.log('INIT YOUTUBE', this.frame.nativeElement, this.item.youtube_video_id);
+    // console.log('INIT YOUTUBE', this.frame.nativeElement, this.item.youtube_video_id);
     const el = this.frame.nativeElement as HTMLElement;
     const width = Math.min(el.offsetWidth, 640);
     const height = (width * 3) / 4;
@@ -50,7 +50,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges {
       width: width + 'px',
       events: {
         onReady: () => {
-          console.log('YOUTUBE READY');
+          // console.log('YOUTUBE READY');
           this.playerReady.next();
           this.playerReady.complete();
         }

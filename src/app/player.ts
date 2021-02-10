@@ -83,16 +83,20 @@ export class Player {
                 filter((x) => x),
                 first()
             ).subscribe(() => {
-                this.playerService.playing(this);
-                this.audio.play();
+                if (this.audio) {
+                    this.playerService.playing(this);
+                    this.audio.play();    
+                }
             });
         }
     }
 
     pause() {
         if (this.playing.getValue()) {
-            this.audio.pause();
-            this.playerService.stopped(this);
+            if (this.audio) {
+                this.audio.pause();
+                this.playerService.stopped(this);    
+            }
         }
     }
 
@@ -116,6 +120,9 @@ export class Player {
     }
 
     updateTextTimestamp() {
+        if (!Number.isFinite(this.audio.duration)) {
+            return;
+        }
         const left = Math.floor(this.audio.duration - this.audio.currentTime);
         let textTimestamp = '' + (left % 60);
         if (textTimestamp.length < 2) {

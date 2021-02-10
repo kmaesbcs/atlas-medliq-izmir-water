@@ -9,7 +9,7 @@
         <svg class='icon pause' 
              [attr.width]="layout.desktop() ? 32 : 24" 
              [attr.height]="layout.desktop() ? 32 : 24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-             *ngIf='troubledWaters.playing' (click)='pause()'>
+             *ngIf='playerService.isPlaying.getValue()' (click)='pause()'>
             <path [attr.fill]='intervieweeColor' d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"/>
             <mask id="path-2-inside-1" fill="white">
                 <rect x="9.06689" y="8.61523" width="5.33333" height="15.3846" rx="1"/>
@@ -24,7 +24,7 @@
             [attr.width]="layout.desktop() ? 32 : 24" 
             [attr.height]="layout.desktop() ? 32 : 24" 
             viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-             *ngIf='!troubledWaters.playing' (click)='play()'>
+             *ngIf='!playerService.isPlaying.getValue()' (click)='play()'>
             <path [attr.fill]='intervieweeColor' d="M0 16C0 7.16344 7.16344 0 16 0V0C24.8366 0 32 7.16344 32 16V16C32 24.8366 24.8366 32 16 32V32C7.16344 32 0 24.8366 0 16V16Z"/>
             <path d="M24.2568 16.0121L11.551 23.3408C11.3843 23.4369 11.1761 23.3167 11.1761 23.1243L11.1761 8.46679C11.1761 8.27439 11.3843 8.1541 11.551 8.25023L24.2568 15.579C24.4236 15.6752 24.4236 15.9159 24.2568 16.0121Z" fill="white" stroke="white" stroke-width="1.5"/>
         </svg>

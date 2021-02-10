@@ -115,10 +115,10 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
 
   initPlayer() {
     if (this.player !== null) {
-      console.log('cleanup PLAYER', this.player.url);
+      // console.log('cleanup PLAYER', this.player.url);
       this.player.pause();
     }
-    console.log('init PLAYER', this.segment.audio);
+    // console.log('init PLAYER', this.segment.audio);
     this.player = this.players[this.segment.audio];
     if (!this.player) {
       const player = new Player(this.segment.audio_s3url || this.segment.audio, this.playerService);

@@ -26,7 +26,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.activeDetector.detected.subscribe((active) => {
-      console.log('CONTENT ACTIVE', active, this.item);
+      // console.log('CONTENT ACTIVE', active, this.item);
       this.active = active;
       if (active) {
         this.handleGeo();
@@ -34,7 +34,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       }
     });
     this.visibleDetector.detected.subscribe((visible) => {
-      console.log('CONTENT VISIBLE', visible, this.item);
+      // console.log('CONTENT VISIBLE', visible, this.item);
       this.contentVisible = this.contentVisible || visible;
     });
     if (this.item.content && this.item.content.length) {

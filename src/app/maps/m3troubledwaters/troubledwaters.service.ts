@@ -73,7 +73,7 @@ export class TroubledwatersService {
         return {segment, timestamp, offset, who};
       })
     ).subscribe(({segment, timestamp, offset, who}) => {
-      console.log('SET POSITION BY', who, ':', segment.id, timestamp.id, offset);
+      // console.log('SET POSITION BY', who, ':', segment.id, timestamp.id, offset);
       this.position.next({segment, timestamp, offset})
     });
   }
@@ -113,7 +113,6 @@ export class TroubledwatersService {
       switchMap((settings: any) => {
         this.TITLE = settings.title;
         this.ABOUT = settings.about;
-        console.log('ABOUT', this.ABOUT);
         return forkJoin([
           this.fetchSegments(),
           this.fetchAudioTimestamps(),
