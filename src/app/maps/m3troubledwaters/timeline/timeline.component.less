@@ -107,11 +107,20 @@
     width: 100vw;
     overflow-x: scroll;
     align-items: stretch;
+    height: 64px;
+    transition-property: height;
+    transition-duration: 500ms;
+    &.expanded {
+        height: 160px;
+        .bio-container .bio-inner .header .caret svg {
+            transform:rotate(90deg);
+        }
+    }
     
     .bio-container {
         flex: 0 0 auto;
         width: 100vw;
-        min-height: 100%;
+        height: 100%;
         padding: 4px 8px 8px 8px;
 
         .bio-inner {
@@ -121,6 +130,7 @@
             flex-flow: column;
             background: #E6E6E6;
             padding: 8px 0 8px 16px;
+            overflow: hidden;
 
             .header {
                 display: flex;
@@ -166,6 +176,9 @@
                     justify-content: center;
                     svg {
                         transform: rotate(-90deg);
+                        transition-property: transform;
+                        transition-duration: 500ms;
+                        cursor: pointer;
                     }
                 }
             }

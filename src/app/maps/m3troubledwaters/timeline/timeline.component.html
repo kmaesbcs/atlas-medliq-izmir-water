@@ -1,6 +1,6 @@
-<div class='bios' #bios>
+<div class='bios' #bios [class.expanded]='expanded'>
     <div class='bio-container' *ngFor='let segment of segments' [attr.data-segment]='segment.id'>
-        <div class='bio-inner' [style.color]='segment.interviewee.color'>
+        <div class='bio-inner' [style.color]='segment.interviewee.color' >
             <div class='header'>
                 <div class='basic'>
                     <div class='name'>{{segment.interviewee.name}}</div>
@@ -9,7 +9,7 @@
                 <div class='clock' [style.border-color]='segment.interviewee.color'>
                     <span>{{playerService.clock | async}}</span>
                 </div>
-                <div class='caret'>
+                <div class='caret' (click)='expanded = !expanded'>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0)">
                             <path d="M8.5 0.25L3.5 5L8.5 9.625" [attr.stroke]="segment.interviewee.color" stroke-width="1.5"/>

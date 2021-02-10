@@ -14,13 +14,14 @@ export class Scroller {
     dragStart = 0;
     _scrolling = false;
     prefix = '';
+    duration = 1000;
     mmSub: Subscription;
   
     constructor(private el: HTMLElement, private itemSelector, private animationManager: AnimationManagerService,
                 private horizontal: () => boolean) {
       let wheelTimer = null;
       this.prefix = `scroller:${itemSelector}:`;
-
+      this.duration = horizontal() ? 500 : 1000;
       // Wheel Event
       animationManager.register(this.prefix + 'wheel', () => {
         this.scrolling = true;
@@ -109,8 +110,8 @@ export class Scroller {
       if (this.done) {
         return;
       }
-      if (timestamp - this.startingTime <= 1000) {
-        let target = this.startingOffset + (this.offset - this.startingOffset) * (timestamp - this.startingTime) / 1000;
+      if (timestamp - this.startingTime <= this.duration) {
+        let target = this.startingOffset + (this.offset - this.startingOffset) * (timestamp - this.startingTime) / this.duration;
         target = Math.ceil(target);
         if (Math.abs(target - this.scrollTop) > 0) {
           if (!this.scrolling && !this.dragging) {

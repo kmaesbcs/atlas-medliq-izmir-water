@@ -21,6 +21,7 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   scroller: Scroller = null;
   bioScroller: Scroller = null;
   bioSelector: string = null;
+  expanded = false;
 
   @ViewChild('timeline', {static: true}) timeline: ElementRef;
   @ViewChild('bios', {static: true}) bios: ElementRef;
