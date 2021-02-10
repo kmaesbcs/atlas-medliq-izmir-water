@@ -11,7 +11,7 @@ export class Player {
     ready = new BehaviorSubject<boolean>(false); 
     hiResTimestamp = new BehaviorSubject<number>(0); 
     timestamp = new BehaviorSubject<number>(0);
-    textTimestamp = new BehaviorSubject<string>('00:00');
+    textTimestamp = new BehaviorSubject<string>('');
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
 
@@ -19,6 +19,7 @@ export class Player {
         this.audio = new Audio(url);
         fromEvent(this.audio, 'canplaythrough').pipe(first()).subscribe(() => {
             this.ready.next(true);
+            this.updateTextTimestamp();
         });
         this.subscriptions.push(...[
             fromEvent(this.audio, 'play').subscribe(() => {
@@ -48,18 +49,7 @@ export class Player {
                         }
                     }
                     const timestamp = Math.floor(this.audio.currentTime);
-                    if (timestamp !== this.timestamp.getValue()) {
-                        this.timestamp.next(timestamp);
-                        let textTimestamp = '' + (timestamp % 60);
-                        if (textTimestamp.length < 2) {
-                            textTimestamp = '0' + textTimestamp;
-                        }
-                        textTimestamp = Math.floor(timestamp / 60) + ':' +textTimestamp;
-                        if (textTimestamp.length < 5) {
-                            textTimestamp = '0' + textTimestamp;
-                        }
-                        this.textTimestamp.next(textTimestamp);
-                    }
+                    this.updateTextTimestamp();
                     return Math.round(this.audio.currentTime / this.audio.duration * 1000);
                 }),
                 distinctUntilChanged(),
@@ -122,6 +112,22 @@ export class Player {
         }
         while (this.subscriptions.length > 0) {
             this.subscriptions.shift().unsubscribe();
+        }
+    }
+
+    updateTextTimestamp() {
+        const left = Math.floor(this.audio.duration - this.audio.currentTime);
+        let textTimestamp = '' + (left % 60);
+        if (textTimestamp.length < 2) {
+            textTimestamp = '0' + textTimestamp;
+        }
+        textTimestamp = Math.floor(left / 60) + ':' +textTimestamp;
+        if (textTimestamp.length < 5) {
+            textTimestamp = '0' + textTimestamp;
+        }
+        textTimestamp = '-' + textTimestamp;
+        if (textTimestamp !== this.textTimestamp.getValue()) {
+            this.textTimestamp.next(textTimestamp);
         }
     }
 }

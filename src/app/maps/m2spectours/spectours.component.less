@@ -10,6 +10,11 @@
         position: relative;
         overflow: hidden;
         
+        .desktop({
+            display: flex;
+            flex-flow: row;        
+        });
+
         .map {
             position: absolute;
             top: 0;
@@ -33,18 +38,20 @@
         }
 
         app-spectours-infobar {
-            position: absolute;
             .desktop({
                 top: 0;
-                right: 8px;
+                margin: 0 4px;
                 height: 100%;
-                width: auto;
-                transform: translateX(100vw);
+                transform: translateX(100%);
+                width: 360px;
+                margin-left: -354px;
                 &.open {
+                    margin-left: 4px;
                     transform: translateX(0);
                 }
             });
             .mobile({
+                position: absolute;;
                 bottom: 0;
                 right: 0;
                 width: 100%;
@@ -54,7 +61,7 @@
                     transform: translateY(0);
                 }
             });
-            transition-property: transform;
+            transition-property: transform margin-left;
             transition-duration: 500ms;
             z-index: 20;
         }    

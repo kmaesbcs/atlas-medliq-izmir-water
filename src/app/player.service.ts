@@ -24,17 +24,8 @@ export class PlayerService {
     if (this.clockSub) {
       this.clockSub.unsubscribe();
     }
-    this.clockSub = player.hiResTimestamp.subscribe((offset) => {
-      const left = Math.floor(offset/10); // Math.floor(this.segment.duration) - offset;
-      let clock = '' + left % 60
-      if (clock.length == 1) {
-        clock = '0' + clock;
-      }
-      clock = Math.floor(left/60) + ':' + clock;
-      if (clock.length < 5) {
-        clock = '0' + clock;
-      }
-      this.clock.next(clock);
+    this.clockSub = player.textTimestamp.subscribe((ts) => {
+      this.clock.next(ts);
     })
   }
 

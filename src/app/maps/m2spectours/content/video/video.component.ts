@@ -25,14 +25,14 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.active) {
       this.playerReady.pipe(first())
       .subscribe(() => {
-        if (this.player.getPlayerState() !== YT.PlayerState.PLAYING) {
+        if (this.active && this.player.getPlayerState() !== YT.PlayerState.PLAYING) {
           this.player.playVideo();
         }
       });  
     } else {
       this.playerReady.pipe(first())
       .subscribe(() => {
-        if (this.player.getPlayerState() === YT.PlayerState.PLAYING) {
+        if (!this.active && this.player.getPlayerState() !== YT.PlayerState.PAUSED && this.player.getPlayerState() !== YT.PlayerState.ENDED) {
           this.player.pauseVideo();
         }
       });  

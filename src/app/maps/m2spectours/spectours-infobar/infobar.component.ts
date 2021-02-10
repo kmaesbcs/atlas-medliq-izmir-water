@@ -1,4 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SpecToursService } from '../spectours.service';
+
+import * as marked from 'marked'
 
 @Component({
   selector: 'app-spectours-infobar',
@@ -8,8 +11,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class SpectoursInfobarComponent implements OnInit {
 
   @Output() close = new EventEmitter();
+  
+  marked = marked;
 
-  constructor() { }
+  constructor(public spectours: SpecToursService) { }
 
   ngOnInit(): void {
   }

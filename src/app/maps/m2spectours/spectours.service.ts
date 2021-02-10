@@ -13,8 +13,22 @@ export class SpecToursService {
   BASE = 'appk4QxOhg2XleeTM';
   YEAR_START = 1901;
   YEAR_END = 2100;
+  YEAR_CURRENT = 2050;
+  ABOUT = '';
 
   constructor(private api: ApiService, private map: MapService) { }
+
+  fetchSettings() {
+    return this.api.airtableFetch(this.BASE, 'Settings', 'website').pipe(
+      map((response: any) => {
+        const ret = {};
+        response.records.forEach((i) => {
+          ret[i.fields.key] = i.fields.value;
+        });
+        return ret;
+      })
+    );
+  }
 
   fetchAudioTimestamps() {
     return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website').pipe(this.api.airtableToMapping());
@@ -62,8 +76,12 @@ export class SpecToursService {
   }
 
   fetchData() {
-    return from([true]).pipe(
-      switchMap(() => {
+    return this.fetchSettings().pipe(
+      switchMap((settings) => {
+        this.YEAR_START = parseInt(settings['from year']);
+        this.YEAR_END = parseInt(settings['to year']);
+        this.YEAR_CURRENT = parseInt(settings['start year']);
+        this.ABOUT = settings['about'];
         return forkJoin([
           this.fetchAudioTimestamps(),
           this.fetchContent(),
