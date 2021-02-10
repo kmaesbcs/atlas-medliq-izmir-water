@@ -124,7 +124,7 @@
                     padding: 8px;
                     padding-right: 48px;
                     background: #E6E6E6;
-                    border-radius: 3px;
+                    border-radius: 4px;
                     height: @badges-height;
                     pointer-events: all;
 
@@ -136,7 +136,7 @@
                     &.big {
                         flex-direction: row-reverse;
                         align-items: center;
-                        width: 120px;
+                        width: 132px;
                         z-index: 2;
                     }
                     &.big-extra {
@@ -158,8 +158,9 @@
                             left: 0;
                             z-index: 2;
 
-                            padding: 0 18px;
+                            padding: 0 8px;
                             background: #E6E6E6;
+                            border-radius: 4px;
 
                             .base-info-content {
                                 display: flex;
@@ -180,6 +181,7 @@
                                 transform: translateY(-100%);
                                 background: #E6E6E6;
                                 padding: 8px;
+                                border-radius: 4px;
 
                                 .bio {
                                     .font-manrope;
@@ -237,7 +239,8 @@
                         svg {
                             transform: rotate(0deg);
                             transition-property: transform;
-                            transition-duration: 500ms;    
+                            transition-duration: 500ms;
+                            transition-delay: 500ms;
                         }
                     }
 
@@ -283,6 +286,9 @@
 
             &:hover {
                 .badges {
+                    .info .caret svg {
+                        transition-delay: 0s;
+                    }
                     .info.small.visible {
                         transform: translateX(0);
                     }
@@ -298,7 +304,7 @@
                             transform: rotate(90deg);
                         }
                         .info.big-extra .extended-info .extended-info-content {
-                            transform: translateY(0);
+                            transform: translateY(-8px);
                         }
                     }    
                 }
@@ -308,11 +314,11 @@
         .filler {
             .desktop({
                 width: 1px;
-                flex: 0 0 ~'calc(50% - 32px)';
+                flex: 0 0 ~'calc(50% - 64px)';
             });
             .mobile({
                 height: 1px;
-                flex: 0 0 ~'calc(50vw - 20px)';
+                flex: 0 0 ~'calc(50vw - 40px)';
             });
         }    
     }

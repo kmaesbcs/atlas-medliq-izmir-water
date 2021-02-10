@@ -29,6 +29,8 @@ export class TroubledwatersComponent implements OnInit {
       container: this.mapEl.nativeElement,
       style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
       minZoom: 3,
+      logoPosition: this.layout.desktop() ? 'bottom-left' : 'top-left',
+      attributionControl: false,
     });
     this.theMap.on('load', () => {
       this.theMap.setLayoutProperty('trouble-waters-points', 'visibility', 'visible');

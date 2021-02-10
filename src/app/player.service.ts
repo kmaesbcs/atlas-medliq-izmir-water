@@ -35,7 +35,7 @@ export class PlayerService {
       if (this.clockSub) {
         this.clockSub.unsubscribe();
         this.clockSub = null;
-        this.clock.next('');
+        // this.clock.next('');
       }
     }
   }

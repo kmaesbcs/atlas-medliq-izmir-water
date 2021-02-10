@@ -1,5 +1,5 @@
 import { debounceTime, filter, sampleTime, tap } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { AnimationManagerService } from '../../animation-manager.service';
 import { LayoutService } from 'src/app/layout.service';
 
@@ -14,6 +14,7 @@ export class Scroller {
     dragStart = 0;
     _scrolling = false;
     prefix = '';
+    mmSub: Subscription;
   
     constructor(private el: HTMLElement, private itemSelector, private animationManager: AnimationManagerService,
                 private horizontal: () => boolean) {
@@ -44,30 +45,37 @@ export class Scroller {
           if (ev.button === 0) {
             this.dragDiff = this.scrollTop + this.eventCoord(ev);
             this.dragStart = performance.now();
-            this.dragging = true;  
+            this.dragging = true;
+            if (this.mmSub) {
+              this.mmSub.unsubscribe();
+            }
+            this.mmSub = fromEvent(el, 'mousemove').subscribe((ev: MouseEvent) => {
+              if (this.dragging) {
+                animationManager.register(this.prefix + 'mousemove', () => {
+                  this.el.scrollTo(this.scrollToOptions(
+                    -this.eventCoord(ev) + this.dragDiff
+                  ));
+                  animationManager.deregister(this.prefix + 'mousemove');
+                });
+                animationManager.enable(this.prefix + 'mousemove');
+                animationManager.go();
+              }
+            });    
           }
         });
         fromEvent(el, 'mouseup').subscribe(() => {
           const now = performance.now();
-          this.dragging = false;
           if (this.dragging && now - this.dragStart > 200) {
             this.scrollEnded();  
+          }
+          this.dragging = false;
+          if (this.mmSub) {
+            this.mmSub.unsubscribe();
+            this.mmSub = null;
           }
         });
 
         // Mouse Move Event
-        fromEvent(el, 'mousemove').subscribe((ev: MouseEvent) => {
-          if (this.dragging) {
-            animationManager.register(this.prefix + 'mousemove', () => {
-              this.el.scrollTo(this.scrollToOptions(
-                -this.eventCoord(ev) + this.dragDiff
-              ));
-              animationManager.deregister(this.prefix + 'mousemove');
-            });
-            animationManager.enable(this.prefix + 'mousemove');
-          }
-          animationManager.go();
-        });
       }
 
       // Smooth Scroll
@@ -121,8 +129,8 @@ export class Scroller {
       }
     }
   
-    update(offset) {
-      if (this.scrollTop === offset) {
+    update(offset, force=false) {
+      if (this.scrollTop === offset && !force) {
         return;
       }
       this.offset = offset;

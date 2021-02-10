@@ -11,7 +11,7 @@ export class Player {
     ready = new BehaviorSubject<boolean>(false); 
     hiResTimestamp = new BehaviorSubject<number>(0); 
     timestamp = new BehaviorSubject<number>(0);
-    textTimestamp = new BehaviorSubject<string>('');
+    textTimestamp = new BehaviorSubject<string>('-00:00');
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
 

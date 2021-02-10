@@ -4,6 +4,7 @@
             <div #mapEl></div>
         </div>
         <app-troubledwaters-timeline></app-troubledwaters-timeline>
+        <app-troubledwaters-infobar [class.open]='info' (close)='info = false'></app-troubledwaters-infobar>
     </div>
     <div class='header-title'>
         <h2>Troubled Waters / </h2>

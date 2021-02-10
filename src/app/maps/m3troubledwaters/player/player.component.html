@@ -60,9 +60,9 @@
                          [class.visible]='idx === segmentIndex'
                 >
                         <div class='clock' [style.border-color]='segment.interviewee.color'>
-                            <span>{{playerService.clock | async}}</span>
+                            <span>{{player?player.textTimestamp.getValue():''}}</span>
                         </div>
-                        <div class='caret' (click)='expanded = expanded >= 0 ? -1 : idx'>
+                    <div class='caret' (click)='expanded = expanded >= 0 ? -1 : idx'>
                             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0)">
                                     <path d="M8.5 0.25L3.5 5L8.5 9.625" [attr.stroke]="segment.interviewee.color" stroke-width="1.5"/>

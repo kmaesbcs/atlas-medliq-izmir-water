@@ -46,23 +46,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       tap((data) => {
         const el = this.interviewees.nativeElement as HTMLElement;
         this.animationManager.register('player:scroll', () => {
-          const center = this.layout.desktop() ? el.offsetHeight / 2 : el.offsetWidth / 2;
-          el.querySelectorAll('.interviewee > .photo').forEach((child: HTMLElement) => {
-            const childRect = child.getBoundingClientRect();                
-            const segmentId = child.getAttribute('data-segment-id');
-            for (const segment of this.segments) {
-              if (segment.id === segmentId) {
-                let ratio = 1;
-                if (this.layout.desktop()) {
-                  ratio = 1 - Math.abs((childRect.top + childRect.height/2) - center) / 64;
-                } else {
-                  ratio = 1 - Math.abs((childRect.left + childRect.width/2) - center) / 64;
-                }
-                if (ratio < 0) { ratio = 0; }
-                segment.size = this.playerSize * (1 + ratio);
-              }
-            }
-          });
+          this.updateBubbleSizes();
         });
         fromEvent(el, 'scroll').subscribe((event) => {
           animationManager.enable('player:scroll')
@@ -91,7 +75,8 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           const s = this.segments[idx];
           if (segment.id === s.id) {
             this.segmentIndex = idx;
-            this.scroller.update(this.offset(idx));  
+            this.updateBubbleSizes();
+            this.scroller.update(this.offset(idx));
           }
         }
       })
@@ -105,7 +90,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   offset(idx) {
-    return idx * (this.playerSize + 32) + this.playerSize/2;
+    return idx * (this.playerSize + 32);
   }
 
   ngAfterViewInit(): void {
@@ -163,5 +148,26 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
 
   get playerSize() {
     return this.layout.desktop() ? 64 : 40;
+  }
+
+  updateBubbleSizes() {
+    const el = this.interviewees.nativeElement as HTMLElement;
+    const edge = (this.layout.desktop() ? el.offsetHeight / 2 : el.offsetWidth / 2) - this.playerSize;
+    el.querySelectorAll('.interviewee > .photo').forEach((child: HTMLElement) => {
+      const childRect = child.getBoundingClientRect();                
+      const segmentId = child.getAttribute('data-segment-id');
+      for (const segment of this.segments) {
+        if (segment.id === segmentId) {
+          let ratio = 1;
+          if (this.layout.desktop()) {
+            ratio = 1 - (Math.abs(childRect.top - edge) / this.playerSize);
+          } else {
+            ratio = 1 - (Math.abs(childRect.left - edge) / this.playerSize);
+          }
+          if (ratio < 0) { ratio = 0; }
+          segment.size = this.playerSize * (1 + ratio);
+        }
+      }
+    });
   }
 }

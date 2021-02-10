@@ -17,8 +17,23 @@ export class TroubledwatersService {
   position = new ReplaySubject<Position>(1);
   playing = false;
 
+  TITLE = '';
+  ABOUT = '';
+
   constructor(private api: ApiService, private map: MapService) {
     this.fetchData();
+  }
+
+  fetchSettings() {
+    return this.api.airtableFetch(this.BASE, 'Settings', 'website').pipe(
+      map((response: any) => {
+        const ret = {};
+        response.records.forEach((i) => {
+          ret[i.fields.key] = i.fields.value;
+        });
+        return ret;
+      })
+    );
   }
 
   setPosition(options: {segment?: any, timestamp?: any, offset?: number, who?: string}) {
@@ -94,11 +109,17 @@ export class TroubledwatersService {
   }
 
   fetchData() {
-    return forkJoin([
-      this.fetchSegments(),
-      this.fetchAudioTimestamps(),
-      this.fetchInterviewees(),
-    ]).pipe(
+    return this.fetchSettings().pipe(
+      switchMap((settings: any) => {
+        this.TITLE = settings.title;
+        this.ABOUT = settings.about;
+        console.log('ABOUT', this.ABOUT);
+        return forkJoin([
+          this.fetchSegments(),
+          this.fetchAudioTimestamps(),
+          this.fetchInterviewees(),
+        ]);
+      }),
       map(([segments, audio_timestamps, interviewees]) => {
         for (const segment of segments) {
           segment.audio = segment.audio[0].url;
