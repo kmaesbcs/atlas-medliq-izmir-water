@@ -122,7 +122,8 @@ export class Player {
         if (!Number.isFinite(this.audio.duration)) {
             return;
         }
-        const left = Math.floor(this.audio.duration - this.audio.currentTime);
+        // const left = Math.floor(this.audio.duration - this.audio.currentTime);
+        const left = Math.floor(this.audio.currentTime);
         let textTimestamp = '' + (left % 60);
         if (textTimestamp.length < 2) {
             textTimestamp = '0' + textTimestamp;
@@ -131,7 +132,7 @@ export class Player {
         if (textTimestamp.length < 5) {
             textTimestamp = '0' + textTimestamp;
         }
-        textTimestamp = '-' + textTimestamp;
+        // textTimestamp = '-' + textTimestamp;
         if (textTimestamp !== this.textTimestamp.getValue()) {
             this.textTimestamp.next(textTimestamp);
         }
