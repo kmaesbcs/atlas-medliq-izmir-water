@@ -77,11 +77,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   intersection(entries: IntersectionObserverEntry[]) {
-    console.log('intersection', entries);
     const intersecting = entries.filter((x) => x.isIntersecting);
     if (intersecting.length) {
       this.active = parseInt(intersecting[0].target.getAttribute('data-index'));
     }
+    console.log('intersection', intersecting.length, this.active);
   }
 
   mapTransform(i) {
