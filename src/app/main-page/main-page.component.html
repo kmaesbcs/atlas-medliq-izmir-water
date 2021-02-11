@@ -34,7 +34,7 @@
         </div>
     </ng-container>
 
-    <ng-container *ngFor='let map of MAPS.reverse()'>
+    <ng-container *ngFor='let map of MAPS_REVERSE'>
         <div class='map' [class.active]='map.idx === active'
                          [style.transform]='mapTransform(map.idx)'>
             <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + ".png)"'></div>

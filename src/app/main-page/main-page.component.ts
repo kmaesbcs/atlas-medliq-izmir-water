@@ -15,6 +15,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   BASE = 'appDMYuX35cQbc97I';
 
   MAPS = [];
+  MAPS_REVERSE = [];
   SETTINGS: any = {};
 
   marked = marked;
@@ -36,6 +37,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
         })
         this.SETTINGS = _settings;
         this.MAPS.forEach((v, i) => { v.idx = i; });
+        this.MAPS_REVERSE = this.MAPS.reverse();
         console.log('MAPS', this.MAPS);
         console.log('SETTINGS', this.SETTINGS);
       }),
@@ -54,7 +56,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   initObserver() {
     const nel = (this.el.nativeElement as HTMLElement).querySelector('.viewport');
-    console.log('NEL', nel);
+    // console.log('NEL', nel);
     this.iobs = new IntersectionObserver(
       (entries) => { this.intersection(entries); },
       {
@@ -64,7 +66,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       }
     );
     nel.querySelectorAll('.slide').forEach((slide) => {
-      console.log('SLSL', slide);
+      // console.log('SLSL', slide);
       this.iobs.observe(slide);
     });
   }
@@ -81,7 +83,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     if (intersecting.length) {
       this.active = parseInt(intersecting[0].target.getAttribute('data-index'));
     }
-    console.log('intersection', intersecting.length, this.active);
+    // console.log('intersection', intersecting.length, this.active);
   }
 
   mapTransform(i) {
