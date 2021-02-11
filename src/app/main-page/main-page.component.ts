@@ -45,7 +45,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       })
     ).subscribe(() => { console.log('INIT'); });
     fromEvent(window, 'resize').subscribe(() => {
-      //
+      console.log('resize');
     });
   }
 
@@ -77,6 +77,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   intersection(entries: IntersectionObserverEntry[]) {
+    console.log('intersection');
     const intersecting = entries.filter((x) => x.isIntersecting);
     if (intersecting.length) {
       this.active = parseInt(intersecting[0].target.getAttribute('data-index'));
