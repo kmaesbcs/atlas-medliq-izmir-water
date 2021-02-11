@@ -34,8 +34,8 @@ export class AudioComponent implements OnInit, OnChanges, AfterViewInit{
         this.player.player.play();
         if (this.sub === null) {
           if (this.item.audio_timestamps && this.item.audio_timestamps.length) {
-            this.sub = this.player.player.timestamp.subscribe((timestamp) => {
-              const timestamps = this.item.audio_timestamps.filter((at) => at.timestamp === timestamp);
+            this.sub = this.player.player.hiResTimestamp.subscribe((timestamp) => {
+              const timestamps = this.item.audio_timestamps.filter((at) => at.timestamp * 10 === timestamp);
               if (timestamps.length && timestamps[0].map_view && timestamps[0].map_view.length) {
                 this.mapView.emit(timestamps[0].map_view[0]);
               }

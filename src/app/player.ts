@@ -10,7 +10,6 @@ export class Player {
     playing = new BehaviorSubject<boolean>(false); 
     ready = new BehaviorSubject<boolean>(false); 
     hiResTimestamp = new BehaviorSubject<number>(0); 
-    timestamp = new BehaviorSubject<number>(0);
     textTimestamp = new BehaviorSubject<string>('-00:00');
     position = new BehaviorSubject<number>(0); 
     ended = new Subject();; 
