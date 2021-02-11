@@ -1,0 +1,45 @@
+<div class='viewport'>
+    <div class='slide' data-index='-1'></div>
+    <div class='slide' *ngFor='let m of MAPS; let i = index' [attr.data-index]='i'></div>
+
+    <div class='layout-desktop title'>
+        <img src='assets/img/title-desktop.svg'>
+        <a class='link link-about' (click)='about = true'></a>
+        <a class='link link-collaborations' (click)='about = true'></a>
+    </div>
+
+    <img class='layout-mobile title' src='assets/img/title-mobile.svg'>
+
+    <div class='about general' [class.active]='-1 === active && about'>
+        <div class='title' [innerHtml]='"About"'></div>
+        <div class='description' [innerHtml]='marked(SETTINGS.About || "")'></div>
+        <div class='title' [innerHtml]='"Collaborations"'></div>
+        <div class='description' [innerHtml]='marked(SETTINGS.Collaborations || "")'></div>
+        <div class='title' [innerHtml]='"Credits"'></div>
+        <div class='description' [innerHtml]='marked(SETTINGS.Credits || "")'></div>
+    </div>
+
+    <div class='about subheading' [class.active]='-1 === active && !about'>
+        <div [innerHtml]='marked(SETTINGS.Subheading || "")'></div>
+    </div>
+
+    <img class='close-icon' src='assets/img/close-icon.svg' *ngIf='about' (click)='about = false'>
+
+    <ng-container *ngFor='let map of MAPS'>
+        <div class='about' [class.active]='map.idx === active'>
+            <a [href]='map.key'>
+                <div class='title' [innerHtml]='marked(map.title)'></div>
+                <div class='description' [innerHtml]='marked(map.description)'></div>    
+            </a>
+        </div>
+    </ng-container>
+
+    <ng-container *ngFor='let map of MAPS.reverse()'>
+        <div class='map' [class.active]='map.idx === active'
+                         [style.transform]='mapTransform(map.idx)'>
+            <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + ".png)"'></div>
+            <div class='title' [innerHtml]='marked(map.title)'></div>
+        </div>
+    </ng-container>
+
+</div>

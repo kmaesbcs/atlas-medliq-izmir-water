@@ -1,0 +1,184 @@
+@import '../../common.less';
+
+@desktop-padding-top: 120px;
+@desktop-padding-bottom: 270px;
+@desktop-padding: 50px;
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    .viewport {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        .no-scrollbars;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+
+        .slide {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .title {
+        &.layout-desktop {
+            position: fixed;
+            right: @desktop-padding;
+            bottom: 0;
+            width: calc(50% ~'-' @desktop-padding);
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .link {
+                cursor: pointer;
+                display: block;
+                position: absolute;
+                pointer-events: all;
+
+                &.link-about {
+                    width: 9%;
+                    height: 10%;
+                    top: 3%;
+                    left: 45%;
+                }
+                &.link-collaborations {
+                    width: 20%;
+                    height: 10%;
+                    top: 3%;
+                    left: 55%;
+                }
+            }
+        }
+        pointer-events: none;
+    }
+
+    .about {
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 250ms;
+        pointer-events: none;
+
+        &.active {
+            opacity: 1;
+            a {
+                pointer-events: all;
+            }
+        }
+
+        > a, a:hover, a:visited {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .desktop({
+            position: fixed;
+            left: 50%;
+            width: calc(50% ~'-' @desktop-padding);
+            height: calc(100vh ~'-' @desktop-padding-top - @desktop-padding-bottom);
+            overflow-y: scroll;
+            .no-scrollbars;
+            padding-right: 20%;
+            top: @desktop-padding-top;
+            color: @accent;
+            
+            .title {
+                .font-sourcecode;
+                font-weight: bold;
+                font-size: 14.5px;
+                line-height: 12px;
+                
+                text-transform: uppercase;
+                margin-bottom: 8px;
+            }
+            .description {
+                .font-manrope;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 22px;
+            }
+            &.subheading {
+                padding-right: 0;
+                pointer-events: none;
+                div {
+                    .font-manrope;
+                    font-weight: 300;
+                    font-size: 22px;
+                    line-height: 31px;
+                }
+            }
+            &.general {
+                padding-right: 10%;
+                border-bottom: 1px solid #00A881;
+                &.active {
+                    pointer-events: all;
+                }
+                .title {
+                    margin: 16px 0;
+                }
+            }
+        });
+        ::ng-deep p {
+            margin: 0;
+        }
+    }
+
+    .close-icon {
+        .desktop({
+            position: fixed;
+            top: 48px;
+            right: 48px;
+            width: 24px;    
+            height: 24px;
+            cursor: pointer;
+        });
+    }
+    .map {
+        pointer-events: none;
+        .desktop({
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 480px;
+            height: 350px;
+            display: flex;
+            flex-flow: column;
+            align-items: stretch;
+            transition-property: transform;
+            transition-duration: 250ms;
+
+            .bg {
+                flex: 1 1 auto;
+            }
+            .title {
+                .font-sourcecode;
+                font-size: 14px;
+                line-height: 14px;
+                font-weight: bold;
+                letter-spacing: 0.05em;
+                text-transform: capitalize;
+                color: #07367D;
+                background-color: #FFFFFF;
+                width: 100%;
+                padding: 8px 16px;
+                transition-property: color,background-color;
+                transition-duration: 250ms;
+            }
+
+            &.active {
+                .title {
+                    color: #FFFFFF;
+                    background-color: #78C9B0;
+                }
+            }
+            ::ng-deep p {
+                margin: 0;
+            }    
+        });
+    }
+}

@@ -23,6 +23,13 @@ export class ApiService {
     });
   }
 
+  airtableToArray() {
+    return map((response: any) => {
+      const ret = response.records.map((i) => i.fields);
+      return ret;
+    });
+  }
+
   airtableFetch(base, table, view, record?, fields?) {
     const headers = {
       Authorization: `Bearer ${this.API_KEY}`
