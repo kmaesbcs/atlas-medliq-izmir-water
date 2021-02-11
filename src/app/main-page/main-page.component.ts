@@ -4,6 +4,7 @@ import { delay, first, map, tap } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 
 import * as marked from 'marked';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'app-main-page',
@@ -21,23 +22,28 @@ export class MainPageComponent implements OnInit, OnDestroy {
   marked = marked;
   active = -1;
   about = false;
+  mobile = false;
   iobs: IntersectionObserver;
 
-  constructor(private api: ApiService, private el: ElementRef) {
+  constructor(private api: ApiService, private el: ElementRef, public layout: LayoutService) {
     forkJoin([
-      api.airtableFetch(this.BASE, 'Maps', 'website', null, ['key', 'title', 'description']).pipe(api.airtableToArray()),
+      api.airtableFetch(this.BASE, 'Maps', 'website', null, ['key', 'title', 'description', 'mobile', 'path']).pipe(api.airtableToArray()),
       api.airtableFetch(this.BASE, 'Settings', 'website', null, ['key', 'value']).pipe(api.airtableToArray())
     ]).pipe(
       first(),
       map(([maps, settings]) => {
+        maps.forEach((el) => {
+          el.mobile = !!el.mobile;
+        });
         this.MAPS = maps;
         const _settings = {};
         settings.forEach(({key, value}) => {
           _settings[key] = value;
         })
         this.SETTINGS = _settings;
-        this.MAPS.forEach((v, i) => { v.idx = i; });
-        this.MAPS_REVERSE = this.MAPS.reverse();
+        this.MAPS.filter((v) => v.mobile).forEach((v, i) => { v.idx = i; });
+        this.MAPS.filter((v) => !v.mobile).forEach((v, i) => { v.idx = i; });
+        this.MAPS_REVERSE = this.MAPS.slice().reverse();
         console.log('MAPS', this.MAPS);
         console.log('SETTINGS', this.SETTINGS);
       }),
@@ -46,8 +52,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
         this.initObserver();
       })
     ).subscribe(() => { console.log('INIT'); });
+
+    this.mobile = this.layout.mobile();
     fromEvent(window, 'resize').subscribe(() => {
-      console.log('resize');
+      this.mobile = this.layout.mobile();
     });
   }
 

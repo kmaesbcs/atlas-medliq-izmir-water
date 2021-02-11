@@ -1,6 +1,8 @@
 <div class='viewport'>
     <div class='slide' data-index='-1'></div>
-    <div class='slide' *ngFor='let m of MAPS; let i = index' [attr.data-index]='i'></div>
+    <ng-container *ngFor='let m of MAPS'>
+        <div class='slide' *ngIf='m.mobile === mobile' [attr.data-index]='m.idx'></div>
+    </ng-container>
 
     <div class='layout-desktop title'>
         <img src='assets/img/title-desktop.svg'>
@@ -26,8 +28,8 @@
     <img class='close-icon' src='assets/img/close-icon.svg' *ngIf='about' (click)='about = false'>
 
     <ng-container *ngFor='let map of MAPS'>
-        <div class='about' [class.active]='map.idx === active'>
-            <a [href]='map.key'>
+        <div class='about' [class.active]='map.idx === active' *ngIf='map.mobile === mobile'>
+            <a [href]='map.path'>
                 <div class='title' [innerHtml]='marked(map.title)'></div>
                 <div class='description' [innerHtml]='marked(map.description)'></div>    
             </a>
@@ -35,8 +37,9 @@
     </ng-container>
 
     <ng-container *ngFor='let map of MAPS_REVERSE'>
-        <div class='map' [class.active]='map.idx === active'
-                         [style.transform]='mapTransform(map.idx)'>
+        <div class='map' *ngIf='map.mobile === mobile'
+                    [class.active]='map.idx === active'
+                    [style.transform]='mapTransform(map.idx)'>
             <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + ".png)"'></div>
             <div class='title' [innerHtml]='marked(map.title)'></div>
         </div>

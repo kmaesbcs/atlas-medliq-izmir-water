@@ -3,6 +3,7 @@
 @desktop-padding-top: 120px;
 @desktop-padding-bottom: 270px;
 @desktop-padding: 50px;
+@mobile-padding: 16px;
 
 :host {
     width: 100%;
@@ -55,6 +56,12 @@
                 }
             }
         }
+        .mobile({
+            position: fixed;
+            right: @desktop-padding;
+            bottom: 0;
+            width: calc(50% ~'-' @desktop-padding);
+        });
         pointer-events: none;
     }
 
