@@ -20,6 +20,8 @@ export class TroubledwatersService {
   TITLE = '';
   ABOUT = '';
 
+  ALL_LAYERS = [];
+
   constructor(private api: ApiService, private map: MapService) {
     this.fetchData();
   }
@@ -91,7 +93,7 @@ export class TroubledwatersService {
   }
 
   fetchAudioTimestamps() {
-    return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website', null, ['name', 'timestamp', 'coordinates', 'geo', 'speed', 'curve', 'filter', 'segment']).pipe(
+    return this.api.airtableFetch(this.BASE, 'AudioTimestamps', 'website', null, ['name', 'timestamp', 'coordinates', 'geo', 'speed', 'curve', 'filter', 'segment', 'show_layers']).pipe(
       tap((resp: any) => {
         resp.records.map((rec) => {
           if (rec.fields.coordinates) {
@@ -100,6 +102,13 @@ export class TroubledwatersService {
           rec.fields.timestamp *= 10;
           if (rec.fields.segment && rec.fields.segment.length) {
             rec.fields.segment = rec.fields.segment[0];
+          }
+          if (rec.fields.show_layers) {
+            for (const l of rec.fields.show_layers) {
+              if (this.ALL_LAYERS.indexOf(l) === -1) {
+                this.ALL_LAYERS.push(l);
+              }
+            }  
           }
           return rec;  
         });

@@ -163,6 +163,14 @@ export class TroubledwatersComponent implements OnInit {
           false
         ]
       ]);
+      for (const l of this.troubledWaters.ALL_LAYERS) {
+        const show_layers = timestamp.show_layers || [];
+        if (show_layers.indexOf(l) === -1) {
+          this.theMap.setLayoutProperty(l, 'visibility', 'none');
+        } else {
+          this.theMap.setLayoutProperty(l, 'visibility', 'visible');
+        }
+      }
     });
   }
 
