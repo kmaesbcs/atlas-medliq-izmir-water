@@ -90,11 +90,12 @@ export class MainPageComponent implements OnInit, OnDestroy {
     const intersecting = entries.filter((x) => x.isIntersecting);
     if (intersecting.length) {
       this.active = parseInt(intersecting[0].target.getAttribute('data-index'));
+      this.about = false;
     }
     // console.log('intersection', intersecting.length, this.active);
   }
 
-  mapTransform(i) {
+  mapTransformDesktop(i) {
     const height = window.innerHeight;
     const width = window.innerWidth;
     const bottom = 256;
@@ -117,6 +118,32 @@ export class MainPageComponent implements OnInit, OnDestroy {
     } else {
       move = height - top + (this.active - i - 1) * skip;
     }
-    return `translateY(-${move}px)translateX(${indent}px)skew(35deg, 0deg)`;
+    move = -move;
+    return `translateY(${move}px)translateX(${indent}px)skew(35deg, 0deg)`;
+  }
+
+  mapTransformMobile(i) {
+    const height = window.innerHeight;
+    const bottom = 96;
+    const top = 32;
+    const skip = 64;
+    let move = 0;
+    if (i > this.active) {
+      move = bottom - (i - this.active - 1) * skip
+    } else if (i == this.active) {
+      move = height / 2;
+    } else {
+      move = height - top + (this.active - i - 1) * skip;
+    }
+    move = -move;
+    return `translateY(${move}px)skew(35deg, 0deg)`;
+  }
+
+  collaborations() {
+    (this.el.nativeElement as HTMLElement).querySelector('.collaborations').scrollIntoView({block: 'start'});
+  }
+
+  aboutTitle() {
+    (this.el.nativeElement as HTMLElement).querySelector('.about-title').scrollIntoView({block: 'start'});
   }
 }

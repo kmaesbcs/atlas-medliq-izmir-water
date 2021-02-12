@@ -23,15 +23,10 @@
             width: 100%;
             // border: 1px solid black;
         }
-    }
 
-    .title {
-        &.layout-desktop {
+        > .title {
+
             position: fixed;
-            right: @desktop-padding;
-            bottom: 0;
-            width: calc(50% ~'-' @desktop-padding);
-
             img {
                 width: 100%;
                 height: 100%;
@@ -41,59 +36,92 @@
                 display: block;
                 position: absolute;
                 pointer-events: all;
-
-                &.link-about {
-                    width: 9%;
-                    height: 10%;
-                    top: 3%;
-                    left: 45%;
+                .desktop({
+                    &.link-about {
+                        width: 9%;
+                        height: 10%;
+                        top: 3%;
+                        left: 45%;
+                    }
+                    &.link-collaborations {
+                        width: 20%;
+                        height: 10%;
+                        top: 3%;
+                        left: 55%;
+                    }
+                });
+                .mobile({
+                    &.link-about {
+                        width: 16%;
+                        height: 10%;
+                        top: 55%;
+                        left: 46%;
+                    }
+                    &.link-collaborations {
+                        width: 34%;
+                        height: 10%;
+                        top: 55%;
+                        left: 64%;
+                    }
+                });
+            }
+    
+            &.layout-desktop {
+                right: @desktop-padding;
+                bottom: 0;
+                width: calc(50% ~'-' @desktop-padding);
+            }
+            &.layout-mobile {
+                opacity: 0;
+                transition-property: opacity;
+                transition-duration: 250ms;
+                &.active {
+                    opacity: 1;
                 }
-                &.link-collaborations {
-                    width: 20%;
-                    height: 10%;
-                    top: 3%;
-                    left: 55%;
+                right: @mobile-padding;
+                top: @mobile-padding;
+                width: calc(100% ~'-' 2 * @mobile-padding);
+            }
+            pointer-events: none;
+        }
+        > .about {
+            opacity: 0;
+            transition-property: opacity;
+            transition-duration: 250ms;
+            pointer-events: none;
+    
+            &.active {
+                opacity: 1;
+                a {
+                    pointer-events: all;
                 }
             }
-        }
-        .mobile({
-            position: fixed;
-            right: @desktop-padding;
-            bottom: 0;
-            width: calc(50% ~'-' @desktop-padding);
-        });
-        pointer-events: none;
-    }
-
-    .about {
-        opacity: 0;
-        transition-property: opacity;
-        transition-duration: 250ms;
-        pointer-events: none;
-
-        &.active {
-            opacity: 1;
-            a {
-                pointer-events: all;
+    
+            > a, a:hover, a:visited {
+                color: inherit;
+                text-decoration: none;
             }
-        }
-
-        > a, a:hover, a:visited {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .desktop({
+    
             position: fixed;
-            left: 50%;
-            width: calc(50% ~'-' @desktop-padding);
-            height: calc(100vh ~'-' @desktop-padding-top - @desktop-padding-bottom);
             overflow-y: scroll;
+            overscroll-behavior-y: none;
             .no-scrollbars;
-            padding-right: 20%;
-            top: @desktop-padding-top;
             color: @accent;
-            
+    
+            .desktop({
+                left: 50%;
+                width: calc(50% ~'-' @desktop-padding);
+                height: ~'calc(100vh - @{desktop-padding-top} - 0.373 * (50vw - @{desktop-padding}) - 64px)';
+                padding-right: 20%;
+                top: @desktop-padding-top;
+            });
+    
+            .mobile({
+                left: @mobile-padding;
+                width: calc(100% ~'-' 2 * @mobile-padding);
+                top: ~'calc( 0.128 * (100vw - 2 * @{mobile-padding}) + 2 * @{mobile-padding})';
+            });
+    
             .title {
                 .font-sourcecode;
                 font-weight: bold;
@@ -102,16 +130,55 @@
                 
                 text-transform: uppercase;
                 margin-bottom: 8px;
+
+                &.arrowed {
+                    width: 100%;
+                    display: flex;
+                    flex-flow: row;
+                    align-items: center;
+                    span.text {
+                        flex: 0 0 auto;
+                        margin-right: 16px;
+                    }
+                    div.arrow-line {
+                        height: 8px;
+                        width: 100%;
+                        flex: 1 1 auto;
+                        background-image: url('../../assets/img/arrow-line-line.png');
+                        background-size: contain;
+                        background-repeat: repeat-x;
+                    }
+                    div.arrow-head {
+                        height: 8px;
+                        width: 10px;
+                        flex: 0 0 auto;
+                        background-image: url('../../assets/img/arrow-line-head.png');
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                    }
+                }
             }
             .description {
                 .font-manrope;
                 font-style: normal;
                 font-weight: 500;
-                font-size: 16px;
-                line-height: 22px;
+                .desktop({
+                    font-size: 16px;
+                    line-height: 22px;    
+                });
+                .mobile({
+                    font-size: 14px;
+                    line-height: 20px;    
+                });
             }
+    
             &.subheading {
-                padding-right: 0;
+                .desktop({
+                    padding-right: 0;
+                });
+                .mobile({
+                    top: ~'calc( 0.56 * (100vw - 2 * @{mobile-padding}) + 64px)';
+                });
                 pointer-events: none;
                 div {
                     .font-manrope;
@@ -121,8 +188,15 @@
                 }
             }
             &.general {
-                padding-right: 10%;
-                border-bottom: 1px solid #00A881;
+                .desktop({
+                    padding-right: 10%;
+                    border-bottom: 1px solid #00A881;
+                });
+                .mobile({
+                    border-top: 1px solid #00A881;
+                    top: ~'calc( 0.56 * (100vw - 2 * @{mobile-padding}) + 64px)';
+                    height: ~'calc( 100% - 0.56 * (100vw - 2 * @{mobile-padding}) - 64px)';
+                });
                 &.active {
                     pointer-events: all;
                 }
@@ -130,55 +204,81 @@
                     margin: 16px 0;
                 }
             }
-        });
-        ::ng-deep p {
-            margin: 0;
+    
+            ::ng-deep p {
+                margin: 0;
+            }
         }
-    }
-
-    .close-icon {
-        .desktop({
+    
+        > .close-icon {
             position: fixed;
-            top: 48px;
-            right: 48px;
-            width: 24px;    
-            height: 24px;
-            cursor: pointer;
-        });
-    }
-    .map {
-        pointer-events: none;
-        .desktop({
+            .desktop({
+                top: 48px;
+                right: 48px;
+                width: 24px;    
+                height: 24px;
+                cursor: pointer;
+            });
+            .mobile({
+                top: ~'calc( 0.56 * (100vw - 2 * @{mobile-padding}) + 24px)';
+                right: @mobile-padding;
+                width: 24px;    
+                height: 24px;
+                cursor: pointer;
+            });
+        }
+        > .map {
+            pointer-events: none;
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 480px;
-            height: 350px;
             display: flex;
             flex-flow: column;
             align-items: stretch;
-            transition-property: transform;
+            transition-property: transform opacity;
             transition-duration: 250ms;
-
+            opacity: 0;
+            &.visible {
+                opacity: 1;
+            }
+            .desktop({
+                bottom: 0;
+                left: 0;
+                width: 480px;
+                height: 350px;
+            });
+            .mobile({
+                bottom: 0;
+                width: ~'calc(0.662 * (100vw - 2 * @{mobile-padding}))';
+                height: ~'calc(0.482 * (100vw - 2 * @{mobile-padding}))';
+                left: ~'calc(0.169 * (100vw - 2 * @{mobile-padding}) + @{mobile-padding})';;
+            });
             .bg {
                 flex: 1 1 auto;
+                background-position: center;
+                background-size: cover;
             }
             .title {
                 .font-sourcecode;
-                font-size: 14px;
-                line-height: 14px;
+                .desktop({
+                    font-size: 14px;
+                    line-height: 14px;
+                    padding: 8px 16px;
+                });
+                .mobile({
+                    font-size: 11px;
+                    line-height: 11px;
+                    padding: 6px 12px;
+                });
                 font-weight: bold;
                 letter-spacing: 0.05em;
                 text-transform: capitalize;
                 color: #07367D;
                 background-color: #FFFFFF;
                 width: 100%;
-                padding: 8px 16px;
                 transition-property: color,background-color;
                 transition-duration: 250ms;
             }
-
             &.active {
+                pointer-events: all;
                 .title {
                     color: #FFFFFF;
                     background-color: #78C9B0;
@@ -187,6 +287,6 @@
             ::ng-deep p {
                 margin: 0;
             }    
-        });
+        }
     }
 }
