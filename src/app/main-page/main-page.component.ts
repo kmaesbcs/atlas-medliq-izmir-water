@@ -124,9 +124,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   mapTransformMobile(i) {
     const height = window.innerHeight;
-    const bottom = 64;
+    const bottom = 40;
     const top = 32;
-    const skip = 40;
+    const skip = 64;
     let move = 0;
     if (i > this.active) {
       move = bottom - (i - this.active - 1) * skip
