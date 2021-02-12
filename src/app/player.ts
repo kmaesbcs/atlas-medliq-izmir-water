@@ -119,7 +119,7 @@ export class Player {
     }
 
     updateTextTimestamp() {
-        if (!Number.isFinite(this.audio.duration)) {
+        if (!this.audio || !Number.isFinite(this.audio.duration)) {
             return;
         }
         // const left = Math.floor(this.audio.duration - this.audio.currentTime);
