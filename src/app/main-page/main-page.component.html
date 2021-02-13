@@ -5,16 +5,17 @@
     </ng-container>
 
     <div class='layout-desktop title'>
-        <img src='assets/img/title-desktop.svg'>
+        <img class='main' src='assets/img/title-desktop.svg'>
         <a class='link link-about' (click)='about = true'></a>
         <a class='link link-collaborations' (click)='about = true'></a>
     </div>
 
     <div class='layout-mobile title' [class.active]='-1 === active'>
-        <img src='assets/img/title-mobile.svg'>
+        <img class='main' src='assets/img/title-mobile.svg'>
         <a class='link link-about' (click)='about = true; aboutTitle()'></a>
         <a class='link link-collaborations' (click)='about = true; collaborations()'></a>
     </div>
+    <img class='globe layout-mobile' src='assets/img/globe-logo.svg' [class.active]='-1 === active'>
 
     <div class='about general' [class.active]='about'>
         <div class='title about-title' [innerHtml]='"About"'></div>

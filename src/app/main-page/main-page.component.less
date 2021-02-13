@@ -27,7 +27,7 @@
         > .title {
 
             position: fixed;
-            img {
+            img.main {
                 width: 100%;
                 height: 100%;
             }
@@ -80,10 +80,24 @@
                 }
                 right: @mobile-padding;
                 top: @mobile-padding;
-                width: calc(100% ~'-' 2 * @mobile-padding);
+                width: ~'calc(100% - 2 * @{mobile-padding})';
             }
             pointer-events: none;
         }
+
+        img.globe {
+            position: fixed;
+            top: ~'calc(100vw * 0.01 + @{mobile-padding})';
+            left: @mobile-padding;
+            width: ~'calc(0.122 * (100vw - 2 * @{mobile-padding}))';
+            height: ~'calc(0.122 * (100vw - 2 * @{mobile-padding}))';
+            transition-property: left;
+            transition-duration: 250ms;
+            &.active {
+                left: 57%;
+            }
+        }
+
         > .about {
             opacity: 0;
             transition-property: opacity;
@@ -119,7 +133,7 @@
             .mobile({
                 left: @mobile-padding;
                 width: calc(100% ~'-' 2 * @mobile-padding);
-                top: ~'calc( 0.128 * (100vw - 2 * @{mobile-padding}) + 2 * @{mobile-padding})';
+                top: ~'calc( 0.128 * (100vw - 2 * @{mobile-padding}) + 3 * @{mobile-padding})';
             });
     
             .title {
