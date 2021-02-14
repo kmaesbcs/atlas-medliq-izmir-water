@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
-import { forkJoin, from } from 'rxjs';
+import { forkJoin, from, ReplaySubject } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/api.service';
 import { MapService } from 'src/app/map.service';
@@ -15,6 +15,8 @@ export class SpecToursService {
   YEAR_END = 2100;
   YEAR_CURRENT = 2050;
   ABOUT = '';
+
+  ready = new ReplaySubject<boolean>(1);
 
   constructor(private api: ApiService, private map: MapService) { }
 
@@ -114,6 +116,7 @@ export class SpecToursService {
           }
           ret.push({year, content});
         }
+        this.ready.next(true);
         return ret;
       })
     );
