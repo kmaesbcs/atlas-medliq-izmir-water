@@ -33,7 +33,7 @@
     <img class='close-icon' src='assets/img/close-icon.svg' *ngIf='about' (click)='about = false'>
 
     <ng-container *ngFor='let map of MAPS'>
-        <div class='about' [class.active]='map.idx === active && !about'>
+        <div class='about regular' [class.active]='map.idx === active && !about'>
             <a [href]='map.path'>
                 <div class='title arrowed'>
                     <span class='text' [innerHtml]='marked(map.title)'></span>

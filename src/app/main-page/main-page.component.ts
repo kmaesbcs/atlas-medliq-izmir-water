@@ -126,16 +126,18 @@ export class MainPageComponent implements OnInit, OnDestroy {
     const height = window.innerHeight;
     const nel = (this.el.nativeElement as HTMLElement).querySelector('.viewport');
     const subheading = nel.querySelector('.subheading').getBoundingClientRect();
-    const map = nel.querySelector('.map').getBoundingClientRect();
-    console.log('CALC', subheading, map);
-    const bottom = Math.min(40, height - (subheading.bottom + map.height) - 10);
+    const abouts = Array.from(nel.querySelectorAll('.about.regular'))
+        .map((el) => el.getBoundingClientRect())
+        .map((r) => r.bottom);
+    const mapHeight = nel.querySelector('.map').getBoundingClientRect().height;
+    const bottom = Math.min(40, height - (subheading.bottom + mapHeight) - 10);
     const top = 32;
     const skip = 64;
     let move = 0;
     if (i > this.active) {
       move = bottom - (i - this.active - 1) * skip
     } else if (i == this.active) {
-      move = height / 2;
+      move = height - Math.max(...abouts) - mapHeight - 10;
     } else {
       move = height - top + (this.active - i - 1) * skip;
     }
