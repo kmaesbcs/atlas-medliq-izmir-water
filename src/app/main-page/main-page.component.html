@@ -6,8 +6,8 @@
 
     <div class='layout-desktop title'>
         <img class='main' src='assets/img/title-desktop.svg'>
-        <a class='link link-about' (click)='about = true'></a>
-        <a class='link link-collaborations' (click)='about = true'></a>
+        <a class='link link-about' (click)='about = true; aboutTitle()'></a>
+        <a class='link link-collaborations' (click)='about = true; collaborations()'></a>
     </div>
 
     <div class='layout-mobile title' [class.active]='-1 === active'>
