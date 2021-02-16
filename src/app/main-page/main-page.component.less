@@ -187,6 +187,17 @@
                     font-size: 14px;
                     line-height: 20px;    
                 });
+                ::ng-deep {
+                    p {
+                        margin: 0;
+                        margin-bottom: 0.5em;
+                        font-weight: 300;
+                    }
+                    a, a:hover, a:visited {
+                        color: #008465;
+                        font-weight: 700;
+                    }
+                }    
             }
     
             &.subheading {
@@ -235,17 +246,6 @@
                 }
             }
     
-            ::ng-deep {
-                p {
-                    margin: 0;
-                    margin-bottom: 0.5em;
-                    font-weight: 300;
-                }
-                a, a:hover, a:visited {
-                    color: #008465;
-                    font-weight: 700;
-                }
-            }
         }
     
         > .close-icon {
