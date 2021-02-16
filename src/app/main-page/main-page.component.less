@@ -205,6 +205,12 @@
                 }
             }
             &.general {
+                .font-manrope;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+
                 .desktop({
                     padding-right: 10%;
                     border-bottom: 1px solid #00A881;
@@ -218,12 +224,26 @@
                     pointer-events: all;
                 }
                 .title {
-                    padding: 16px 0;
+                    padding: 24px 0 8px 0;
+                }
+                .logos {
+                    margin: 32px 0;
+                    img {
+                        margin-right: 32px;
+                        height: 45px;
+                    }
                 }
             }
     
-            ::ng-deep p {
-                margin: 0;
+            ::ng-deep {
+                p {
+                    margin: 0;
+                    margin-bottom: 0.5em;
+                }
+                a, a:hover, a:visited {
+                    color: inherit;
+                    font-weight: 700;
+                }
             }
         }
     

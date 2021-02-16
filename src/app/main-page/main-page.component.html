@@ -24,6 +24,15 @@
         <div class='description' [innerHtml]='marked(SETTINGS.Collaborations || "")'></div>
         <div class='title' [innerHtml]='"Credits"'></div>
         <div class='description' [innerHtml]='marked(SETTINGS.Credits || "")'></div>
+        <div class='logos'>
+            <a href='https://www.goethe.de' target='_blank'>
+                <img src='assets/img/logo-goethe.png'>
+            </a>
+            <a href='https://www.digitalartlab.org.il/?localeId=en-us' target='_blank'>
+                <img src='assets/img/logo-cda.png'>
+            </a>
+
+        </div>
     </div>
 
     <div class='about subheading' [class.active]='-1 === active && !about'>
