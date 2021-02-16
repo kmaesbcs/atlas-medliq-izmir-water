@@ -37,7 +37,7 @@
             <a [href]='map.path'>
                 <div class='title arrowed'>
                     <span class='text' [innerHtml]='marked(map.title)'></span>
-                    <ng-container *ngIf='map.path'>
+                    <ng-container *ngIf='map.path && map.state==="live"'>
                         <div class='arrow-line'></div>
                         <div class='arrow-head'></div>    
                     </ng-container>
