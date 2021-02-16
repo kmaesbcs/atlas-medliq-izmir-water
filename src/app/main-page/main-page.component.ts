@@ -124,7 +124,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   mapTransformMobile(i) {
     const height = window.innerHeight;
-    const bottom = 40;
+    const nel = (this.el.nativeElement as HTMLElement).querySelector('.viewport');
+    const subheading = nel.querySelector('.subheading').getBoundingClientRect();
+    const map = nel.querySelector('.map').getBoundingClientRect();
+    console.log('CALC', subheading, map);
+    const bottom = Math.min(40, height - (subheading.bottom + map.height) - 10);
     const top = 32;
     const skip = 64;
     let move = 0;
