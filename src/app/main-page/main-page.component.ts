@@ -27,7 +27,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   constructor(private api: ApiService, private el: ElementRef, public layout: LayoutService) {
     forkJoin([
-      api.airtableFetch(this.BASE, 'Maps', 'website', null, ['key', 'title', 'description', 'mobile', 'path']).pipe(api.airtableToArray()),
+      api.airtableFetch(this.BASE, 'Maps', 'website', null, ['key', 'title', 'description', 'state', 'path']).pipe(api.airtableToArray()),
       api.airtableFetch(this.BASE, 'Settings', 'website', null, ['key', 'value']).pipe(api.airtableToArray())
     ]).pipe(
       first(),

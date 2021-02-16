@@ -1,7 +1,7 @@
 <div class='viewport'>
     <div class='slide' data-index='-1'></div>
     <ng-container *ngFor='let m of MAPS'>
-        <div class='slide' *ngIf='m.mobile === mobile' [attr.data-index]='m.idx'></div>
+        <div class='slide' [attr.data-index]='m.idx'></div>
     </ng-container>
 
     <div class='layout-desktop title'>
@@ -33,12 +33,14 @@
     <img class='close-icon' src='assets/img/close-icon.svg' *ngIf='about' (click)='about = false'>
 
     <ng-container *ngFor='let map of MAPS'>
-        <div class='about' [class.active]='map.idx === active && !about' *ngIf='map.mobile === mobile'>
+        <div class='about' [class.active]='map.idx === active && !about'>
             <a [href]='map.path'>
                 <div class='title arrowed'>
                     <span class='text' [innerHtml]='marked(map.title)'></span>
-                    <div class='arrow-line'></div>
-                    <div class='arrow-head'></div>
+                    <ng-container *ngIf='map.path'>
+                        <div class='arrow-line'></div>
+                        <div class='arrow-head'></div>    
+                    </ng-container>
                 </div>
                 <div class='description' [innerHtml]='marked(map.description)'></div>    
             </a>
@@ -46,13 +48,13 @@
     </ng-container>
 
     <ng-container *ngFor='let map of MAPS_REVERSE'>
-        <div class='map' *ngIf='map.mobile === mobile'
+        <div class='map'
                     [class.active]='map.idx === active'
-                    [class.visible]='!map.mobile || !about'
-                    [style.transform]='map.mobile ? mapTransformMobile(map.idx) : mapTransformDesktop(map.idx)'
+                    [class.visible]='!mobile || !about'
+                    [style.transform]='mobile ? mapTransformMobile(map.idx) : mapTransformDesktop(map.idx)'
                     [routerLink]='map.path'
                 >
-            <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + ".png)"'></div>
+            <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + (mobile ? "-mobile" : "-desktop") + ".png)"'></div>
             <div class='title' [innerHtml]='marked(map.title)'></div>
         </div>
     </ng-container>
