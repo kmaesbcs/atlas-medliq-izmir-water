@@ -146,7 +146,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   collaborations() {
-    (this.el.nativeElement as HTMLElement).querySelector('.collaborations').scrollIntoView({block: 'start'});
+    window.setTimeout(() => {
+      (this.el.nativeElement as HTMLElement).querySelector('.collaborations').scrollIntoView({block: 'start'});
+    }, 100);
   }
 
   aboutTitle() {
