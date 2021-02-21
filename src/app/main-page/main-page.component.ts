@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { forkJoin, fromEvent } from 'rxjs';
-import { delay, first, map, tap } from 'rxjs/operators';
+import { delay, filter, first, map, tap, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 
 import * as marked from 'marked';
@@ -77,6 +77,16 @@ export class MainPageComponent implements OnInit, OnDestroy {
       // console.log('SLSL', slide);
       this.iobs.observe(slide);
     });
+    fromEvent(nel.querySelectorAll('.map'), 'wheel').pipe(
+      filter((ev: WheelEvent) => ev.deltaY !== 0),
+      throttleTime(1500),
+      map((ev: WheelEvent) => {
+        return ev.deltaY / Math.abs(ev.deltaY);
+      }),
+    ).subscribe((dir) => {
+      // console.log('nel', dir, nel.scrollTop);
+      nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
+    });
   }
 
   ngOnDestroy() {
@@ -142,6 +152,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       move = height - top + (this.active - i - 1) * skip;
     }
     move = -move;
+    // move = 0;
     return `translateY(${move}px)skew(35deg, 0deg)`;
   }
 
