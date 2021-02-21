@@ -40,44 +40,16 @@ export class Scroller {
         animationManager.go();
       });
 
-      if (!horizontal()) {
+      // if (!horizontal()) {
         // Mouse up/down Event
-        fromEvent(el, 'mousedown').subscribe((ev: MouseEvent) => {
-          if (ev.button === 0) {
-            this.dragDiff = this.scrollTop + this.eventCoord(ev);
-            this.dragStart = performance.now();
-            this.dragging = true;
-            if (this.mmSub) {
-              this.mmSub.unsubscribe();
-            }
-            this.mmSub = fromEvent(el, 'mousemove').subscribe((ev: MouseEvent) => {
-              if (this.dragging) {
-                animationManager.register(this.prefix + 'mousemove', () => {
-                  this.el.scrollTo(this.scrollToOptions(
-                    -this.eventCoord(ev) + this.dragDiff
-                  ));
-                  animationManager.deregister(this.prefix + 'mousemove');
-                });
-                animationManager.enable(this.prefix + 'mousemove');
-                animationManager.go();
-              }
-            });    
-          }
-        });
-        fromEvent(el, 'mouseup').subscribe(() => {
-          const now = performance.now();
-          if (this.dragging && now - this.dragStart > 200) {
-            this.scrollEnded();  
-          }
-          this.dragging = false;
-          if (this.mmSub) {
-            this.mmSub.unsubscribe();
-            this.mmSub = null;
-          }
-        });
+        fromEvent(el, 'mousedown').subscribe((ev: MouseEvent) => { if (ev.button === 0) { this.mousedown(ev); }});
+        fromEvent(el, 'touchstart').subscribe((ev: MouseEvent) => { this.mousedown(ev); });
+        
+        fromEvent(el, 'mouseup').subscribe((ev: Event) => { this.mouseup(ev); });
+        fromEvent(el, 'touchend').subscribe((ev: Event) => { this.mouseup(ev); });
 
         // Mouse Move Event
-      }
+      // }
 
       // Smooth Scroll
       this.animationManager.register(this.prefix + 'smoothscroll', (x) => this.scrollSmoothly(x));
@@ -106,6 +78,52 @@ export class Scroller {
       }
     }
   
+    mousedown(ev: Event) {
+      this.dragDiff = this.scrollTop + this.eventCoord(ev);
+      this.dragStart = performance.now();
+      this.dragging = true;
+      this.animationManager.disable(this.prefix + 'smoothscroll');
+      if (this.mmSub) {
+        this.mmSub.unsubscribe();
+      }
+      if (ev instanceof MouseEvent) {
+        this.mmSub = fromEvent(this.el, 'mousemove').subscribe((ev: MouseEvent) => { this.mousemove(ev); });
+      } else {
+        this.mmSub = fromEvent(this.el, 'touchmove').subscribe((ev: MouseEvent) => { this.mousemove(ev); });
+      }
+      ev.preventDefault();
+    }
+
+    mouseup(ev: Event) {
+      const now = performance.now();
+      if (this.dragging && now - this.dragStart > 200) {
+        this.scrollEnded();  
+      }
+      this.dragging = false;
+      setTimeout(() => {
+        this.animationManager.enable(this.prefix + 'smoothscroll');
+      }, 0);
+      if (this.mmSub) {
+        this.mmSub.unsubscribe();
+        this.mmSub = null;
+      }
+      ev.preventDefault();
+    }
+
+    mousemove(ev: Event) {
+      if (this.dragging) {
+        this.animationManager.register(this.prefix + 'mousemove', () => {
+          this.el.scrollTo(this.scrollToOptions(
+            -this.eventCoord(ev) + this.dragDiff
+          ));
+          this.animationManager.deregister(this.prefix + 'mousemove');
+        });
+        this.animationManager.enable(this.prefix + 'mousemove');
+        this.animationManager.go();
+      }
+      ev.preventDefault();
+    }
+
     scrollSmoothly(timestamp) {
       if (this.done) {
         return;
@@ -182,7 +200,11 @@ export class Scroller {
     }
 
     eventCoord(ev) {
-      return this.horizontal() ? ev.x : ev.y;
+      if (ev instanceof TouchEvent) {
+        return this.horizontal() ? ev.touches.item(0).clientX : ev.touches.item(0).clientY;
+      } else if (ev instanceof MouseEvent) {
+        return this.horizontal() ? ev.clientX : ev.clientY;
+      }
     }
 
     scrollToOptions(ofs: number, behavior: ScrollBehavior = 'auto'): ScrollToOptions {

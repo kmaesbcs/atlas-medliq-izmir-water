@@ -113,6 +113,16 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
+  toggle() {
+    if (this.player !== null) {
+      if (this.troubledWaters.playing) {
+        this.pause();
+      } else {
+        this.play();
+      }
+    }
+  }
+
   initPlayer() {
     if (this.player !== null) {
       // console.log('cleanup PLAYER', this.player.url);

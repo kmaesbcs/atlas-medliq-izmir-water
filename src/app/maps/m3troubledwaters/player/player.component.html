@@ -33,8 +33,8 @@
         <div class='filler'></div>
         <ng-container *ngFor='let segment of segments; let idx=index'>
             <div class='interviewee' (mouseleave)='expanded=-1'>
-                <a class='photo'
-                    [class.active]='idx === segmentIndex'
+                <a class='photo' *ngIf='idx !== segmentIndex'
+                    [class.active]='false'
                     [style.width]='segment.size + "px"'
                     [style.height]='segment.size + "px"'
                     [style.border-radius]='segment.size/2 + "px"'
@@ -45,6 +45,20 @@
                     [attr.data-segment-id]='segment.id'
                     [attr.data-offset]='offset(idx)'
                     routerLink='/m3' [queryParams]='{segment: segment.id, offset: 0, who: "interviewee-click"}'
+                >
+                </a>
+                <a class='photo' *ngIf='idx === segmentIndex'
+                    [class.active]='true'
+                    [style.width]='segment.size + "px"'
+                    [style.height]='segment.size + "px"'
+                    [style.border-radius]='segment.size/2 + "px"'
+                    [style.border-width]='segment.size/32 + "px"'
+                    [style.margin-right]='(layout.desktop() ? (64 - (segment.size/2)) : 0) + "px"'
+                    [style.background-image]='"url(" + segment.interviewee.profile_pic[0].thumbnails.large.url + ")"'
+                    [style.border-color]='segment.interviewee.color'
+                    [attr.data-segment-id]='segment.id'
+                    [attr.data-offset]='offset(idx)'
+                    (click)='toggle()'
                 >
                 </a>
                 <div class='badges layout-desktop' [class.expanded]='expanded === idx'
