@@ -79,6 +79,9 @@ export class Scroller {
     }
   
     mousedown(ev: Event) {
+      if (this.dragging) {
+        return;
+      }
       this.dragDiff = this.scrollTop + this.eventCoord(ev);
       this.dragStart = performance.now();
       this.dragging = true;
@@ -91,10 +94,12 @@ export class Scroller {
       } else {
         this.mmSub = fromEvent(this.el, 'touchmove').subscribe((ev: MouseEvent) => { this.mousemove(ev); });
       }
-      ev.preventDefault();
     }
 
     mouseup(ev: Event) {
+      if (!this.dragging) {
+        return;
+      }
       const now = performance.now();
       if (this.dragging && now - this.dragStart > 200) {
         this.scrollEnded();  
@@ -107,7 +112,6 @@ export class Scroller {
         this.mmSub.unsubscribe();
         this.mmSub = null;
       }
-      ev.preventDefault();
     }
 
     mousemove(ev: Event) {
@@ -200,10 +204,10 @@ export class Scroller {
     }
 
     eventCoord(ev) {
-      if (ev instanceof TouchEvent) {
-        return this.horizontal() ? ev.touches.item(0).clientX : ev.touches.item(0).clientY;
-      } else if (ev instanceof MouseEvent) {
+      if (ev instanceof MouseEvent) {
         return this.horizontal() ? ev.clientX : ev.clientY;
+      } else if (ev instanceof TouchEvent) {
+        return this.horizontal() ? ev.touches.item(0).clientX : ev.touches.item(0).clientY;
       }
     }
 

@@ -75,7 +75,6 @@ export class TroubledwatersService {
         return {segment, timestamp, offset, who};
       })
     ).subscribe(({segment, timestamp, offset, who}) => {
-      // console.log('SET POSITION BY', who, ':', segment.id, timestamp.id, offset);
       this.position.next({segment, timestamp, offset})
     });
   }

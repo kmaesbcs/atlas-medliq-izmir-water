@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TroubledwatersService } from './troubledwaters.service';
 import * as mapboxgl from 'mapbox-gl';
 import { FeatureCollection, Feature, Point } from 'geojson';
@@ -12,7 +12,7 @@ import { LayoutService } from 'src/app/layout.service';
   templateUrl: './troubledwaters.component.html',
   styleUrls: ['./troubledwaters.component.less']
 })
-export class TroubledwatersComponent implements OnInit {
+export class TroubledwatersComponent implements OnInit, AfterViewInit {
 
   theMap: mapboxgl.Map;
   info = false;
@@ -25,6 +25,9 @@ export class TroubledwatersComponent implements OnInit {
               private layout :LayoutService) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
       style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
@@ -40,6 +43,9 @@ export class TroubledwatersComponent implements OnInit {
       }
       this.initialize();
     });
+    setTimeout(() => {
+      this.theMap.resize();
+    }, 2000);
   }
 
   setPosition(segment?: any, timestamp?: any, offset?: number) {
@@ -146,12 +152,12 @@ export class TroubledwatersComponent implements OnInit {
         }
         this.theMap.flyTo(flyTo);
       }
-      this.theMap.setFilter('trouble-waters-markers', [
+      const filter = [
         "all",
         [
           "match",
-          ["get", "segment"],
-          [segment.name] || ['__non_existent'],
+          ["to-string", ["get", "segment"]],
+          segment.name || '__non_existent',
           true,
           false
         ],
@@ -162,7 +168,8 @@ export class TroubledwatersComponent implements OnInit {
           true,
           false
         ]
-      ]);
+      ];
+      this.theMap.setFilter('trouble-waters-markers', filter);
       for (const l of this.troubledWaters.ALL_LAYERS) {
         const show_layers = timestamp.show_layers || [];
         if (show_layers.indexOf(l) === -1) {

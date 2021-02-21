@@ -83,8 +83,13 @@ export class Player {
                 first()
             ).subscribe(() => {
                 if (this.audio) {
-                    this.playerService.playing(this);
-                    this.audio.play();    
+                    this.audio.play()
+                        .then(() => {
+                            this.playerService.playing(this);
+                        })
+                        .catch(() => {
+                            console.log('FAILED TO PLAY...');
+                        });
                 }
             });
         }
