@@ -6,9 +6,9 @@ import { SpecToursComponent } from './maps/m2spectours/spectours.component';
 import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.component';
 
 const routes: Routes = [
-  {path: 'm1', component: WawbComponent},
-  {path: 'm2', component: SpecToursComponent},
-  {path: 'm3', component: TroubledwatersComponent},
+  {path: 'water-above-water-below', component: WawbComponent},
+  {path: 'speculative-tourism-sea-change', component: SpecToursComponent},
+  {path: 'troubled-waters-the-nile-conflict', component: TroubledwatersComponent},
   {path: '', component: MainPageComponent}
 ];
 
