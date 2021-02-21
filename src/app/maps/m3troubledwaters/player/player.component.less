@@ -108,7 +108,7 @@
                 z-index: 2;
                 position: relative;
                 margin-bottom: -@dropdown-height;
-                width: 320px;
+                width: 340px;
                 height: @badges-height + @dropdown-height;
                 display: flex;
                 flex-flow: row-reverse;
@@ -240,7 +240,7 @@
                             transform: rotate(0deg);
                             transition-property: transform;
                             transition-duration: 500ms;
-                            transition-delay: 500ms;
+                            // transition-delay: 500ms;
                         }
                     }
 
@@ -249,32 +249,32 @@
 
                     &.small {
                         transform: translateX(210px);
-                        transition-delay: 0ms;
+                        // transition-delay: 0ms;
                     }
 
                     &.big {
                         transform: translateX(130px);
-                        transition-delay: 0;
+                        // transition-delay: 0;
                     }
 
                     &.big-extra {
                         transform: translateX(210px);
-                        transition-delay: 0;
+                        // transition-delay: 0;
                     }
 
                     &.visible {
 
                         &.small {
-                            transition-delay: 250ms;
+                            // transition-delay: 250ms;
                         }
 
                         &.big {
                             transform: translateX(0);
-                            transition-delay: 250ms;
+                            // transition-delay: 250ms;
                         }
     
                         &.big-extra {
-                            transition-delay: 250ms;
+                            // transition-delay: 250ms;
                         }    
                     }
                 }
@@ -287,13 +287,13 @@
             &:hover {
                 .badges {
                     .info .caret svg {
-                        transition-delay: 0s;
+                        // transition-delay: 0s;
                     }
                     .info.small.visible {
                         transform: translateX(0);
                     }
                     .info.big-extra.visible {
-                        transform: translateX(-110px);
+                        transform: translateX(-130px);
                     }
                     .info.big .caret svg {
                         transform: rotate(-90deg);
