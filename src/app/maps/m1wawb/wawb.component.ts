@@ -24,6 +24,7 @@ export class WawbComponent implements OnInit {
   info = false;
 
   LAYER_NAME = 'above-below-sample';
+  HIGHLIGHTS = 'highlighted';
   SOURCE_NAME = 'samples';
   DUMMY = {author: '', author_credits: ''}
 
@@ -50,8 +51,10 @@ export class WawbComponent implements OnInit {
   set sample(value) {
     this._sample = value;
     if (value) {
+      this.setHighlight(value.id);
       location.hash = '#' + value.id;
     } else {
+      this.setHighlight('__non_existent__');
       location.hash = '';
     }
   }
@@ -71,6 +74,8 @@ export class WawbComponent implements OnInit {
       this.samples.pipe(first()).subscribe((samples: GeoJSON.FeatureCollection) => {
         this.theMap.addSource(this.SOURCE_NAME, {type: 'geojson', data: samples});
         this.map.setLayerSource(this.theMap, this.LAYER_NAME, this.SOURCE_NAME);
+        this.map.setLayerSource(this.theMap, this.HIGHLIGHTS, this.SOURCE_NAME);
+        this.setHighlight('__non_existent__');
         this.theMap.on('mouseenter', this.LAYER_NAME, () => {
           this.theMap.getCanvas().style.cursor = 'pointer';
         });
@@ -84,5 +89,17 @@ export class WawbComponent implements OnInit {
         });
       });
     });
+  }
+
+  setHighlight(id) {
+    if (this.theMap) {
+      this.theMap.setFilter(this.HIGHLIGHTS, [
+        "match",
+        ["get", "id"],
+        [id],
+        true,
+        false
+      ]);  
+    }
   }
 }
