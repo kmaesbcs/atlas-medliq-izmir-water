@@ -42,12 +42,12 @@ jobs:
           git checkout -b dist
           rm .gitignore
           npm run prod
-          mkdir dist/atlas-medliq/m1
-          mkdir dist/atlas-medliq/m2
-          mkdir dist/atlas-medliq/m3
-          jinja -d data/social-m1.json -o dist/atlas-medliq/m1/index.html dist/atlas-medliq/index.html
-          jinja -d data/social-m2.json -o dist/atlas-medliq/m2/index.html dist/atlas-medliq/index.html
-          jinja -d data/social-m3.json -o dist/atlas-medliq/m3/index.html dist/atlas-medliq/index.html
+          mkdir dist/atlas-medliq/water-above-water-below
+          mkdir dist/atlas-medliq/speculative-tourism-sea-change
+          mkdir dist/atlas-medliq/troubled-waters-the-nile-conflict
+          jinja -d data/social-m1.json -o dist/atlas-medliq/water-above-water-below/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-m2.json -o dist/atlas-medliq/speculative-tourism-sea-change/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-m3.json -o dist/atlas-medliq/social-troubled-waters-the-nile-conflict/index.html dist/atlas-medliq/index.html
           jinja -d data/social-main.json -o dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
           mv dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
           cp dist/atlas-medliq/index.html dist/atlas-medliq/404.html

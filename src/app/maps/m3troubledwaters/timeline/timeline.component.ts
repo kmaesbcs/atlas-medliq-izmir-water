@@ -124,6 +124,6 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   }
 
   secondClicked(segment, offset) {
-    this.router.navigate(['m3'], {queryParams: {segment: segment.id, offset: offset * 10, who: 'second-click'}});
+    this.router.navigate(['troubled-waters-the-nile-conflict'], {queryParams: {segment: segment.id, offset: offset * 10, who: 'second-click'}});
   }
 }

@@ -51,7 +51,7 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
   }
 
   setPosition(segment?: any, timestamp?: any, offset?: number) {
-    this.router.navigate(['m3'], {
+    this.router.navigate(['troubled-waters-the-nile-conflict'], {
       queryParams: {segment, timestamp}
     });
   }
