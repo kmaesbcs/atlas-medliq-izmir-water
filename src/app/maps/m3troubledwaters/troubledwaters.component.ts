@@ -17,6 +17,7 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
   theMap: mapboxgl.Map;
   info = false;
   currentTimestamp = '';
+  loadedImages = [];
 
   @ViewChild('mapEl', {static: true}) mapEl: ElementRef;
 
@@ -30,7 +31,8 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
+      style: 'mapbox://styles/atlasmedliq/cklfbkntb6lh317rz99cjxfbz/draft',   // -> testing
+      // style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
       minZoom: 3,
       logoPosition: this.layout.desktop() ? 'bottom-left' : 'top-left',
       attributionControl: false,
@@ -152,6 +154,18 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
         }
         this.theMap.flyTo(flyTo);
       }
+
+      const timestampFilter = timestamp.filter || [];
+      const requiredImages = timestampFilter.map((f) => `${segment.name}_${f}`);
+      this.loadedImages = this.loadedImages.filter((li) => {
+        if (requiredImages.indexOf(li) < 0) {
+          console.log('REMOVED', li);
+          this.theMap.removeImage(li);
+          return false;
+        }
+        return true;
+      });
+      this.loadedImages = requiredImages;
       const filter = [
         "all",
         [
@@ -164,12 +178,13 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
         [
           "match",
           ["to-string", ["get", "name"]],
-          timestamp.filter || ['__non_existent'],
+          timestampFilter.length ? timestampFilter : ['__non_existent'],
           true,
           false
         ]
       ];
       this.theMap.setFilter('trouble-waters-markers', filter);
+
       for (const l of this.troubledWaters.ALL_LAYERS) {
         const show_layers = timestamp.show_layers || [];
         if (show_layers.indexOf(l) === -1) {
@@ -181,4 +196,8 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
     });
   }
 
+  imageLoaded(ri: string, ev: Event) {
+    console.log('LOADED', ri);
+    this.theMap.addImage(ri, ev.target as HTMLImageElement);
+  }
 }
