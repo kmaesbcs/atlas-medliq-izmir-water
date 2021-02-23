@@ -38,6 +38,13 @@
                 min-height: @header-size-mobile;
                 flex-flow: row;
                 padding: 12px;
+                margin-top: 0;
+                transition-property: margin-top;
+                transition-duration: 500ms;
+
+                &.hidden {
+                    margin-top: -@header-size-mobile;
+                }
             });
 
             .logo {

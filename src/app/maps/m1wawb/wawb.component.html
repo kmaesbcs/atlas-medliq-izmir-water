@@ -1,4 +1,4 @@
-<app-layout (info)='info = $event; sample = $event ? null : sample'>
+<app-layout (info)='info = $event; sample = $event ? null : sample' [hideHeader]='!!sample'>
     <div class='map content'>
         <div #mapEl></div>
         <app-wawb-sidebar [class.open]='!!sample' [item]='sample || DUMMY' (close)='sample = null'></app-wawb-sidebar>
