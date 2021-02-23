@@ -17,11 +17,10 @@
     <div class='date' *ngIf='item.date'>{{date}}</div>
     <div class='date' *ngIf='item.notes'>{{item.notes}}</div>
     <div class='author' *ngFor='let author of item.authors'>
-        <div class='header'>
+        <div class='header' (click)='authorExpanded[author.name] = !authorExpanded[author.name]'>
             <strong>{{author.name}}</strong><span>&nbsp;&mdash;&nbsp;{{author.credit}}</span>
             <img src='assets/img/wawb-expander-icon.svg'
-                 class='expander' [class.expanded]='authorExpanded[author.name]' 
-                 (click)='authorExpanded[author.name] = !authorExpanded[author.name]'>
+                 class='expander' [class.expanded]='authorExpanded[author.name]'>
         </div>
         <div class='content' *ngIf='authorExpanded[author.name]'>
             <p *ngIf='author.bio'>{{author.bio}}</p>
