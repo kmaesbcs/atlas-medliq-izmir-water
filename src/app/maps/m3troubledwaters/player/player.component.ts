@@ -58,17 +58,18 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       tap(({segment, timestamp, offset}) => {
         offset /= 10;
         if (segment.id !== this.segment.id) {
+          this.pause();
           this.segment = segment;
           this.intervieweeColor = segment.interviewee.color;
           this.initPlayer();
           this.player.seekTime(offset).then(() => {
-            if (this.troubledWaters.playing) {
-              this.player.play();
-            }
+            this.play();
           });
         } else {
           if (this.player.audio && Math.abs(offset - this.player.audio.currentTime) > 2) {
-            this.player.seekTime(offset);
+            this.player.seekTime(offset).then(() => {
+              this.play();
+            });
           }
         }
         for (let idx = 0 ; idx < this.segments.length ; idx++) {
@@ -102,8 +103,10 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   }
 
   pause() {
-    this.troubledWaters.playing = false;
-    this.player.pause();
+    if (this.player !== null) {
+      this.troubledWaters.playing = false;
+      this.player.pause();
+    }
   }
 
   play() {

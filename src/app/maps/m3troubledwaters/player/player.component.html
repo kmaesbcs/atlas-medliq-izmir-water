@@ -63,6 +63,7 @@
                 </a>
                 <div class='badges layout-desktop' [class.expanded]='expanded === idx'
                      [class.visible]='idx === segmentIndex'
+                     (click)='expanded = expanded >= 0 ? -1 : idx'
                 >
                     <div class='info small' [style.color]='segment.interviewee.color'
                     [class.visible]='idx !== segmentIndex'
@@ -76,7 +77,7 @@
                         <div class='clock' [style.border-color]='segment.interviewee.color'>
                             <span>{{player?player.textTimestamp.getValue():''}}</span>
                         </div>
-                    <div class='caret' (click)='expanded = expanded >= 0 ? -1 : idx'>
+                    <div class='caret'>
                             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0)">
                                     <path d="M8.5 0.25L3.5 5L8.5 9.625" [attr.stroke]="segment.interviewee.color" stroke-width="1.5"/>
