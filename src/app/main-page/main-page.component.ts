@@ -24,6 +24,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   about = false;
   mobile = false;
   iobs: IntersectionObserver;
+  touchStart: number;
 
   constructor(private api: ApiService, private el: ElementRef, public layout: LayoutService) {
     forkJoin([
@@ -87,6 +88,22 @@ export class MainPageComponent implements OnInit, OnDestroy {
       // console.log('nel', dir, nel.scrollTop);
       nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
     });
+    fromEvent(nel.querySelectorAll('.map'), 'touchstart').subscribe(
+      (ev: TouchEvent) => {
+        this.touchStart = ev.touches[0].clientY;
+        fromEvent(ev.target, 'touchmove').pipe(
+          filter((ev: TouchEvent) => Math.abs(ev.touches[0].clientY - this.touchStart) > 20),
+          first(),
+          map((ev: TouchEvent) => {
+            const delta =  this.touchStart - ev.touches[0].clientY;
+            return delta / Math.abs(delta);
+          })
+        ).subscribe((dir) => {
+          // console.log('nel', dir, nel.scrollTop);
+          nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
+        })
+      }
+    );
   }
 
   ngOnDestroy() {
