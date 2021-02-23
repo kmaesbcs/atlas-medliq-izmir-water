@@ -58,7 +58,7 @@
                     [style.border-color]='segment.interviewee.color'
                     [attr.data-segment-id]='segment.id'
                     [attr.data-offset]='offset(idx)'
-                    (click)='toggle()'
+                    (click)='toggle(); $event.preventDefault()'
                 >
                 </a>
                 <div class='badges layout-desktop' [class.expanded]='expanded === idx'
