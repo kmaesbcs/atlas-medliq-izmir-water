@@ -197,7 +197,7 @@
                             font-weight: 300;
                         }
                         a, a:hover, a:visited {
-                            color: #008465;
+                            color: @accent;
                             font-weight: 700;
                         }
                     }    
@@ -244,7 +244,12 @@
                         margin: 32px 0;
                         img {
                             margin-right: 20px;
-                            height: 45px;
+                            .desktop({
+                                height: 45px;
+                            });
+                            .mobile({
+                                height: 35px;
+                            });
                         }
                     }
                 }
