@@ -16,7 +16,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   BASE = 'appDMYuX35cQbc97I';
 
   MAPS = [];
-  MAPS_REVERSE = [];
   SETTINGS: any = {};
 
   marked = marked;
@@ -44,7 +43,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
         this.SETTINGS = _settings;
         this.MAPS.filter((v) => v.mobile).forEach((v, i) => { v.idx = i; });
         this.MAPS.filter((v) => !v.mobile).forEach((v, i) => { v.idx = i; });
-        this.MAPS_REVERSE = this.MAPS.slice().reverse();
         console.log('MAPS', this.MAPS);
         console.log('SETTINGS', this.SETTINGS);
       }),
@@ -63,47 +61,57 @@ export class MainPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  scrollTo(idx) {
+    const nel = (this.el.nativeElement as HTMLElement).querySelector(`.viewport .slide[data-index="${idx}"]`) as HTMLElement;
+    if (nel) {
+      nel.scrollIntoView({behavior: 'smooth'});
+    }
+  }
+
   initObserver() {
     const nel = (this.el.nativeElement as HTMLElement).querySelector('.viewport');
-    // console.log('NEL', nel);
     this.iobs = new IntersectionObserver(
       (entries) => { this.intersection(entries); },
       {
         root: nel,
         threshold: 0.5,
-        // rootMargin: '-50% 0% -50% 0%',
       }
     );
     nel.querySelectorAll('.slide').forEach((slide) => {
-      // console.log('SLSL', slide);
       this.iobs.observe(slide);
     });
-    fromEvent(nel.querySelectorAll('.map'), 'wheel').pipe(
-      filter((ev: WheelEvent) => ev.deltaY !== 0),
-      throttleTime(1500),
-      map((ev: WheelEvent) => {
-        return ev.deltaY / Math.abs(ev.deltaY);
-      }),
-    ).subscribe((dir) => {
-      // console.log('nel', dir, nel.scrollTop);
-      nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
+    nel.querySelectorAll('.map').forEach((el) => {
+      fromEvent(el, 'wheel').pipe(
+        tap(() => {
+          // console.log('WHEEL!!');
+        }),
+        filter((ev: WheelEvent) => ev.deltaY !== 0),
+        throttleTime(500),
+        map((ev: WheelEvent) => {
+          // console.log('WHEEL');
+          return ev.deltaY / Math.abs(ev.deltaY);
+        }),
+      ).subscribe((dir) => {
+        nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
+      });
     });
-    fromEvent(nel.querySelectorAll('.map'), 'touchstart').subscribe(
-      (ev: TouchEvent) => {
-        this.touchStart = ev.touches[0].clientY;
-        fromEvent(ev.target, 'touchmove').pipe(
-          filter((ev: TouchEvent) => Math.abs(ev.touches[0].clientY - this.touchStart) > 20),
-          first(),
-          map((ev: TouchEvent) => {
-            const delta =  this.touchStart - ev.touches[0].clientY;
-            return delta / Math.abs(delta);
+    nel.querySelectorAll('.map').forEach((el) => {
+      fromEvent(el, 'touchstart').subscribe(
+        (ev: TouchEvent) => {
+          this.touchStart = ev.touches[0].clientY;
+          fromEvent(ev.target, 'touchmove').pipe(
+            filter((ev: TouchEvent) => Math.abs(ev.touches[0].clientY - this.touchStart) > 20),
+            first(),
+            map((ev: TouchEvent) => {
+              const delta =  this.touchStart - ev.touches[0].clientY;
+              return delta / Math.abs(delta);
+            })
+          ).subscribe((dir) => {
+            nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
           })
-        ).subscribe((dir) => {
-          // console.log('nel', dir, nel.scrollTop);
-          nel.scrollTo({top: nel.scrollTop + dir * window.innerHeight * 0.6, behavior: 'smooth'});
-        })
-      }
-    );
+        }
+      );
+    });
   }
 
   ngOnDestroy() {
