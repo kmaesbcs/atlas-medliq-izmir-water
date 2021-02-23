@@ -66,7 +66,7 @@ export class WawbComponent implements OnInit {
   ngOnInit(): void {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/ckioczj9i39w717peyp20en12/draft',
+      style: 'mapbox://styles/atlasmedliq/ckioczj9i39w717peyp20en12',
       minZoom: 3,
       bounds: [34.2654333839, 29.5013261988, 35.8363969256, 33.2774264593]
     });

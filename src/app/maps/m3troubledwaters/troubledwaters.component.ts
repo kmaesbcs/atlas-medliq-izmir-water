@@ -31,8 +31,8 @@ export class TroubledwatersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.theMap = new mapboxgl.Map({
       container: this.mapEl.nativeElement,
-      style: 'mapbox://styles/atlasmedliq/cklfbkntb6lh317rz99cjxfbz/draft',   // -> testing
-      // style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj/draft',
+      // style: 'mapbox://styles/atlasmedliq/cklfbkntb6lh317rz99cjxfbz/draft',   // -> testing
+      style: 'mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj',
       minZoom: 3,
       logoPosition: this.layout.desktop() ? 'bottom-left' : 'top-left',
       attributionControl: false,
