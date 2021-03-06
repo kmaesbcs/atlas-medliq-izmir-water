@@ -44,7 +44,7 @@
     <ng-container *ngFor='let map of MAPS'>
         <div class='slide' [attr.data-index]='map.idx' (click)='true'>
             <div class='about regular' [class.active]='map.idx === active && !about'>
-                <a [href]='map.path'>
+                <a [href]='map.path && map.state==="live" ? map.path : null'>
                     <div class='title arrowed'>
                         <span class='text' [innerHtml]='marked(map.title)'></span>
                         <ng-container *ngIf='map.path && map.state==="live"'>
@@ -60,7 +60,7 @@
                     [class.visible]='!mobile || !about'
                     [style.z-index]='20 - map.idx'
                     [style.transform]='mobile ? mapTransformMobile(map.idx) : mapTransformDesktop(map.idx)'
-                    [routerLink]='map.idx === active ? map.path : null'
+                    [routerLink]='map.idx === active && map.path && map.state==="live" ? map.path : null'
                     (click)='map.idx !== active ? scrollTo(map.idx) : true'
                 >
                 <div class='bg' [style.background-image]='"url(assets/img/map-thumbnail-" + map.key + (mobile ? "-mobile" : "-desktop") + ".png)"'></div>
