@@ -10,22 +10,23 @@ import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
 import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
 import { SpecToursComponent } from './maps/m2spectours/spectours.component';
-import { PlaceholderComponent } from './maps/m2spectours/timeline/placeholder/placeholder.component';
-import { ContentComponent } from './maps/m2spectours/timeline/content/content.component';
-import { TwitterComponent } from './maps/m2spectours/content/twitter/twitter.component';
-import { ImageComponent } from './maps/m2spectours/content/image/image.component';
-import { InstagramComponent } from './maps/m2spectours/content/instagram/instagram.component';
-import { WikipediaComponent } from './maps/m2spectours/content/wikipedia/wikipedia.component';
-import { AudioComponent } from './maps/m2spectours/content/audio/audio.component';
-import { VideoComponent } from './maps/m2spectours/content/video/video.component';
+import { PlaceholderComponent } from './templates/timeline/placeholder/placeholder.component';
+import { ContentComponent } from './templates/timeline/content/content.component';
+import { TwitterComponent } from './templates/timeline/content-types/twitter/twitter.component';
+import { ImageComponent } from './templates/timeline/content-types/image/image.component';
+import { InstagramComponent } from './templates/timeline/content-types/instagram/instagram.component';
+import { WikipediaComponent } from './templates/timeline/content-types/wikipedia/wikipedia.component';
+import { AudioComponent } from './templates/timeline/content-types/audio/audio.component';
+import { VideoComponent } from './templates/timeline/content-types/video/video.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.component';
 import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timeline/timeline.component';
 import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/player.component';
 import { Router } from '@angular/router';
-import { SpectoursInfobarComponent } from './maps/m2spectours/infobar/infobar.component';
+import { SpectoursInfobarComponent } from './templates/timeline/infobar/infobar.component';
 import { InfobarComponent } from './maps/m3troubledwaters/infobar/infobar.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { TimelineMapComponent } from './templates/timeline/timeline-map/timeline-map.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MainPageComponent } from './main-page/main-page.component';
     SpectoursInfobarComponent,
     InfobarComponent,
     MainPageComponent,
+    TimelineMapComponent,
   ],
   imports: [
     BrowserModule,
