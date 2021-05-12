@@ -44,7 +44,7 @@
                     [style.border-color]='segment.interviewee.color'
                     [attr.data-segment-id]='segment.id'
                     [attr.data-offset]='offset(idx)'
-                    routerLink='/troubled-waters-the-nile-conflict' [queryParams]='{segment: segment.id, offset: 0, who: "interviewee-click"}'
+                    [routerLink]='"/" + id' [queryParams]='{segment: segment.id, offset: 0, who: "interviewee-click"}'
                 >
                 </a>
                 <a class='photo' *ngIf='idx === segmentIndex'

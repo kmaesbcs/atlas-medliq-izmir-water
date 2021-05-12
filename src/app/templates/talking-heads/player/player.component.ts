@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { delay, first, switchMap, tap } from 'rxjs/operators';
-import { Player } from 'src/app/player';
-import { PlayerService } from 'src/app/player.service';
+import { Player } from '../../../player';
+import { PlayerService } from '../../../player.service';
 import { Scroller } from '../scroller';
 import { AnimationManagerService } from '../../../animation-manager.service';
-import { TroubledwatersService } from '../troubledwaters.service';
-import { LayoutService } from 'src/app/layout.service';
-import { ThrowStmt } from '@angular/compiler';
+import { TalkingHeadsService } from '../talking-heads-service';
+import { LayoutService } from '../../../layout.service';
+import { ApiService } from 'src/app/api.service';
 
 @Component({
   selector: 'app-troubledwaters-player',
@@ -15,6 +15,9 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./player.component.less']
 })
 export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
+
+  @Input() id: string;
+  @Input() api: TalkingHeadsService;
 
   segments = [];
   segment: any = {};
@@ -29,9 +32,12 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   expanded = -1;
   // observer: IntersectionObserver;
 
-  constructor(public troubledWaters: TroubledwatersService, public playerService: PlayerService,
+  constructor(public playerService: PlayerService,
               private animationManager: AnimationManagerService, private layout: LayoutService) {
-    troubledWaters.data.pipe(
+  }
+
+  ngOnInit(): void {
+    this.api.data.pipe(
       first(),
       tap((data) => {
         this.segments = data;
@@ -49,11 +55,11 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           this.updateBubbleSizes();
         });
         fromEvent(el, 'scroll').subscribe((event) => {
-          animationManager.enable('player:scroll')
-          animationManager.go();
+          this.animationManager.enable('player:scroll')
+          this.animationManager.go();
         });
       }),
-      switchMap(() => this.troubledWaters.position),
+      switchMap(() => this.api.position),
       delay(0),
       tap(({segment, timestamp, offset}) => {
         offset /= 10;
@@ -87,7 +93,7 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
       if (this.player !== null) {
         this.pause();
       }  
-    })
+    })    
   }
 
   offset(idx) {
@@ -98,13 +104,9 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
     this.scroller = new Scroller(this.interviewees.nativeElement, '.interviewee .photo', this.animationManager,  () => this.layout.mobile());
   }
 
-  ngOnInit(): void {
-    
-  }
-
   pause() {
     if (this.player !== null) {
-      this.troubledWaters.playing = false;
+      this.api.playing = false;
       this.player.pause();
     }
   }
@@ -112,13 +114,13 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
   play() {
     if (this.player !== null) {
       this.player.play();
-      this.troubledWaters.playing = true;  
+      this.api.playing = true;  
     }
   }
 
   toggle() {
     if (this.player !== null) {
-      if (this.troubledWaters.playing) {
+      if (this.api.playing) {
         this.pause();
       } else {
         this.play();
@@ -139,8 +141,8 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
         if (player !== this.player) {
           return;
         }
-        if (this.troubledWaters.playing) {
-          this.troubledWaters.setPosition({segment: this.segment, offset, who: 'play-position'});
+        if (this.api.playing) {
+          this.api.setPosition({segment: this.segment, offset, who: 'play-position'});
         }
       });
       player.ended.subscribe(() => {
@@ -148,9 +150,9 @@ export class TroubledwatersPlayerComponent implements OnInit, AfterViewInit {
           return;
         }
         if (this.segment.segmentIndex + 1 < this.segments.length) {
-          this.troubledWaters.setPosition({segment: this.segments[this.segment.segmentIndex + 1], who: 'play-ended'});
+          this.api.setPosition({segment: this.segments[this.segment.segmentIndex + 1], who: 'play-ended'});
         } else {
-          this.troubledWaters.playing = false;
+          this.api.playing = false;
         }
       });
       this.player = player

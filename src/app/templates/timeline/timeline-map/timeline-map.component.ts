@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 import { ReplaySubject } from 'rxjs';
 import { switchMap, first, delay } from 'rxjs/operators';
-import { MapService } from 'src/app/map.service';
+import { MapService } from '../../../map.service';
+import { ApiService } from '../../../api.service';
 import { TimelineMapService } from '../timeline-map-service';
 
 @Component({
@@ -14,12 +15,13 @@ import { TimelineMapService } from '../timeline-map-service';
 export class TimelineMapComponent implements OnInit {
 
   @Input() id: string;
+  @Input() airtableBase: string;
   @Input() title: string;
   @Input() subtitle: string;
   @Input() infobarTitle: string;
   @Input() infobarSubtitle: string;
   @Input() mapStyle: string;
-  @Input() api: TimelineMapService;
+  api: TimelineMapService;
 
   timeline = [];
   mapViews = new ReplaySubject<any>(1);
@@ -28,7 +30,7 @@ export class TimelineMapComponent implements OnInit {
   _info = false;
   activeYear = -1;
 
-  constructor(private activatedRoute: ActivatedRoute, private mapSvc: MapService) {
+  constructor(private activatedRoute: ActivatedRoute, private apiSvc: ApiService, private mapSvc: MapService) {
   }
 
   get info() { return this._info; }
@@ -39,6 +41,7 @@ export class TimelineMapComponent implements OnInit {
 
   ngOnInit(): void {
     this._info = localStorage.getItem(this.id) !== 'opened';
+    this.api = new TimelineMapService(this.apiSvc, this.airtableBase);
     this.api.fetchData().pipe(
       switchMap((timeline) => {
         this.timeline = timeline;

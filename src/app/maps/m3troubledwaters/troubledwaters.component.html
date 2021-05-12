@@ -1,18 +1,10 @@
-<app-layout (info)='info = $event'>
-    <div class='content'>
-        <div class='map'>
-            <div #mapEl></div>
-        </div>
-        <app-troubledwaters-timeline></app-troubledwaters-timeline>
-        <app-troubledwaters-infobar [class.open]='info' (close)='info = false'></app-troubledwaters-infobar>
-    </div>
-    <div class='header-title'>
-        <h2>Troubled Waters / </h2>
-        <h1>The Nile Conflict</h1>
-    </div>
-</app-layout>
-
-<img class='sprite' *ngFor='let img of loadedImages' [src]='"/assets/img/m3/sprites/" + img + ".svg"'
-     (load)='imageLoaded(img, $event)'
+<app-talking-heads-map
+    id='troubled-waters-the-nile-conflict'
+    airtableBase='appfJRhs6ZsWF5OtU'
+    subtitle='Troubled Waters / '
+    title='The Nile Conflict'
+    infobarTitle='Troubled Waters: The Nile Conflict'
+    infobarSubtitle='A turn of the tide in the Mediterranean'
+    mapStyle='mapbox://styles/atlasmedliq/ckiocyuoy4o9217qsvjosbxxj'
 >
-
+</app-talking-heads-map>

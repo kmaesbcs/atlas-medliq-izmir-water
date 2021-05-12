@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { from, ReplaySubject } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
-import { TroubledwatersService } from '../troubledwaters.service';
 
 import { Scroller } from '../scroller';
-import { AnimationManagerService } from 'src/app/animation-manager.service';
+import { AnimationManagerService } from '../../../animation-manager.service';
 import { Router } from '@angular/router';
 import { LayoutService } from '../../../layout.service';
-import { PlayerService } from 'src/app/player.service';
+import { PlayerService } from '../../../player.service';
+import { TalkingHeadsService } from '../talking-heads-service';
 
 @Component({
   selector: 'app-troubledwaters-timeline',
@@ -15,6 +15,9 @@ import { PlayerService } from 'src/app/player.service';
   styleUrls: ['./timeline.component.less']
 })
 export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
+
+  @Input() id: string;
+  @Input() api: TalkingHeadsService;
 
   segments: any[] = [];
   init = new ReplaySubject<void>(1);
@@ -26,12 +29,12 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   @ViewChild('timeline', {static: true}) timeline: ElementRef;
   @ViewChild('bios', {static: true}) bios: ElementRef;
 
-  constructor(private troubledWaters: TroubledwatersService, private router: Router, 
+  constructor(private router: Router, 
               private animationManager: AnimationManagerService, private layout: LayoutService,
               public playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.troubledWaters.data.pipe(first()).subscribe((segments) => {
+    this.api.data.pipe(first()).subscribe((segments) => {
       for (const segment of segments) {
         const item = {
           id: segment.id,
@@ -64,7 +67,7 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.init.pipe(first(), delay(0)).subscribe(() => {
-      this.troubledWaters.position.subscribe(({segment, timestamp, offset}) => {
+      this.api.position.subscribe(({segment, timestamp, offset}) => {
         if (!this.timeline || !this.timeline.nativeElement) {
           return;
         }
@@ -83,7 +86,7 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
           }
           this.scroller.update(scrollOffset);
         }
-        if (this.troubledWaters.playing) {
+        if (this.api.playing) {
           // this.segments.filter(x => x.id === segment.id)[0].played[offset] = true;
           if (second > 0) {
             this.segments.filter(x => x.id === segment.id)[0].played[second - 1] = true;
@@ -124,6 +127,6 @@ export class TroubledwatersTimelineComponent implements OnInit, AfterViewInit {
   }
 
   secondClicked(segment, offset) {
-    this.router.navigate(['troubled-waters-the-nile-conflict'], {queryParams: {segment: segment.id, offset: offset * 10, who: 'second-click'}});
+    this.router.navigate([this.id], {queryParams: {segment: segment.id, offset: offset * 10, who: 'second-click'}});
   }
 }

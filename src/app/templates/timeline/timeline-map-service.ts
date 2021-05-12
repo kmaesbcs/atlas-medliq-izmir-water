@@ -1,8 +1,7 @@
 import * as dayjs from 'dayjs';
-import { forkJoin, from, ReplaySubject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, ReplaySubject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../api.service';
-import { MapService } from '../../map.service';
 
 
 export class TimelineMapService {
@@ -16,7 +15,6 @@ export class TimelineMapService {
 
   constructor(
       private api: ApiService, 
-      private map: MapService,
       private baseId: string,
   ) { }
 
@@ -116,7 +114,6 @@ export class TimelineMapService {
           }
           ret.push({year, content});
         }
-        console.log('READY!!!');
         this.ready.next(true);
         return ret;
       })

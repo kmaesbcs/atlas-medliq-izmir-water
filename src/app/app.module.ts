@@ -20,13 +20,14 @@ import { AudioComponent } from './templates/timeline/content-types/audio/audio.c
 import { VideoComponent } from './templates/timeline/content-types/video/video.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TroubledwatersComponent } from './maps/m3troubledwaters/troubledwaters.component';
-import { TroubledwatersTimelineComponent } from './maps/m3troubledwaters/timeline/timeline.component';
-import { TroubledwatersPlayerComponent } from './maps/m3troubledwaters/player/player.component';
+import { TroubledwatersTimelineComponent } from './templates/talking-heads/timeline/timeline.component';
+import { TroubledwatersPlayerComponent } from './templates/talking-heads/player/player.component';
 import { Router } from '@angular/router';
 import { SpectoursInfobarComponent } from './templates/timeline/infobar/infobar.component';
-import { InfobarComponent } from './maps/m3troubledwaters/infobar/infobar.component';
+import { InfobarComponent } from './templates/talking-heads/infobar/infobar.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { TimelineMapComponent } from './templates/timeline/timeline-map/timeline-map.component';
+import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-heads-map/talking-heads-map.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TimelineMapComponent } from './templates/timeline/timeline-map/timeline
     InfobarComponent,
     MainPageComponent,
     TimelineMapComponent,
+    TalkingHeadsMapComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SpecToursService } from '../../../maps/m2spectours/spectours.service';
 
 import * as marked from 'marked'
 import { DomSanitizer } from '@angular/platform-browser';
@@ -25,7 +24,6 @@ export class SpectoursInfobarComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.ready.pipe(first()).subscribe(() => {
-      console.log('READY!');
       this.aboutContent = this.sanitizer.bypassSecurityTrustHtml(marked(this.api.ABOUT))
     });
   }
