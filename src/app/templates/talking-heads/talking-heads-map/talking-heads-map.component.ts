@@ -25,7 +25,7 @@ export class TalkingHeadsMapComponent implements OnInit, AfterViewInit {
   api: TalkingHeadsService;
 
   theMap: mapboxgl.Map;
-  info = false;
+  _info = false;
   currentTimestamp = '';
   loadedImages = [];
 
@@ -36,6 +36,7 @@ export class TalkingHeadsMapComponent implements OnInit, AfterViewInit {
               private layout :LayoutService) { }
 
   ngOnInit(): void {
+    this._info = localStorage.getItem(this.id) !== 'opened';
     this.api = new TalkingHeadsService(this.apiSvc, this.airtableBase);
   }
 
@@ -58,6 +59,12 @@ export class TalkingHeadsMapComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.theMap.resize();
     }, 2000);
+  }
+
+  get info() { return this._info; }
+  set info(value) {
+    this._info = value;
+    localStorage.setItem(this.id, 'opened');
   }
 
   setPosition(segment?: any, timestamp?: any, offset?: number) {

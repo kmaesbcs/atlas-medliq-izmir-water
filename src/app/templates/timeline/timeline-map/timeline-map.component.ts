@@ -36,7 +36,7 @@ export class TimelineMapComponent implements OnInit {
   get info() { return this._info; }
   set info(value) {
     this._info = value;
-    localStorage.setItem('M2', 'opened');
+    localStorage.setItem(this.id, 'opened');
   }
 
   ngOnInit(): void {
