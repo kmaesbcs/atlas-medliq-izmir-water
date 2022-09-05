@@ -50,7 +50,7 @@ jobs:
           jinja -d data/social-m3.json -o dist/atlas-medliq/troubled-waters-the-nile-conflict/index.html dist/atlas-medliq/index.html
           jinja -d data/social-main.json -o dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
           mv dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
-          mv external/* dist/
+          mv external/* dist/atlas-medliq/
           cp dist/atlas-medliq/index.html dist/atlas-medliq/404.html
           cp CNAME dist/atlas-medliq/
       - name: deploy
