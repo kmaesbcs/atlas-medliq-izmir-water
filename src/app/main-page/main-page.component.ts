@@ -191,7 +191,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   redirect(url) {
     this.ngZone.runOutsideAngular(() => {
-      window.location.href = window.location.href + `/${url}/`;
+      window.location.href = window.location.href + url;
     });
     return true;
   }
