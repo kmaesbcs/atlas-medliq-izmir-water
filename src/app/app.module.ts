@@ -9,7 +9,6 @@ import { WawbComponent } from './maps/m1wawb/wawb.component'
 import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
 import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
-import { SpecToursComponent } from './maps/m2spectours/spectours.component';
 import { PlaceholderComponent } from './templates/timeline/placeholder/placeholder.component';
 import { ContentComponent } from './templates/timeline/content/content.component';
 import { TwitterComponent } from './templates/timeline/content-types/twitter/twitter.component';
@@ -36,7 +35,6 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
     WawbComponent,
     WawbSidebarComponent,
     WawbInfobarComponent,
-    SpecToursComponent,
     PlaceholderComponent,
     ContentComponent,
     TwitterComponent,

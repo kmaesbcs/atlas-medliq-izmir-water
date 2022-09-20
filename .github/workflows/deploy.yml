@@ -43,10 +43,14 @@ jobs:
           rm .gitignore
           npm run prod
           mkdir dist/atlas-medliq/water-above-water-below
-          mkdir dist/atlas-medliq/speculative-tourism-sea-change
           mkdir dist/atlas-medliq/troubled-waters-the-nile-conflict
+
+          wget https://github.com/mushon/ST-sea_change/archive/refs/heads/atlas.zip
+          unzip atlas.zip          
+          cp -r ST-sea_change-atlas external/speculative-tourism-sea-change
+
           jinja -d data/social-m1.json -o dist/atlas-medliq/water-above-water-below/index.html dist/atlas-medliq/index.html
-          jinja -d data/social-m2.json -o dist/atlas-medliq/speculative-tourism-sea-change/index.html dist/atlas-medliq/index.html
+          jinja -d data/social-m2.json -o dist/atlas-medliq/speculative-tourism-sea-change/index.html ST-sea_change-atlas/index.html
           jinja -d data/social-m3.json -o dist/atlas-medliq/troubled-waters-the-nile-conflict/index.html dist/atlas-medliq/index.html
           jinja -d data/social-main.json -o dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
           mv dist/atlas-medliq/index-soc.html dist/atlas-medliq/index.html
