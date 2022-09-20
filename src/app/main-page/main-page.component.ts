@@ -190,10 +190,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   redirect(url) {
-    console.log('REDIRECT TO2', url);
-    console.log('REDIRECT TOO', window.location.host + '/' + url);
     this.ngZone.runTask(() => {
-      window.location.href = window.location.protocol + window.location.host + '/' + url + '/';
+      window.location.href = window.location.href + `/${url}/`;
     });
     return true;
   }
