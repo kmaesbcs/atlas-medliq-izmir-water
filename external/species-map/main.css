@@ -467,6 +467,10 @@
     margin-right: 50px;
   }
 
+  .about__inner a[href] {
+    text-decoration: underline;
+  }
+
   .about__close {
     background: none; border: none;
     position: absolute; right: 20px; top: 47px;
