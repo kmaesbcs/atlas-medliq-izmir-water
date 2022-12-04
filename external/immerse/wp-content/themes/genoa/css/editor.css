@@ -1,0 +1,35 @@
+@import url(http://fonts.googleapis.com/css?family=Alef:400,700);
+
+body {
+  font-family: Alef, arial, sans-serif;
+}
+
+blockquote {
+  position: relative;  
+  margin: 15px;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+blockquote em {
+  font-style: normal; font-weight: normal;
+}
+
+thead {
+  background: #eee;
+}
+
+th {
+  text-align: inherit;
+}
+
+.hebrew {
+  direction: rtl;
+  display: inline-block;
+}
+
+.english {
+  direction: ltr;
+  display: inline-block;
+}

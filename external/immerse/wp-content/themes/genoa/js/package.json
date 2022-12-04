@@ -1,0 +1,8 @@
+{
+  "name": "ek-theme",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "webpack --watch --progress",
+    "build": "webpack --progress"
+  }
+}
