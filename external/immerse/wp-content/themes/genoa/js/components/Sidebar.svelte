@@ -1,6 +1,6 @@
 <script>
   import AboutPopup from "@components/AboutPopup.svelte";
-  import { themeBase, t } from "@components/common";
+  import {themeBase, t, getLanguagePath} from "@components/common";
   import { muted } from '@components/stores';
 
   export let options;
@@ -10,6 +10,11 @@
   function toggleMute() {
     muted.update(value => !value);
   }
+
+  $: languageLinks = Object.values(languages).map(language => {
+    language.url = getLanguagePath(language.code);
+    return language;
+  });
 </script>
 
 <aside class="sidebar">
@@ -37,7 +42,7 @@
     </button>
 
     <nav class="languages">
-      {#each Object.values(languages) as language, index}
+      {#each languageLinks as language}
         <a href="{language.url}"
            class="language"
            class:is-current={language.code === currentLanguage}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {t, homeUrl, italian, themeBase} from '@components/common.js';
+  import {t, homeUrl, italian, themeBase, getCurrentLanguagePath} from '@components/common.js';
   import {isMobile} from '@components/stores.js';
   import {fade} from 'svelte/transition';
 
@@ -14,6 +14,10 @@
   export let story: Story;
   export let options;
 
+  function getClosePath() {
+    italian ? '/it/' : ''
+  }
+
 </script>
 
 {#if story}
@@ -22,7 +26,7 @@
            volume={options.maxVolume ? options.maxVolume : 1}
            src={story.backgroundSound}/>
 
-    <a class="close round-button" href="{italian ? '/it/' : ''}#">
+    <a class="close round-button" href="{getCurrentLanguagePath()}#">
       <CloseIcon />
     </a>
 

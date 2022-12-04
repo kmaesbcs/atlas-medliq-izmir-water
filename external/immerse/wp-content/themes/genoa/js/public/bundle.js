@@ -11085,12 +11085,11 @@ const file = "components\\Sidebar.svelte";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[5] = list[i];
-	child_ctx[7] = i;
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
-// (33:6) {:else}
+// (38:6) {:else}
 function create_else_block(ctx) {
 	let img;
 	let img_src_value;
@@ -11103,7 +11102,7 @@ function create_else_block(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "height", "18");
 			if (img.src !== (img_src_value = "" + (_components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase + "/images/speaker-off.svg"))) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "src", img_src_value);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "alt", img_alt_value = (0,_components_common__WEBPACK_IMPORTED_MODULE_2__.t)("Sound off"));
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 33, 8, 1027);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 38, 8, 1190);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, img, anchor);
@@ -11118,14 +11117,14 @@ function create_else_block(ctx) {
 		block,
 		id: create_else_block.name,
 		type: "else",
-		source: "(33:6) {:else}",
+		source: "(38:6) {:else}",
 		ctx
 	});
 
 	return block;
 }
 
-// (30:6) {#if !$muted}
+// (35:6) {#if !$muted}
 function create_if_block(ctx) {
 	let img;
 	let img_src_value;
@@ -11138,7 +11137,7 @@ function create_if_block(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "height", "18");
 			if (img.src !== (img_src_value = "" + (_components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase + "/images/speaker.svg"))) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "src", img_src_value);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "alt", img_alt_value = (0,_components_common__WEBPACK_IMPORTED_MODULE_2__.t)("Sound on"));
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 30, 8, 902);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 35, 8, 1065);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, img, anchor);
@@ -11153,17 +11152,17 @@ function create_if_block(ctx) {
 		block,
 		id: create_if_block.name,
 		type: "if",
-		source: "(30:6) {#if !$muted}",
+		source: "(35:6) {#if !$muted}",
 		ctx
 	});
 
 	return block;
 }
 
-// (40:6) {#each Object.values(languages) as language, index}
+// (45:6) {#each languageLinks as language}
 function create_each_block(ctx) {
 	let a;
-	let t0_value = /*language*/ ctx[5].code + "";
+	let t0_value = /*language*/ ctx[6].code + "";
 	let t0;
 	let t1;
 	let a_href_value;
@@ -11175,12 +11174,12 @@ function create_each_block(ctx) {
 			a = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("a");
 			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t0_value);
 			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = /*language*/ ctx[5].url);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = /*language*/ ctx[6].url);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "class", "language");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "title", a_title_value = /*language*/ ctx[5].native_name);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "hreflang", a_hreflang_value = /*language*/ ctx[5].code);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(a, "is-current", /*language*/ ctx[5].code === /*currentLanguage*/ ctx[2]);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 40, 8, 1260);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "title", a_title_value = /*language*/ ctx[6].native_name);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "hreflang", a_hreflang_value = /*language*/ ctx[6].code);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(a, "is-current", /*language*/ ctx[6].code === /*currentLanguage*/ ctx[1]);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 45, 8, 1405);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, a, anchor);
@@ -11188,22 +11187,22 @@ function create_each_block(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append_dev)(a, t1);
 		},
 		p: function update(ctx, dirty) {
-			if (dirty & /*languages*/ 2 && t0_value !== (t0_value = /*language*/ ctx[5].code + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data_dev)(t0, t0_value);
+			if (dirty & /*languageLinks*/ 4 && t0_value !== (t0_value = /*language*/ ctx[6].code + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data_dev)(t0, t0_value);
 
-			if (dirty & /*languages*/ 2 && a_href_value !== (a_href_value = /*language*/ ctx[5].url)) {
+			if (dirty & /*languageLinks*/ 4 && a_href_value !== (a_href_value = /*language*/ ctx[6].url)) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value);
 			}
 
-			if (dirty & /*languages*/ 2 && a_title_value !== (a_title_value = /*language*/ ctx[5].native_name)) {
+			if (dirty & /*languageLinks*/ 4 && a_title_value !== (a_title_value = /*language*/ ctx[6].native_name)) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "title", a_title_value);
 			}
 
-			if (dirty & /*languages*/ 2 && a_hreflang_value !== (a_hreflang_value = /*language*/ ctx[5].code)) {
+			if (dirty & /*languageLinks*/ 4 && a_hreflang_value !== (a_hreflang_value = /*language*/ ctx[6].code)) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "hreflang", a_hreflang_value);
 			}
 
-			if (dirty & /*Object, languages, currentLanguage*/ 6) {
-				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(a, "is-current", /*language*/ ctx[5].code === /*currentLanguage*/ ctx[2]);
+			if (dirty & /*languageLinks, currentLanguage*/ 6) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(a, "is-current", /*language*/ ctx[6].code === /*currentLanguage*/ ctx[1]);
 			}
 		},
 		d: function destroy(detaching) {
@@ -11215,7 +11214,7 @@ function create_each_block(ctx) {
 		block,
 		id: create_each_block.name,
 		type: "each",
-		source: "(40:6) {#each Object.values(languages) as language, index}",
+		source: "(45:6) {#each languageLinks as language}",
 		ctx
 	});
 
@@ -11254,7 +11253,7 @@ function create_fragment(ctx) {
 
 	let current_block_type = select_block_type(ctx, -1);
 	let if_block = current_block_type(ctx);
-	let each_value = Object.values(/*languages*/ ctx[1]);
+	let each_value = /*languageLinks*/ ctx[2];
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_each_argument)(each_value);
 	let each_blocks = [];
 
@@ -11295,28 +11294,28 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(aboutpopup.$$.fragment);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source0, "srcset", source0_srcset_value = "" + (_components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase + "/images/globe-logo-left.svg"));
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source0, "media", "(max-width: 764px)");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source0, file, 17, 6, 457);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source0, file, 22, 6, 620);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source1, "srcset", source1_srcset_value = "" + (_components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase + "images/globe-logo-up.svg"));
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source1, "media", "(min-width: 765px)");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source1, file, 18, 6, 550);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source1, file, 23, 6, 713);
 			if (img.src !== (img_src_value = "" + (_components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase + "/images/globe-logo-up.svg"))) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "src", img_src_value);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "alt", "Back");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 19, 6, 640);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 24, 6, 803);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(picture, "class", "sidebar__logo");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(picture, file, 16, 4, 418);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(picture, file, 21, 4, 581);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", "https://medliq.art");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "class", "sidebar__link");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 15, 2, 361);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 20, 2, 524);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(h1, "class", "sidebar__title");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(h1, file, 23, 2, 731);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(h1, file, 28, 2, 894);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(button, "class", "toggle-mute");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(button, file, 28, 4, 821);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(button, file, 33, 4, 984);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(nav, "class", "languages");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(nav, file, 38, 4, 1168);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(nav, file, 43, 4, 1331);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(div, "class", "sidebar__bottom");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(div, file, 27, 2, 786);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(div, file, 32, 2, 949);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(aside, "class", "sidebar");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(aside, file, 14, 0, 334);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(aside, file, 19, 0, 497);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11365,8 +11364,8 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*Object, languages, currentLanguage*/ 6) {
-				each_value = Object.values(/*languages*/ ctx[1]);
+			if (dirty & /*languageLinks, currentLanguage*/ 6) {
+				each_value = /*languageLinks*/ ctx[2];
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_each_argument)(each_value);
 				let i;
 
@@ -11424,6 +11423,7 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
+	let languageLinks;
 	let $muted;
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_store)(_components_stores__WEBPACK_IMPORTED_MODULE_3__.muted, "muted");
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _components_stores__WEBPACK_IMPORTED_MODULE_3__.muted, $$value => $$invalidate(3, $muted = $$value));
@@ -11445,33 +11445,45 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ("options" in $$props) $$invalidate(0, options = $$props.options);
-		if ("languages" in $$props) $$invalidate(1, languages = $$props.languages);
-		if ("currentLanguage" in $$props) $$invalidate(2, currentLanguage = $$props.currentLanguage);
+		if ("languages" in $$props) $$invalidate(5, languages = $$props.languages);
+		if ("currentLanguage" in $$props) $$invalidate(1, currentLanguage = $$props.currentLanguage);
 	};
 
 	$$self.$capture_state = () => ({
 		AboutPopup: _components_AboutPopup_svelte__WEBPACK_IMPORTED_MODULE_1__.default,
 		themeBase: _components_common__WEBPACK_IMPORTED_MODULE_2__.themeBase,
 		t: _components_common__WEBPACK_IMPORTED_MODULE_2__.t,
+		getLanguagePath: _components_common__WEBPACK_IMPORTED_MODULE_2__.getLanguagePath,
 		muted: _components_stores__WEBPACK_IMPORTED_MODULE_3__.muted,
 		options,
 		languages,
 		currentLanguage,
 		toggleMute,
+		languageLinks,
 		$muted
 	});
 
 	$$self.$inject_state = $$props => {
 		if ("options" in $$props) $$invalidate(0, options = $$props.options);
-		if ("languages" in $$props) $$invalidate(1, languages = $$props.languages);
-		if ("currentLanguage" in $$props) $$invalidate(2, currentLanguage = $$props.currentLanguage);
+		if ("languages" in $$props) $$invalidate(5, languages = $$props.languages);
+		if ("currentLanguage" in $$props) $$invalidate(1, currentLanguage = $$props.currentLanguage);
+		if ("languageLinks" in $$props) $$invalidate(2, languageLinks = $$props.languageLinks);
 	};
 
 	if ($$props && "$$inject" in $$props) {
 		$$self.$inject_state($$props.$$inject);
 	}
 
-	return [options, languages, currentLanguage, $muted, toggleMute];
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*languages*/ 32) {
+			$: $$invalidate(2, languageLinks = Object.values(languages).map(language => {
+				language.url = (0,_components_common__WEBPACK_IMPORTED_MODULE_2__.getLanguagePath)(language.code);
+				return language;
+			}));
+		}
+	};
+
+	return [options, currentLanguage, languageLinks, $muted, toggleMute, languages];
 }
 
 class Sidebar extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponentDev {
@@ -11480,8 +11492,8 @@ class Sidebar extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteCompone
 
 		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
 			options: 0,
-			languages: 1,
-			currentLanguage: 2
+			languages: 5,
+			currentLanguage: 1
 		});
 
 		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.dispatch_dev)("SvelteRegisterComponent", {
@@ -11498,11 +11510,11 @@ class Sidebar extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteCompone
 			console.warn("<Sidebar> was created without expected prop 'options'");
 		}
 
-		if (/*languages*/ ctx[1] === undefined && !("languages" in props)) {
+		if (/*languages*/ ctx[5] === undefined && !("languages" in props)) {
 			console.warn("<Sidebar> was created without expected prop 'languages'");
 		}
 
-		if (/*currentLanguage*/ ctx[2] === undefined && !("currentLanguage" in props)) {
+		if (/*currentLanguage*/ ctx[1] === undefined && !("currentLanguage" in props)) {
 			console.warn("<Sidebar> was created without expected prop 'currentLanguage'");
 		}
 	}
@@ -11574,9 +11586,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const file = "components\\Story.svelte";
 
-// (15:0) {#if story}
+// (18:0) {#if story}
 function create_if_block(ctx) {
 	let section;
 	let audio;
@@ -11624,10 +11637,10 @@ function create_if_block(ctx) {
 			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			if_block.c();
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "class", "close round-button");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = "" + ((_components_common_js__WEBPACK_IMPORTED_MODULE_1__.italian ? "/it/" : "") + "#"));
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 20, 4, 783);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = "" + ((0,_components_common_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentLanguagePath)() + "#"));
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 23, 4, 865);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(section, "class", "story");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 15, 2, 566);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 18, 2, 648);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, section, anchor);
@@ -11710,14 +11723,14 @@ function create_if_block(ctx) {
 		block,
 		id: create_if_block.name,
 		type: "if",
-		source: "(15:0) {#if story}",
+		source: "(18:0) {#if story}",
 		ctx
 	});
 
 	return block;
 }
 
-// (27:4) {:else}
+// (30:4) {:else}
 function create_else_block(ctx) {
 	let storyinfo;
 	let t_1;
@@ -11776,14 +11789,14 @@ function create_else_block(ctx) {
 		block,
 		id: create_else_block.name,
 		type: "else",
-		source: "(27:4) {:else}",
+		source: "(30:4) {:else}",
 		ctx
 	});
 
 	return block;
 }
 
-// (25:4) {#if $isMobile}
+// (28:4) {#if $isMobile}
 function create_if_block_1(ctx) {
 	let mobilestory;
 	let current;
@@ -11824,7 +11837,7 @@ function create_if_block_1(ctx) {
 		block,
 		id: create_if_block_1.name,
 		type: "if",
-		source: "(25:4) {#if $isMobile}",
+		source: "(28:4) {#if $isMobile}",
 		ctx
 	});
 
@@ -11908,6 +11921,11 @@ function instance($$self, $$props, $$invalidate) {
 	
 	let { story } = $$props;
 	let { options } = $$props;
+
+	function getClosePath() {
+		_components_common_js__WEBPACK_IMPORTED_MODULE_1__.italian ? "/it/" : "";
+	}
+
 	const writable_props = ["story", "options"];
 
 	Object.keys($$props).forEach(key => {
@@ -11924,6 +11942,7 @@ function instance($$self, $$props, $$invalidate) {
 		homeUrl: _components_common_js__WEBPACK_IMPORTED_MODULE_1__.homeUrl,
 		italian: _components_common_js__WEBPACK_IMPORTED_MODULE_1__.italian,
 		themeBase: _components_common_js__WEBPACK_IMPORTED_MODULE_1__.themeBase,
+		getCurrentLanguagePath: _components_common_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentLanguagePath,
 		isMobile: _components_stores_js__WEBPACK_IMPORTED_MODULE_2__.isMobile,
 		fade: svelte_transition__WEBPACK_IMPORTED_MODULE_3__.fade,
 		Audio: _components_Audio_svelte__WEBPACK_IMPORTED_MODULE_5__.default,
@@ -11933,6 +11952,7 @@ function instance($$self, $$props, $$invalidate) {
 		CloseIcon: _components_CloseIcon_svelte__WEBPACK_IMPORTED_MODULE_9__.default,
 		story,
 		options,
+		getClosePath,
 		$isMobile
 	});
 
@@ -28389,13 +28409,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "homeUrl": () => (/* binding */ homeUrl),
 /* harmony export */   "themeBase": () => (/* binding */ themeBase),
 /* harmony export */   "MOBILE_WIDTH": () => (/* binding */ MOBILE_WIDTH),
-/* harmony export */   "t": () => (/* binding */ t)
+/* harmony export */   "t": () => (/* binding */ t),
+/* harmony export */   "getLanguagePath": () => (/* binding */ getLanguagePath),
+/* harmony export */   "getCurrentLanguagePath": () => (/* binding */ getCurrentLanguagePath)
 /* harmony export */ });
 const italian = window.location.pathname.indexOf('/it') !== -1;
 const homeUrl = italian ? '../' : '';
 const themeBase = homeUrl + 'wp-content/themes/genoa/';
-
-
 const MOBILE_WIDTH = 820;
 function t(str) {
   const strings = window.siteOptions.strings;
@@ -28407,6 +28427,22 @@ function t(str) {
     return str;
 }
 
+/**
+ * Adjusted language path, that works with subdirectories.
+ */
+function getLanguagePath(code) {
+  const basePath = window.location.origin + window.location.pathname.replace('/it', '');
+  const path = code === 'en' ? basePath : basePath + code;
+  return path.endsWith('/') ? path : path + '/';
+}
+
+/**
+ * Get the *current* language path
+ */
+function getCurrentLanguagePath() {
+  const code = italian ? 'it' : 'en';
+  return getLanguagePath(code);
+}
 
 /***/ }),
 

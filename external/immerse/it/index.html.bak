@@ -44,9 +44,9 @@
 
   
   <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" hreflang="en" href=".." />
+<link rel="alternate" hreflang="en" href="https://genoa.elikr.com" />
 <link rel="alternate" hreflang="it" href="../it/" />
-<link rel="alternate" hreflang="x-default" href=".." />
+<link rel="alternate" hreflang="x-default" href="https://genoa.elikr.com" />
 <link rel='dns-prefetch' href='//storage.googleapis.com' />
 <link rel='stylesheet' id='classic-theme-styles-css' href='../wp-includes/css/classic-themes.min.css' type='text/css' media='all' />
 <style id='global-styles-inline-css' type='text/css'>
@@ -147,4 +147,4 @@ var wpml_cookies = {"wp-wpml_current_language":{"value":"it","expires":1,"path":
 
 <!-- Performance optimized by Redis Object Cache. Learn more: https://wprediscache.com -->
 
-<!-- Cache served by breeze CACHE - Last modified: Sat, 03 Dec 2022 22:06:16 GMT -->
+<!-- Cache served by breeze CACHE - Last modified: Sun, 04 Dec 2022 07:44:20 GMT -->
