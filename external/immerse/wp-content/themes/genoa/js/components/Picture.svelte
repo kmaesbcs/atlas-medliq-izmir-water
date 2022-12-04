@@ -4,6 +4,7 @@
 
   export let picture: StoryImage;
   export let sizes = ['1600', '1920', '2560'];
+  export let eager = false;
 
   let video;
   let mobileVideo;
@@ -34,19 +35,19 @@
   {/each}
 
 
-  <img loading="lazy" src="{picture.image['thumb-2560']}" alt=""/>
+  <img loading="{eager ? 'eager' : 'lazy'}" src="{picture.image['thumb-2560']}" alt=""/>
 </picture>
 
 
 {#if (picture.video && !$isMobile) || (picture.video && !picture.mobileVideo)}
   <video src="{picture.video}" autoplay playsinline loop muted webkit-playsinline
-         bind:this={video}
+         bind:this={video} preload="metadata"
          class="fill fill-image picture__video picture__video"></video>
 {/if}
 
 {#if picture.mobileVideo && $isMobile}
   <video src="{picture.mobileVideo}" autoplay playsinline loop muted webkit-playsinline
-         bind:this={mobileVideo}
+         bind:this={mobileVideo} preload="metadata"
          class="fill fill-image picture__video picture__video"></video>
 {/if}
 

@@ -14,8 +14,13 @@
   export let story: Story;
   export let options;
 
-  function getClosePath() {
-    italian ? '/it/' : ''
+  // On firefox, moving between stories doesn't work too well.
+  // So we'll silently reload the page instead by appending / instead of # to the close button
+  function getCloseButtonLink() {
+    const path = getCurrentLanguagePath()
+    const isFirefox = navigator.userAgent.match(/firefox|fxios/i);
+    const sigil = isFirefox ? '' : '#';
+    return path + sigil;
   }
 
 </script>
@@ -26,7 +31,7 @@
            volume={options.maxVolume ? options.maxVolume : 1}
            src={story.backgroundSound}/>
 
-    <a class="close round-button" href="{getCurrentLanguagePath()}#">
+    <a class="close round-button" href="{getCloseButtonLink()}">
       <CloseIcon />
     </a>
 

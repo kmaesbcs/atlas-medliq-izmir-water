@@ -17,8 +17,7 @@ export function t(str) {
  */
 export function getLanguagePath(code) {
   const basePath = window.location.origin + window.location.pathname.replace('/it', '');
-  const path = code === 'en' ? basePath : basePath + code;
-  return path.endsWith('/') ? path : path + '/';
+  return code === 'en' ? basePath : basePath + code;
 }
 
 /**

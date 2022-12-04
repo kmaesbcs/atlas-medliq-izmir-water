@@ -10198,11 +10198,11 @@ const file = "components\\Picture.svelte";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
+	child_ctx[10] = list[i];
 	return child_ctx;
 }
 
-// (17:2) {#if picture.mobileImage}
+// (18:2) {#if picture.mobileImage}
 function create_if_block_2(ctx) {
 	let source;
 	let source_srcset_value;
@@ -10217,7 +10217,7 @@ function create_if_block_2(ctx) {
 			? /*picture*/ ctx[0].mobileImage["thumb-720"]
 			: /*picture*/ ctx[0].image["thumb-720"]);
 
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source, file, 17, 4, 475);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source, file, 18, 4, 502);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, source, anchor);
@@ -10238,14 +10238,14 @@ function create_if_block_2(ctx) {
 		block,
 		id: create_if_block_2.name,
 		type: "if",
-		source: "(17:2) {#if picture.mobileImage}",
+		source: "(18:2) {#if picture.mobileImage}",
 		ctx
 	});
 
 	return block;
 }
 
-// (25:2) {#each sizes as size}
+// (26:2) {#each sizes as size}
 function create_each_block(ctx) {
 	let source;
 	let source_data_size_value;
@@ -10255,24 +10255,24 @@ function create_each_block(ctx) {
 	const block = {
 		c: function create() {
 			source = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("source");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "data-size", source_data_size_value = /*size*/ ctx[9]);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "media", source_media_value = "(max-width: " + /*size*/ ctx[9] + "px)");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "srcset", source_srcset_value = /*picture*/ ctx[0].image["thumb-" + /*size*/ ctx[9]]);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source, file, 25, 4, 748);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "data-size", source_data_size_value = /*size*/ ctx[10]);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "media", source_media_value = "(max-width: " + /*size*/ ctx[10] + "px)");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "srcset", source_srcset_value = /*picture*/ ctx[0].image["thumb-" + /*size*/ ctx[10]]);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(source, file, 26, 4, 775);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, source, anchor);
 		},
 		p: function update(ctx, dirty) {
-			if (dirty & /*sizes*/ 2 && source_data_size_value !== (source_data_size_value = /*size*/ ctx[9])) {
+			if (dirty & /*sizes*/ 2 && source_data_size_value !== (source_data_size_value = /*size*/ ctx[10])) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "data-size", source_data_size_value);
 			}
 
-			if (dirty & /*sizes*/ 2 && source_media_value !== (source_media_value = "(max-width: " + /*size*/ ctx[9] + "px)")) {
+			if (dirty & /*sizes*/ 2 && source_media_value !== (source_media_value = "(max-width: " + /*size*/ ctx[10] + "px)")) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "media", source_media_value);
 			}
 
-			if (dirty & /*picture, sizes*/ 3 && source_srcset_value !== (source_srcset_value = /*picture*/ ctx[0].image["thumb-" + /*size*/ ctx[9]])) {
+			if (dirty & /*picture, sizes*/ 3 && source_srcset_value !== (source_srcset_value = /*picture*/ ctx[0].image["thumb-" + /*size*/ ctx[10]])) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(source, "srcset", source_srcset_value);
 			}
 		},
@@ -10285,14 +10285,14 @@ function create_each_block(ctx) {
 		block,
 		id: create_each_block.name,
 		type: "each",
-		source: "(25:2) {#each sizes as size}",
+		source: "(26:2) {#each sizes as size}",
 		ctx
 	});
 
 	return block;
 }
 
-// (36:0) {#if (picture.video && !$isMobile) || (picture.video && !picture.mobileVideo)}
+// (37:0) {#if (picture.video && !$isMobile) || (picture.video && !picture.mobileVideo)}
 function create_if_block_1(ctx) {
 	let video_1;
 	let video_1_src_value;
@@ -10306,12 +10306,13 @@ function create_if_block_1(ctx) {
 			video_1.loop = true;
 			video_1.muted = true;
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "webkit-playsinline", "");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "preload", "metadata");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "class", "fill fill-image picture__video picture__video");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(video_1, file, 36, 2, 1060);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(video_1, file, 37, 2, 1109);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, video_1, anchor);
-			/*video_1_binding*/ ctx[7](video_1);
+			/*video_1_binding*/ ctx[8](video_1);
 		},
 		p: function update(ctx, dirty) {
 			if (dirty & /*picture*/ 1 && video_1.src !== (video_1_src_value = /*picture*/ ctx[0].video)) {
@@ -10320,7 +10321,7 @@ function create_if_block_1(ctx) {
 		},
 		d: function destroy(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach_dev)(video_1);
-			/*video_1_binding*/ ctx[7](null);
+			/*video_1_binding*/ ctx[8](null);
 		}
 	};
 
@@ -10328,14 +10329,14 @@ function create_if_block_1(ctx) {
 		block,
 		id: create_if_block_1.name,
 		type: "if",
-		source: "(36:0) {#if (picture.video && !$isMobile) || (picture.video && !picture.mobileVideo)}",
+		source: "(37:0) {#if (picture.video && !$isMobile) || (picture.video && !picture.mobileVideo)}",
 		ctx
 	});
 
 	return block;
 }
 
-// (42:0) {#if picture.mobileVideo && $isMobile}
+// (43:0) {#if picture.mobileVideo && $isMobile}
 function create_if_block(ctx) {
 	let video_1;
 	let video_1_src_value;
@@ -10349,12 +10350,13 @@ function create_if_block(ctx) {
 			video_1.loop = true;
 			video_1.muted = true;
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "webkit-playsinline", "");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "preload", "metadata");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(video_1, "class", "fill fill-image picture__video picture__video");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(video_1, file, 42, 2, 1293);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(video_1, file, 43, 2, 1361);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, video_1, anchor);
-			/*video_1_binding_1*/ ctx[8](video_1);
+			/*video_1_binding_1*/ ctx[9](video_1);
 		},
 		p: function update(ctx, dirty) {
 			if (dirty & /*picture*/ 1 && video_1.src !== (video_1_src_value = /*picture*/ ctx[0].mobileVideo)) {
@@ -10363,7 +10365,7 @@ function create_if_block(ctx) {
 		},
 		d: function destroy(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach_dev)(video_1);
-			/*video_1_binding_1*/ ctx[8](null);
+			/*video_1_binding_1*/ ctx[9](null);
 		}
 	};
 
@@ -10371,7 +10373,7 @@ function create_if_block(ctx) {
 		block,
 		id: create_if_block.name,
 		type: "if",
-		source: "(42:0) {#if picture.mobileVideo && $isMobile}",
+		source: "(43:0) {#if picture.mobileVideo && $isMobile}",
 		ctx
 	});
 
@@ -10384,6 +10386,7 @@ function create_fragment(ctx) {
 	let t0;
 	let t1;
 	let img;
+	let img_loading_value;
 	let img_src_value;
 	let t2;
 	let t3;
@@ -10397,8 +10400,8 @@ function create_fragment(ctx) {
 		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
 	}
 
-	let if_block1 = (/*picture*/ ctx[0].video && !/*$isMobile*/ ctx[4] || /*picture*/ ctx[0].video && !/*picture*/ ctx[0].mobileVideo) && create_if_block_1(ctx);
-	let if_block2 = /*picture*/ ctx[0].mobileVideo && /*$isMobile*/ ctx[4] && create_if_block(ctx);
+	let if_block1 = (/*picture*/ ctx[0].video && !/*$isMobile*/ ctx[5] || /*picture*/ ctx[0].video && !/*picture*/ ctx[0].mobileVideo) && create_if_block_1(ctx);
+	let if_block2 = /*picture*/ ctx[0].mobileVideo && /*$isMobile*/ ctx[5] && create_if_block(ctx);
 
 	const block = {
 		c: function create() {
@@ -10417,15 +10420,15 @@ function create_fragment(ctx) {
 			if (if_block1) if_block1.c();
 			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			if (if_block2) if_block2.c();
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "loading", "lazy");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "loading", img_loading_value = /*eager*/ ctx[2] ? "eager" : "lazy");
 			if (img.src !== (img_src_value = /*picture*/ ctx[0].image["thumb-2560"])) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "src", img_src_value);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "alt", "");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 31, 2, 896);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(img, file, 32, 2, 923);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(picture_1, "class", "picture__image fill fill-image");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_style)(picture_1, "--focus", /*picture*/ ctx[0].focus);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(picture_1, file, 14, 0, 357);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(div, "class", div_class_value = "" + (/*$$props*/ ctx[5].class + " picture"));
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(div, file, 13, 0, 318);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(picture_1, file, 15, 0, 384);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(div, "class", div_class_value = "" + (/*$$props*/ ctx[6].class + " picture"));
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(div, file, 14, 0, 345);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10485,6 +10488,10 @@ function create_fragment(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
+			if (dirty & /*eager*/ 4 && img_loading_value !== (img_loading_value = /*eager*/ ctx[2] ? "eager" : "lazy")) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "loading", img_loading_value);
+			}
+
 			if (dirty & /*picture*/ 1 && img.src !== (img_src_value = /*picture*/ ctx[0].image["thumb-2560"])) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(img, "src", img_src_value);
 			}
@@ -10493,7 +10500,7 @@ function create_fragment(ctx) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_style)(picture_1, "--focus", /*picture*/ ctx[0].focus);
 			}
 
-			if (/*picture*/ ctx[0].video && !/*$isMobile*/ ctx[4] || /*picture*/ ctx[0].video && !/*picture*/ ctx[0].mobileVideo) {
+			if (/*picture*/ ctx[0].video && !/*$isMobile*/ ctx[5] || /*picture*/ ctx[0].video && !/*picture*/ ctx[0].mobileVideo) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -10506,7 +10513,7 @@ function create_fragment(ctx) {
 				if_block1 = null;
 			}
 
-			if (/*picture*/ ctx[0].mobileVideo && /*$isMobile*/ ctx[4]) {
+			if (/*picture*/ ctx[0].mobileVideo && /*$isMobile*/ ctx[5]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
@@ -10519,7 +10526,7 @@ function create_fragment(ctx) {
 				if_block2 = null;
 			}
 
-			if (dirty & /*$$props*/ 32 && div_class_value !== (div_class_value = "" + (/*$$props*/ ctx[5].class + " picture"))) {
+			if (dirty & /*$$props*/ 64 && div_class_value !== (div_class_value = "" + (/*$$props*/ ctx[6].class + " picture"))) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(div, "class", div_class_value);
 			}
 		},
@@ -10548,12 +10555,13 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let $isMobile;
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_store)(_components_stores_js__WEBPACK_IMPORTED_MODULE_1__.isMobile, "isMobile");
-	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _components_stores_js__WEBPACK_IMPORTED_MODULE_1__.isMobile, $$value => $$invalidate(4, $isMobile = $$value));
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _components_stores_js__WEBPACK_IMPORTED_MODULE_1__.isMobile, $$value => $$invalidate(5, $isMobile = $$value));
 	let { $$slots: slots = {}, $$scope } = $$props;
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_slots)("Picture", slots, []);
 	
 	let { picture } = $$props;
 	let { sizes = ["1600", "1920", "2560"] } = $$props;
+	let { eager = false } = $$props;
 	let video;
 	let mobileVideo;
 
@@ -10568,27 +10576,29 @@ function instance($$self, $$props, $$invalidate) {
 	function video_1_binding($$value) {
 		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? "unshift" : "push"](() => {
 			video = $$value;
-			$$invalidate(2, video);
+			$$invalidate(3, video);
 		});
 	}
 
 	function video_1_binding_1($$value) {
 		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? "unshift" : "push"](() => {
 			mobileVideo = $$value;
-			$$invalidate(3, mobileVideo);
+			$$invalidate(4, mobileVideo);
 		});
 	}
 
 	$$self.$$set = $$new_props => {
-		$$invalidate(5, $$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props)));
+		$$invalidate(6, $$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props)));
 		if ("picture" in $$new_props) $$invalidate(0, picture = $$new_props.picture);
 		if ("sizes" in $$new_props) $$invalidate(1, sizes = $$new_props.sizes);
+		if ("eager" in $$new_props) $$invalidate(2, eager = $$new_props.eager);
 	};
 
 	$$self.$capture_state = () => ({
 		isMobile: _components_stores_js__WEBPACK_IMPORTED_MODULE_1__.isMobile,
 		picture,
 		sizes,
+		eager,
 		video,
 		mobileVideo,
 		rewind,
@@ -10596,11 +10606,12 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	$$self.$inject_state = $$new_props => {
-		$$invalidate(5, $$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), $$new_props));
+		$$invalidate(6, $$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), $$new_props));
 		if ("picture" in $$props) $$invalidate(0, picture = $$new_props.picture);
 		if ("sizes" in $$props) $$invalidate(1, sizes = $$new_props.sizes);
-		if ("video" in $$props) $$invalidate(2, video = $$new_props.video);
-		if ("mobileVideo" in $$props) $$invalidate(3, mobileVideo = $$new_props.mobileVideo);
+		if ("eager" in $$props) $$invalidate(2, eager = $$new_props.eager);
+		if ("video" in $$props) $$invalidate(3, video = $$new_props.video);
+		if ("mobileVideo" in $$props) $$invalidate(4, mobileVideo = $$new_props.mobileVideo);
 	};
 
 	if ($$props && "$$inject" in $$props) {
@@ -10612,6 +10623,7 @@ function instance($$self, $$props, $$invalidate) {
 	return [
 		picture,
 		sizes,
+		eager,
 		video,
 		mobileVideo,
 		$isMobile,
@@ -10625,7 +10637,13 @@ function instance($$self, $$props, $$invalidate) {
 class Picture extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponentDev {
 	constructor(options) {
 		super(options);
-		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { picture: 0, sizes: 1, rewind: 6 });
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			picture: 0,
+			sizes: 1,
+			eager: 2,
+			rewind: 7
+		});
 
 		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.dispatch_dev)("SvelteRegisterComponent", {
 			component: this,
@@ -10658,8 +10676,16 @@ class Picture extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteCompone
 		throw new Error("<Picture>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
 	}
 
+	get eager() {
+		throw new Error("<Picture>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
+	set eager(value) {
+		throw new Error("<Picture>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	}
+
 	get rewind() {
-		return this.$$.ctx[6];
+		return this.$$.ctx[7];
 	}
 
 	set rewind(value) {
@@ -11589,7 +11615,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const file = "components\\Story.svelte";
 
-// (18:0) {#if story}
+// (23:0) {#if story}
 function create_if_block(ctx) {
 	let section;
 	let audio;
@@ -11637,10 +11663,10 @@ function create_if_block(ctx) {
 			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			if_block.c();
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "class", "close round-button");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = "" + ((0,_components_common_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentLanguagePath)() + "#"));
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 23, 4, 865);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = /*getCloseButtonLink*/ ctx[3]());
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 28, 4, 1178);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(section, "class", "story");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 18, 2, 648);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 23, 2, 961);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, section, anchor);
@@ -11723,14 +11749,14 @@ function create_if_block(ctx) {
 		block,
 		id: create_if_block.name,
 		type: "if",
-		source: "(18:0) {#if story}",
+		source: "(23:0) {#if story}",
 		ctx
 	});
 
 	return block;
 }
 
-// (30:4) {:else}
+// (35:4) {:else}
 function create_else_block(ctx) {
 	let storyinfo;
 	let t_1;
@@ -11789,14 +11815,14 @@ function create_else_block(ctx) {
 		block,
 		id: create_else_block.name,
 		type: "else",
-		source: "(30:4) {:else}",
+		source: "(35:4) {:else}",
 		ctx
 	});
 
 	return block;
 }
 
-// (28:4) {#if $isMobile}
+// (33:4) {#if $isMobile}
 function create_if_block_1(ctx) {
 	let mobilestory;
 	let current;
@@ -11837,7 +11863,7 @@ function create_if_block_1(ctx) {
 		block,
 		id: create_if_block_1.name,
 		type: "if",
-		source: "(28:4) {#if $isMobile}",
+		source: "(33:4) {#if $isMobile}",
 		ctx
 	});
 
@@ -11922,8 +11948,13 @@ function instance($$self, $$props, $$invalidate) {
 	let { story } = $$props;
 	let { options } = $$props;
 
-	function getClosePath() {
-		_components_common_js__WEBPACK_IMPORTED_MODULE_1__.italian ? "/it/" : "";
+	// On firefox, moving between stories doesn't work too well.
+	// So we'll silently reload the page instead by appending / instead of # to the close button
+	function getCloseButtonLink() {
+		const path = (0,_components_common_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentLanguagePath)();
+		const isFirefox = navigator.userAgent.match(/firefox|fxios/i);
+		const sigil = isFirefox ? "" : "#";
+		return path + sigil;
 	}
 
 	const writable_props = ["story", "options"];
@@ -11952,7 +11983,7 @@ function instance($$self, $$props, $$invalidate) {
 		CloseIcon: _components_CloseIcon_svelte__WEBPACK_IMPORTED_MODULE_9__.default,
 		story,
 		options,
-		getClosePath,
+		getCloseButtonLink,
 		$isMobile
 	});
 
@@ -11965,7 +11996,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$self.$inject_state($$props.$$inject);
 	}
 
-	return [story, options, $isMobile];
+	return [story, options, $isMobile, getCloseButtonLink];
 }
 
 class Story extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponentDev {
@@ -12743,6 +12774,7 @@ function create_default_slot_1(ctx) {
 
 	picture = new _components_Picture_svelte__WEBPACK_IMPORTED_MODULE_6__.default({
 			props: {
+				eager: /*slideIndex*/ ctx[13] === 0 && /*sectionIndex*/ ctx[10] === 0,
 				picture: /*slide*/ ctx[11],
 				class: "slide__picture"
 			},
@@ -28432,8 +28464,7 @@ function t(str) {
  */
 function getLanguagePath(code) {
   const basePath = window.location.origin + window.location.pathname.replace('/it', '');
-  const path = code === 'en' ? basePath : basePath + code;
-  return path.endsWith('/') ? path : path + '/';
+  return code === 'en' ? basePath : basePath + code;
 }
 
 /**

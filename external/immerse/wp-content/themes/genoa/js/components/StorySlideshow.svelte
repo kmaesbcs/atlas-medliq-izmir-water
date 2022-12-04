@@ -76,7 +76,7 @@
   {#each story.sections as section, sectionIndex}
     {#each section.images as slide, slideIndex}
       <SwiperSlide data-section-id="{sectionIndex}" class="story__slide slide">
-        <Picture picture={slide} class="slide__picture" />
+        <Picture eager="{ slideIndex === 0 && sectionIndex === 0 }" picture={slide} class="slide__picture" />
       </SwiperSlide>
     {/each}
   {/each}
