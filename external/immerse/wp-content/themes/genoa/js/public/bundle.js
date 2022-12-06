@@ -11663,10 +11663,10 @@ function create_if_block(ctx) {
 			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			if_block.c();
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "class", "close round-button");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = /*getCloseButtonLink*/ ctx[3]());
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 28, 4, 1178);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(a, "href", a_href_value = getCloseButtonLink());
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(a, file, 28, 4, 1203);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(section, "class", "story");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 23, 2, 961);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(section, file, 23, 2, 986);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, section, anchor);
@@ -11938,6 +11938,13 @@ function create_fragment(ctx) {
 	return block;
 }
 
+function getCloseButtonLink() {
+	const path = window.location.origin + window.location.pathname;
+	const isFirefox = navigator.userAgent.match(/firefox|fxios/i);
+	const sigil = isFirefox ? "" : "#";
+	return path + sigil;
+}
+
 function instance($$self, $$props, $$invalidate) {
 	let $isMobile;
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.validate_store)(_components_stores_js__WEBPACK_IMPORTED_MODULE_2__.isMobile, "isMobile");
@@ -11947,16 +11954,6 @@ function instance($$self, $$props, $$invalidate) {
 	
 	let { story } = $$props;
 	let { options } = $$props;
-
-	// On firefox, moving between stories doesn't work too well.
-	// So we'll silently reload the page instead by appending / instead of # to the close button
-	function getCloseButtonLink() {
-		const path = (0,_components_common_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentLanguagePath)();
-		const isFirefox = navigator.userAgent.match(/firefox|fxios/i);
-		const sigil = isFirefox ? "" : "#";
-		return path + sigil;
-	}
-
 	const writable_props = ["story", "options"];
 
 	Object.keys($$props).forEach(key => {
@@ -11996,7 +11993,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$self.$inject_state($$props.$$inject);
 	}
 
-	return [story, options, $isMobile, getCloseButtonLink];
+	return [story, options, $isMobile];
 }
 
 class Story extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponentDev {
@@ -12766,7 +12763,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (69:6) <SwiperSlide data-section-id="{sectionIndex}" class="story__slide slide">
+// (67:6) <SwiperSlide data-section-id="{sectionIndex}" class="story__slide slide">
 function create_default_slot_1(ctx) {
 	let picture;
 	let t_1;
@@ -12815,14 +12812,14 @@ function create_default_slot_1(ctx) {
 		block,
 		id: create_default_slot_1.name,
 		type: "slot",
-		source: "(69:6) <SwiperSlide data-section-id=\\\"{sectionIndex}\\\" class=\\\"story__slide slide\\\">",
+		source: "(67:6) <SwiperSlide data-section-id=\\\"{sectionIndex}\\\" class=\\\"story__slide slide\\\">",
 		ctx
 	});
 
 	return block;
 }
 
-// (68:4) {#each section.images as slide, slideIndex}
+// (66:4) {#each section.images as slide, slideIndex}
 function create_each_block_1(ctx) {
 	let swiperslide;
 	let current;
@@ -12872,14 +12869,14 @@ function create_each_block_1(ctx) {
 		block,
 		id: create_each_block_1.name,
 		type: "each",
-		source: "(68:4) {#each section.images as slide, slideIndex}",
+		source: "(66:4) {#each section.images as slide, slideIndex}",
 		ctx
 	});
 
 	return block;
 }
 
-// (67:2) {#each story.sections as section, sectionIndex}
+// (65:2) {#each story.sections as section, sectionIndex}
 function create_each_block(ctx) {
 	let each_1_anchor;
 	let current;
@@ -12968,7 +12965,7 @@ function create_each_block(ctx) {
 		block,
 		id: create_each_block.name,
 		type: "each",
-		source: "(67:2) {#each story.sections as section, sectionIndex}",
+		source: "(65:2) {#each story.sections as section, sectionIndex}",
 		ctx
 	});
 
@@ -13040,21 +13037,21 @@ function create_default_slot(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(button0, "class", "slideshow__nav slideshow__nav--prev round-button");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(button0, "visuallyhidden", /*currentSlideIndex*/ ctx[3] == 0);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(button0, file, 46, 2, 1791);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(title1, file, 61, 6, 2430);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(title1, file, 59, 6, 2426);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "d", "M1,1L9.61,7.8,18.21,1");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "fill", "none");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "stroke", "#fff");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "stroke-linecap", "round");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "stroke-linejoin", "round");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(path1, "stroke-width", "2");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(path1, file, 62, 6, 2470);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(path1, file, 60, 6, 2466);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(svg1, "class", "down-icon");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(svg1, "xmlns", "http://www.w3.org/2000/svg");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(svg1, "viewBox", "0 0 22.99 12.48");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(svg1, file, 58, 4, 2318);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(svg1, file, 56, 4, 2314);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr_dev)(button1, "class", "slideshow__nav slideshow__nav--next");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.toggle_class)(button1, "is-throbbing", !/*slideHasChanged*/ ctx[2]);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(button1, file, 57, 2, 2222);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_location)(button1, file, 55, 2, 2218);
 		},
 		m: function mount(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert_dev)(target, button0, anchor);
@@ -28442,8 +28439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "themeBase": () => (/* binding */ themeBase),
 /* harmony export */   "MOBILE_WIDTH": () => (/* binding */ MOBILE_WIDTH),
 /* harmony export */   "t": () => (/* binding */ t),
-/* harmony export */   "getLanguagePath": () => (/* binding */ getLanguagePath),
-/* harmony export */   "getCurrentLanguagePath": () => (/* binding */ getCurrentLanguagePath)
+/* harmony export */   "getLanguagePath": () => (/* binding */ getLanguagePath)
 /* harmony export */ });
 const italian = window.location.pathname.indexOf('/it') !== -1;
 const homeUrl = italian ? '../' : '';
@@ -28463,17 +28459,10 @@ function t(str) {
  * Adjusted language path, that works with subdirectories.
  */
 function getLanguagePath(code) {
-  const basePath = window.location.origin + window.location.pathname.replace('/it', '');
+  const basePath = window.location.origin + window.location.pathname.replace('/it/', '/');
   return code === 'en' ? basePath : basePath + code;
 }
 
-/**
- * Get the *current* language path
- */
-function getCurrentLanguagePath() {
-  const code = italian ? 'it' : 'en';
-  return getLanguagePath(code);
-}
 
 /***/ }),
 

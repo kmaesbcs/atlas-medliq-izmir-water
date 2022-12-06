@@ -62,8 +62,6 @@
     </svg>
   </button>
 
-
-
   <button class="slideshow__nav slideshow__nav--next" class:is-throbbing={!slideHasChanged}>
     <svg class="down-icon"
          xmlns="http://www.w3.org/2000/svg"

@@ -17,7 +17,7 @@
   // On firefox, moving between stories doesn't work too well.
   // So we'll silently reload the page instead by appending / instead of # to the close button
   function getCloseButtonLink() {
-    const path = getCurrentLanguagePath()
+    const path = window.location.origin + window.location.pathname;
     const isFirefox = navigator.userAgent.match(/firefox|fxios/i);
     const sigil = isFirefox ? '' : '#';
     return path + sigil;

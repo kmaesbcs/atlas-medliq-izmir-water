@@ -88,8 +88,12 @@
 .about p a,
 .story-info__text p a,
 .link__title {
-  border-bottom: 1px solid rgba(0,0,0,0.3);
   line-height: 1.1;  
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(0,0,0,0.3);
+}
 }
 
 .about p a,
@@ -921,10 +925,27 @@ button {
 
 /* All small screens */
 @media (max-width: 960px) {
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .wrapper {
+    height: 100vh;
+    position: fixed !important;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: 100vw;
+    transform: translateZ(0);
+  }
+
+  .wrapper.is-current-item {
+    z-index: -1;
+  }
+  
   .story {
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: auto;
     background: white;
+    position: relative;
   }
 
   .story .close {

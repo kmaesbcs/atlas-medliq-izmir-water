@@ -16,14 +16,6 @@ export function t(str) {
  * Adjusted language path, that works with subdirectories.
  */
 export function getLanguagePath(code) {
-  const basePath = window.location.origin + window.location.pathname.replace('/it', '');
+  const basePath = window.location.origin + window.location.pathname.replace('/it/', '/');
   return code === 'en' ? basePath : basePath + code;
-}
-
-/**
- * Get the *current* language path
- */
-export function getCurrentLanguagePath() {
-  const code = italian ? 'it' : 'en';
-  return getLanguagePath(code);
 }
