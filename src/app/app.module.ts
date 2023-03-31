@@ -56,7 +56,7 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     {
