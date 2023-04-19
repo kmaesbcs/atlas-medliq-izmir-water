@@ -21,6 +21,10 @@
   outline: none;
 }
 
+a, button {
+  color: inherit;
+}
+
 
 * {
   -webkit-user-select: none;
@@ -466,6 +470,25 @@ button {
   font-size: 16px;
 }
 
+.logos {
+  display: flex;
+  justify-content: space-between;
+  gap: 29px;
+  margin-top: 9px;
+  margin-bottom: 42px;
+}
+
+.logo {
+  max-height: 59px;
+  max-width: 131px;
+  display: block;
+    width: auto;  
+}
+
+.logo__link {
+  display: block;
+}
+
 .about__inner h2,
 .about__inner h3,
 .about__inner h4,
@@ -801,10 +824,22 @@ button {
     font-size: 12px;
     line-height: 1.27;
     padding-right: 20px;
+    padding-top: 28px;
   }
 
   .about__close.close {
     right: 417px;
+  }
+
+  .logos {
+    margin-top: 0px;
+    margin-bottom: 22px;
+    gap: 17px
+  }
+
+  .logo {
+    max-height: 36px;
+    max-width: 110px;
   }
 
   /* Stories */
@@ -927,11 +962,11 @@ button {
 @media (max-width: 960px) {
   .app {
     height: auto;
-    min-height: 100vh;
+    min-height: calc(var(--rvh,1vh) * 100);
   }
 
   .wrapper {
-    height: 100vh;
+    height: calc(var(--rvh,1vh) * 100);;
     position: fixed !important;
     top: 0; left: 0; bottom: 0; right: 0;
     width: 100vw;
@@ -970,6 +1005,8 @@ button {
   /* Legend */
   .legend {
     left: 0; right: 0;
+    padding-bottom: 0;
+    transform: translateY(calc(100% - 34px));
   }
   
   .legend__items {
@@ -988,6 +1025,7 @@ button {
   .legend__items {
     grid-template-columns: min-content 1fr;
     grid-gap: 55px;
+    margin-top: 34px;
   }
 
   .legend__column {
@@ -996,7 +1034,7 @@ button {
 
   .legend__toggle {
     font-size: 7px;
-    left: 50%; top: -33px;
+    left: 50%; top: 0;
     transform: translateX(-50%);
     padding: 13px 25px;
     height: auto;
@@ -1133,6 +1171,12 @@ button {
   .about__inner {
     padding: 20px 20px 20px 0;
     border: none;
+  }
+
+  .logos {
+    justify-content: center;
+    gap: 37px;
+    margin: 0 0 22px 0;
   }
 
   .about__close.close {
