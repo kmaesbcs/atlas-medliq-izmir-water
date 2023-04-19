@@ -184,11 +184,19 @@
                     font-weight: 500;
                     .desktop({
                         font-size: 16px;
-                        line-height: 22px;    
+                        line-height: 22px;
+                        &.smaller {
+                            font-size: 14px;
+                            line-height: 20px;
+                        }
                     });
                     .mobile({
                         font-size: 14px;
-                        line-height: 20px;    
+                        line-height: 20px;
+                        &.smaller {
+                            font-size: 12px;
+                            line-height: 18px;
+                        }
                     });
                     ::ng-deep {
                         p {

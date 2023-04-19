@@ -37,8 +37,8 @@
                 <a href='https://www.digitalartlab.org.il/?localeId=en-us' target='_blank'>
                     <img src='assets/img/logo-cda.png'>
                 </a>
-    
             </div>
+            <div class='description smaller' [innerHtml]='marked(SETTINGS.Legalese || "")'></div>
         </div>    
     </div>
     <ng-container *ngFor='let map of MAPS'>
@@ -46,13 +46,14 @@
             <div class='about regular' [class.active]='map.idx === active && !about'>
                 <a [href]='map.path && map.state==="live" ? map.path : null'>
                     <div class='title arrowed'>
-                        <span class='text' [innerHtml]='marked(map.title)'></span>
+                        <span class='text' [innerHtml]='marked(map.title + (map.disclaimer ? "&nbsp;↪" : ""))'></span>
                         <ng-container *ngIf='map.path && map.state==="live"'>
                             <div class='arrow-line'></div>
                             <div class='arrow-head'></div>    
                         </ng-container>
                     </div>
-                    <div class='description' [innerHtml]='marked(map.description)'></div>    
+                    <div class='description' [innerHtml]='marked(map.description)'></div>
+                    
                 </a>
             </div>
             <div class='map' 
