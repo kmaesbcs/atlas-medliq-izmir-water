@@ -1,0 +1,16 @@
+<app-izmir-water-seclayout
+  (info)="info = $event; point = $event ? null : point"
+  [hideHeader]="!!point"
+>
+  <div class="map content">
+    <div #mapEl></div>
+    <app-izmir-water-detailpanel
+      [class.open]="!!point"
+      [item]="point || DUMMY"
+      (close)="point = null">
+    </app-izmir-water-detailpanel>
+    <app-izmir-water-aboutus [class.open]='!!info' (close)='info = false'></app-izmir-water-aboutus>
+  </div>
+
+  <h1 class="izmir-water__header-title header-title">Suyumuz</h1>
+</app-izmir-water-seclayout>

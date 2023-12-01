@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WawbComponent } from './maps/m1wawb/wawb.component'
+import { WawbComponent } from './maps/m1wawb/wawb.component';
 import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
 import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
@@ -27,6 +28,10 @@ import { InfobarComponent } from './templates/talking-heads/infobar/infobar.comp
 import { MainPageComponent } from './main-page/main-page.component';
 import { TimelineMapComponent } from './templates/timeline/timeline-map/timeline-map.component';
 import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-heads-map/talking-heads-map.component';
+import { IzmirWaterComponent } from './maps/izmir-water/izmir-water.component';
+import { IzmirWaterDetailPanelComponent } from './maps/izmir-water/detailpanel/detailpanel.component';
+import { IzmirWaterAboutUsComponent } from './maps/izmir-water/aboutus/aboutus.component';
+import { IzmirWaterLayoutComponent } from './maps/izmir-water/seclayout/izmir-water.seclayout.component';
 
 @NgModule({
   declarations: [
@@ -52,12 +57,12 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
     MainPageComponent,
     TimelineMapComponent,
     TalkingHeadsMapComponent,
+    IzmirWaterComponent,
+    IzmirWaterDetailPanelComponent,
+    IzmirWaterLayoutComponent,
+    IzmirWaterAboutUsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
   providers: [
     {
       provide: ErrorHandler,
@@ -76,6 +81,6 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,141 @@
+.carousel--btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(18, 18, 18, 0.4);
+  border: 2px solid #000000;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.carousel--btn:hover {
+  background: rgba(18, 18, 18, 0.75);
+}
+
+.carousel-button-container {
+  width: 15%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-image-container {
+  width: 70%;
+  position: relative;
+}
+
+:host {
+  width: 100%;
+  height: 100%;
+  .layout {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    align-items: stretch;
+  }
+
+  .fountain {
+    color: rgba(255, 255, 255, 1);
+    font-family: Inter;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(25px);
+    height: 90%;
+    width: 90%;
+    margin: 3%;
+  }
+  .fountain-top {
+    display: flex;
+    width: 100%;
+    height: 5%;
+    flex-direction: row-reverse;
+  }
+  .fountain-bottom {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 95%;
+  }
+
+  .fountain-image-container {
+    display: flex;
+    position: relative;
+    width: 50%;
+  }
+
+  .fountain-text-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    row-gap: 1%;
+    padding-right: 3%;
+  }
+
+  .fountain-close {
+    position: relative;
+    align-content: right;
+  }
+
+  .fountain-image {
+    display: flex;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .fountain-title {
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+  }
+
+  .fountain-dateperiod {
+    font-size: 15px;
+    font-weight: 400;
+    width: 100%;
+    padding-bottom: 3%;
+  }
+
+  .fountain-description {
+    width: 100%;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+    max-height: 60%;
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-track:hover {
+    background-color: transparent;
+  }
+}

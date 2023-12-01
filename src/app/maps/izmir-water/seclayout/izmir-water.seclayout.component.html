@@ -1,0 +1,41 @@
+<div class="layout">
+  <ng-content select=".content"></ng-content>
+  <div class="header">
+    <a class="white" href="/">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="36"
+        height="36"
+        viewBox="0 0 36 36"
+        fill="none"
+        style="margin: 1rem"
+      >
+        <path
+          d="M32.5 18C32.5 26.0081 26.0081 32.5 18 32.5C9.99187 32.5 3.5 26.0081 3.5 18V3.5H18C26.0081 3.5 32.5 9.99187 32.5 18Z"
+          stroke="white"
+          stroke-width="7"
+        />
+      </svg>
+    </a>
+
+    <div class="text">
+      <ng-content select=".header-title"></ng-content>
+    </div>
+    <div class="right">
+      <div class="header__about-us">
+        <a class="header__link" (click)='info.emit(true)'>ABOUT US</a>
+      </div>
+      <div class="header__language">
+        <select class="header__select-btn" [(ngModel)]="selectedLanguageOption" (change)="onLanguageChange()">
+          <option 
+            *ngFor="let o of languageOptions"
+            [ngValue]="o"
+            [selected]="o == selectedLanguageOption"
+          >
+            {{ o }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
