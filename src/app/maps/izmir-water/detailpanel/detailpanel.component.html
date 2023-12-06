@@ -1,0 +1,52 @@
+<div class="fountain" *ngIf="item.details?.length > 0">
+  <div class="fountain-top">
+      <img (click)="close.emit()" class="close" src="assets/img/iw-close.svg" /> 
+  </div>
+  <div class="fountain-bottom">
+    <div class="fountain-image-container" *ngIf="item.details?.length < 2 && item.details[0].MediaType === 'Image'">
+      <img
+        *ngFor="let att of item.details[0].Attachment"
+        class="fountain-image"
+        src="{{ att.thumbnails.large.url }}"
+      />
+    </div>
+    <div class="fountain-image-container" *ngIf="item.details?.length < 2 && item.details[0].MediaType === 'Video'">
+      <video 
+        *ngFor="let att of item.details[0].Attachment"
+        class="fountain-image"
+        src="{{ att.url }}"
+        type="video/mp4" controls>
+      </video>
+    </div>
+    
+    
+    <div class="fountain-image-container" *ngIf="item.details?.length >= 2">
+      <div class="carousel-button-container">
+        <button class="carousel--btn carousel--btn__left" (click)="prevItem(0)">
+          &lt;
+        </button>
+      </div>
+      <div class="carousel-image-container">
+        <img
+          *ngFor="let att of item.details[currentIndex].Attachment"
+          class="fountain-image"
+          src="{{ att.thumbnails.large.url }}"
+        />
+      </div>
+      <div class="carousel-button-container">
+        <button class="carousel--btn carousel--btn__right" (click)="nextItem(0)">
+          &gt;
+        </button>
+      </div> 
+    </div>
+    
+
+    <div class="fountain-text-container">
+      <div class="fountain-title" [innerHTML]='item.Name'></div>
+      <div class="fountain-dateperiod" [innerHTML]='item.details[0].Date_Period_ArtworkType'></div>
+      <div class="fountain-description" [innerHTML]='item.details[0].Description'></div>
+    </div>
+  </div>
+</div>>
+
+

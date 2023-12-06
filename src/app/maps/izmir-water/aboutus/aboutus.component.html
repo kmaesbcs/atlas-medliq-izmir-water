@@ -1,0 +1,48 @@
+<div class="aboutus-card">
+    <div class="aboutus-top">
+        <img (click)="close.emit()" class="close" src="assets/img/iw-close.svg" /> 
+    </div>
+    <div class="aboutus-suyumuz-top" *ngIf="currentContributor == contributor_suyumuz">
+        <div class="aboutus-suyumuz-top-left">
+            <div class="aboutus-suyumuz-image-container"><img class="aboutus-image" (click)="switchCurrentContributorDisplay(contributor_suyumuz)" src="{{suyumuzAboutInfo?.Logo[0]?.url}}"/></div>
+            <div class="aboutus-projectteam" *ngIf="suyumuzAboutInfo != null" innerHTML="{{suyumuzAboutInfo?.Team}}"></div>
+        </div>
+        <div class="aboutus-suyumuz-top-right">
+            <div class="aboutus-projectname" *ngIf="suyumuzAboutInfo != null" innerHTML="{{suyumuzAboutInfo?.Project_Name}}"></div>
+            <div class="aboutus-projectdescription" *ngIf="suyumuzAboutInfo != null" innerHTML="{{suyumuzAboutInfo?.Project_Description}}"></div>
+        </div>
+    </div>
+    <div class="aboutus-suyumuz-bottom" *ngIf="currentContributor == contributor_suyumuz">
+        <div class="aboutus-suyumuz-contributor-container">
+            <div class="aboutus-image-container" [class.selected]="currentContributor === contributor_goethe"><img class="aboutus-image" src="{{goetheAboutInfo?.Logo[0]?.url}}"/></div>
+            <div class="aboutus-projectteam" innerHTML="{{goetheAboutInfo?.Team}}"></div>
+        </div>
+        <div class="aboutus-suyumuz-contributor-container">
+            <div class="aboutus-image-container aboutus-image-clickable-container" [class.selected]="currentContributor === contributor_egedernegi"><img class="aboutus-image" (click)="switchCurrentContributorDisplay(contributor_egedernegi)" src="{{egedernegiAboutInfo?.Logo[0]?.url}}"/></div>
+            <div class="aboutus-projectteam" innerHTML="{{egedernegiAboutInfo?.Team}}"></div>
+        </div>
+        <div class="aboutus-suyumuz-contributor-container">
+            <div class="aboutus-image-container aboutus-image-clickable-container" [class.selected]="currentContributor === contributor_karantina"><img class="aboutus-image" (click)="switchCurrentContributorDisplay(contributor_karantina)" src="{{karantinaAboutInfo?.Logo[0]?.url}}"/></div>
+            <div class="aboutus-projectteam" innerHTML="{{karantinaAboutInfo?.Team}}"></div>
+        </div>
+    </div>
+
+
+
+    <div class="aboutus-other" *ngIf="currentContributor != contributor_suyumuz">
+        <div class="aboutus-other-left">
+            <div class="aboutus-other-back">
+                <button class="back-btn" (click)="switchCurrentContributorDisplay(contributor_suyumuz)">
+                    &lt;
+                </button>
+            </div>
+            <div class="aboutus-projectname" *ngIf="currentAboutInfo != null" innerHTML="{{currentAboutInfo?.Project_Name}}"></div>
+            <div class="aboutus-other-image-container" ><img class="aboutus-image" src="{{currentAboutInfo?.Logo[0]?.url}}"/></div>
+            <a href="{{currentAboutInfo?.Catalog_PDF[0]?.url}}" target="_blank">{{currentAboutInfo?.Catalog_PDF[0]?.filename}}</a>
+        </div>
+        <div class="aboutus-other-right">
+            <div class="aboutus-projectdescription" *ngIf="currentAboutInfo != null" innerHTML="{{currentAboutInfo?.Project_Description}}"></div>
+        </div>
+    </div>
+
+</div>

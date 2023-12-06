@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WawbComponent } from './maps/m1wawb/wawb.component'
+import { WawbComponent } from './maps/m1wawb/wawb.component';
 import { WawbSidebarComponent } from './maps/m1wawb/sidebar/sidebar.component';
 import { PlayerComponent } from './player/player.component';
 import { WawbInfobarComponent } from './maps/m1wawb/infobar/infobar.component';
@@ -53,11 +54,7 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
     TimelineMapComponent,
     TalkingHeadsMapComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
   providers: [
     {
       provide: ErrorHandler,
@@ -76,6 +73,6 @@ import { TalkingHeadsMapComponent } from './templates/talking-heads/talking-head
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
