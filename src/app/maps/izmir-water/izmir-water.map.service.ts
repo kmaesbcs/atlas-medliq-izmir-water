@@ -3,9 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class IzmirWaterMapService {
 
   ACCESS_TOKEN = 'pk.eyJ1Ijoia21hZXMiLCJhIjoiY2xvaDhzNm8zMTk0djJqb2l2eHdjOTI4bSJ9.BDm-bDJZjjfwFx87AFsyqQ';

@@ -6,6 +6,10 @@ import { IzmirWaterComponent } from './izmir-water.component';
 import { IzmirWaterLayoutComponent } from './seclayout/izmir-water.seclayout.component';
 import { IzmirWaterRoutingModule } from './izmir-water-routing.module';
 import { FormsModule } from '@angular/forms';
+import { IzmirWaterEventManagerService } from './izmir-water.eventmanager.service';
+import { IzmirWaterLanguageService } from './izmir-water.language.service';
+import { IzmirWaterMapService } from './izmir-water.map.service';
+import { IzmirWaterMapboxHelperService } from './izmir-water.mapbox.helper.service';
 
 
 
@@ -20,6 +24,12 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     IzmirWaterRoutingModule
+  ],
+  providers: [
+    IzmirWaterEventManagerService,
+    IzmirWaterLanguageService,
+    IzmirWaterMapService,
+    IzmirWaterMapboxHelperService
   ]
 })
 export class IzmirWaterModule { }

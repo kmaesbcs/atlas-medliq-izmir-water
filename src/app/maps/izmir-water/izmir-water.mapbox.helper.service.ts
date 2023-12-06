@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { IzmirWaterLanguageService } from './izmir-water.language.service';
 import { IzmirWaterEventManagerService } from './izmir-water.eventmanager.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class IzmirWaterMapboxHelperService {
 
   selectedLanguageOption = 'TR';
