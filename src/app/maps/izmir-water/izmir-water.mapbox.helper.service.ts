@@ -41,20 +41,19 @@ export class IzmirWaterMapboxHelperService {
 
   karantinaIcon(map: mapboxgl.Map, karantinaPosition: number[], karantinaZoom: number, karantinaPitch: number): HTMLElement {
     const element = document.createElement('div');
-    element.addEventListener('mouseover', () => {
-      element.classList.add('hovered');
-    });
-    element.addEventListener('mouseout', () => {
-      element.classList.remove('hovered');
-    });
-
-    const style = document.createElement('style');
-    style.textContent = ".hovered { padding: 2px }";
-
-    element.innerHTML = 
-    '<img style="max-width: 100%; border-radius: 8px;" src="../../../assets/img/iw-karantina-logo.png"></img>';
-    document.head.appendChild(style);
-    element.style.width = '15rem';
+    element.innerHTML =
+    '<div style="font-family: Inter; font-weight: 500;">' +
+    '<p style="margin-left: 0.75rem; margin-top:0; margin-bottom:0; margin-right: 0;">' +
+      'To Karantina exhibition  →'
+    '</p>' +
+    '</div>';
+    element.style.padding = '0.5rem';
+    element.style.width = '6.5rem';
+    element.style.height = '2.9rem';
+    element.style.background = '#252525';
+    element.style.border = '1px solid #252525';
+    element.style.borderRadius = '8px';
+    element.style.color = '#fff';
 
     element.addEventListener('click', (e) => {
       map.easeTo({
@@ -63,7 +62,7 @@ export class IzmirWaterMapboxHelperService {
         pitch: karantinaPitch
       })
     });
-    return element;
+  return element;
   }
 
   returnToIzmirMarker(map: mapboxgl.Map, mapCentre: number[], standardZoom: number, standardPitch: number): HTMLElement {
@@ -71,7 +70,7 @@ export class IzmirWaterMapboxHelperService {
     element.innerHTML =
     '<div style="font-family: Inter; font-weight: 500;">' +
     '<p style="margin-left: 0.75rem; margin-top:0; margin-bottom:0; margin-right: 0;">' +
-      '↩ Return to Izmir'
+      '↩ To Ege Derneği'
     '</p>' +
     '</div>';
     element.style.padding = '0.5rem';
