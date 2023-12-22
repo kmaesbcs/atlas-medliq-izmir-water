@@ -37,8 +37,10 @@
                 </button>
             </div>
             <div class="aboutus-projectname" *ngIf="currentAboutInfo != null" innerHTML="{{currentAboutInfo?.Project_Name}}"></div>
-            <div class="aboutus-other-image-container" ><img class="aboutus-image" src="{{currentAboutInfo?.Logo[0]?.url}}"/></div>
-            <a href="{{currentAboutInfo?.Catalog_PDF[0]?.url}}" target="_blank">{{currentAboutInfo?.Catalog_PDF[0]?.filename}}</a>
+            <div class="aboutus-other-image-container" >
+                <img class="aboutus-image" src="{{currentAboutInfo?.Logo[0]?.url}}"/>
+            </div>
+            <a style="text-overflow: ellipse;" href="{{currentAboutInfo?.Catalog_PDF[0]?.url}}" target="_blank">download catalogue</a>
         </div>
         <div class="aboutus-other-right">
             <div class="aboutus-projectdescription" *ngIf="currentAboutInfo != null" innerHTML="{{currentAboutInfo?.Project_Description}}"></div>
