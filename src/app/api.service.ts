@@ -8,7 +8,7 @@ import { from } from 'rxjs';
 })
 export class ApiService {
 
-  API_KEY = 'key7jIbxK4zBiOYDr';
+  API_KEY = 'patU6EhqmETwydOrK.30f97ce7ff8af71f555e5d1af3b715669601f712b17ce5dafd8b60494527dd56';
   AIRTABLE_BASE = 'https://api.airtable.com/v0';
   
   constructor(private http: HttpClient) { }
